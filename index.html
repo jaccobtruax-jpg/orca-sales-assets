@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrcaRouter Competitive Battlecard — 2026-08-19</title>
+<style>
+  :root {
+    --bg-primary: #0a0d14;
+    --bg-elevated: #0f131c;
+    --bg-surface: #161b28;
+    --bg-hover: #1e2536;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --you-win: #10b981;
+    --they-win: #ef4444;
+    --tie: #f59e0b;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    line-height: 1.55;
+  }
+  .container { max-width: 1150px; margin: 0 auto; padding: 0 20px; }
+  header {
+    padding: 32px 0 20px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(59,130,246,0.08), transparent);
+  }
+  header h1 { font-size: 1.7rem; letter-spacing: -0.02em; }
+  header .sub { color: var(--text-secondary); margin-top: 6px; font-size: 0.95rem; }
+  header .meta { color: var(--text-muted); font-size: 0.82rem; margin-top: 8px; }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 600; margin-right: 6px;
+  }
+  .badge.you { background: rgba(16,185,129,0.15); color: var(--you-win); border: 1px solid rgba(16,185,129,0.35); }
+  .badge.them { background: rgba(239,68,68,0.15); color: var(--they-win); border: 1px solid rgba(239,68,68,0.35); }
+  .badge.tie { background: rgba(245,158,11,0.15); color: var(--tie); border: 1px solid rgba(245,158,11,0.35); }
+  nav.tabs {
+    display: flex; flex-wrap: wrap; gap: 4px;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg-primary); z-index: 10;
+  }
+  nav.tabs button {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px;
+    cursor: pointer; font-size: 0.88rem; font-weight: 500;
+    transition: all 0.2s;
+  }
+  nav.tabs button:hover { background: var(--bg-hover); color: var(--text-primary); }
+  nav.tabs button.active {
+    background: var(--accent); border-color: var(--accent); color: #fff;
+  }
+  .tab-content { display: none; padding: 26px 0 60px; }
+  .tab-content.active { display: block; }
+  h2 { font-size: 1.25rem; margin: 28px 0 12px; letter-spacing: -0.01em; }
+  h2:first-child { margin-top: 0; }
+  h3 { font-size: 1.02rem; margin: 20px 0 8px; color: var(--text-secondary); }
+  p { color: var(--text-secondary); margin-bottom: 10px; }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 0.86rem;
+    background: var(--bg-surface); border-radius: 10px; overflow: hidden;
+  }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  thead th {
+    position: sticky; top: 60px; background: var(--bg-elevated);
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);
+  }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  td.dim { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+  .w { color: var(--you-win); font-weight: 600; }
+  .l { color: var(--they-win); font-weight: 600; }
+  .t { color: var(--tie); font-weight: 600; }
+  .cell-w { background: rgba(16,185,129,0.08); }
+  .cell-l { background: rgba(239,68,68,0.08); }
+  .cell-t { background: rgba(245,158,11,0.07); }
+  .winloss {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;
+  }
+  .winloss .box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .winloss h4 { font-size: 0.9rem; margin-bottom: 8px; }
+  .winloss .win h4 { color: var(--you-win); }
+  .winloss .lose h4 { color: var(--they-win); }
+  .winloss ul { list-style: none; }
+  .winloss li { font-size: 0.84rem; color: var(--text-secondary); padding: 4px 0 4px 18px; position: relative; }
+  .winloss li::before { content: "›"; position: absolute; left: 2px; color: var(--text-muted); }
+  .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .card h3 { margin-top: 0; }
+  .kvl { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 10px 0 4px; }
+  .kvl .kv { background: var(--bg-elevated); border-radius: 8px; padding: 10px 12px; }
+  .kvl .kv .k { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+  .kvl .kv .v { font-size: 0.88rem; margin-top: 3px; color: var(--text-primary); }
+  details {
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 8px; margin: 8px 0; padding: 0;
+  }
+  details summary {
+    cursor: pointer; padding: 12px 16px; font-weight: 600; font-size: 0.9rem;
+    color: var(--text-primary); list-style: none; position: relative;
+  }
+  details summary::after { content: "+"; position: absolute; right: 16px; color: var(--text-muted); }
+  details[open] summary::after { content: "–"; }
+  details .inner { padding: 0 16px 14px; font-size: 0.87rem; color: var(--text-secondary); }
+  details .inner p { margin-bottom: 8px; }
+  .tag { display: inline-block; background: rgba(59,130,246,0.12); color: #93c5fd; border-radius: 6px; padding: 1px 8px; font-size: 0.72rem; margin: 2px 4px 2px 0; }
+  .src { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
+  footer { border-top: 1px solid var(--border); padding: 24px 0 50px; color: var(--text-muted); font-size: 0.8rem; }
+  .note { border-left: 3px solid var(--tie); background: rgba(245,158,11,0.06); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 0.85rem; color: var(--text-secondary); margin: 12px 0; }
+  .disclaimer { border-left: 3px solid var(--they-win); background: rgba(239,68,68,0.05); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 0.82rem; color: var(--text-secondary); margin: 12px 0; }
+  @media (max-width: 700px) {
+    thead th { position: static; }
+    nav.tabs { position: static; }
+    header h1 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>OrcaRouter Competitive Battlecard</h1>
+    <div class="sub">One gateway. Every model. Zero markup. — vs OpenRouter, Martian, NotDiamond, LiteLLM</div>
+    <div class="meta">Generated 2026-08-19 · Sources: live web research (sites, docs, pricing pages, third-party fee analysis) + internal wiki (deck, PR, status page) · Refresh: monthly, before major deals, after competitor announcements</div>
+    <div class="meta" style="margin-top:6px">
+      <span class="badge you">YOU WIN</span><span class="badge them">THEY WIN</span><span class="badge tie">TIE / CONTEXT</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="tabs">
+    <button class="tab active" data-tab="matrix">Comparison Matrix</button>
+    <button class="tab" data-tab="orcarouter">OrcaRouter</button>
+    <button class="tab" data-tab="openrouter">OpenRouter</button>
+    <button class="tab" data-tab="martian">Martian</button>
+    <button class="tab" data-tab="notdiamond">NotDiamond</button>
+    <button class="tab" data-tab="litellm">LiteLLM</button>
+  </nav>
+
+  <!-- ======================= MATRIX ======================= -->
+  <section id="matrix" class="tab-content active">
+    <h2>Head-to-Head Comparison</h2>
+    <p>Color marks who wins the dimension: <span class="w">green = OrcaRouter</span>, <span class="l">red = competitor</span>, <span class="t">yellow = depends on context</span>.</p>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>OrcaRouter</th>
+          <th>OpenRouter</th>
+          <th>Martian</th>
+          <th>NotDiamond</th>
+          <th>LiteLLM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dim">Routing intelligence</td>
+          <td class="cell-w"><span class="w">Learned, online</span> — hybrid offline/online; 75.5% RouterArena, 99% w/ escalation</td>
+          <td class="cell-l"><span class="l">None/limited</span> — aggregator; per-model choice, no learned routing</td>
+          <td class="cell-t"><span class="t">Predictive learned</span> — real-time prompt analysis (claimed)</td>
+          <td class="cell-t"><span class="t">RL-learned</span> — 60.8% RouterArena; tuned for coding agents</td>
+          <td class="cell-l"><span class="l">Static rules</span> — config-based (YAML) fallbacks/load balance</td>
+        </tr>
+        <tr>
+          <td class="dim">Token margin</td>
+          <td class="cell-w"><span class="w">0%</span> — provider list price, glass-box receipts; cached reads at provider cache rate</td>
+          <td class="cell-l"><span class="l">5.5% platform fee</span> on credit top-ups ($0.80 min) + 5% BYOK fee &gt;1M req/mo (third-party itemized analysis, May 2026)</td>
+          <td class="cell-l"><span class="l">Passthrough + fee</span> (per LLM Reference)</td>
+          <td class="cell-l"><span class="l">$0.05 / M tokens</span> routed — small but per-token fee; plus enterprise</td>
+          <td class="cell-w"><span class="w">$0 license</span> OSS; Enterprise sized to request capacity, never per token</td>
+        </tr>
+        <tr>
+          <td class="dim">BYOK</td>
+          <td class="cell-w"><span class="w">Yes, 0% BYOK fees</span> — negotiated rates/commitments/data terms unchanged</td>
+          <td class="cell-l"><span class="l">Yes, 5% fee</span> above 1M req/mo (per fee analysis)</td>
+          <td class="cell-t"><span class="t">Not indicated</span></td>
+          <td class="cell-t"><span class="t">Not indicated</span></td>
+          <td class="cell-w"><span class="w">Yes, natively</span> — it is the proxy; you bring your own provider keys</td>
+        </tr>
+        <tr>
+          <td class="dim">Governance &amp; compliance</td>
+          <td class="cell-w"><span class="w">Built in</span> — SOC 2, GDPR, HIPAA, ISO 27001; 32 compliance packs w/ exportable evidence; RBAC, budgets, audit trail; Agent Firewall, PII shield</td>
+          <td class="cell-l"><span class="l">Limited</span> — API keys, enterprise SSO; no attested compliance packs listed</td>
+          <td class="cell-l"><span class="l">Limited info</span> — SaaS only, no attestations surfaced</td>
+          <td class="cell-l"><span class="l">Limited info</span> — SaaS only</td>
+          <td class="cell-t"><span class="t">You operate it</span> — Enterprise add-on: SSO/SCIM, audit logs, secret mgmt; air-gapped capable; no attestation by default</td>
+        </tr>
+        <tr>
+          <td class="dim">Deployment</td>
+          <td class="cell-w"><span class="w">4 options</span> — managed SaaS, private cloud, self-host Docker, open-source Lite</td>
+          <td class="cell-l"><span class="l">Hosted only</span></td>
+          <td class="cell-l"><span class="l">Hosted only</span> — no self-host flag</td>
+          <td class="cell-l"><span class="l">Hosted only</span></td>
+          <td class="cell-w"><span class="w">Self-host first</span> — Docker/Helm/K8s, air-gapped; hosted option exists</td>
+        </tr>
+        <tr>
+          <td class="dim">Open source</td>
+          <td class="cell-w"><span class="w">Yes — OrcaRouter-Lite</span>, same API surface (lock-in escape hatch)</td>
+          <td class="cell-l"><span class="l">No</span></td>
+          <td class="cell-l"><span class="l">No</span></td>
+          <td class="cell-l"><span class="l">No</span></td>
+          <td class="cell-w"><span class="w">Yes — MIT</span>, "read every line on GitHub"</td>
+        </tr>
+        <tr>
+          <td class="dim">Reliability</td>
+          <td class="cell-w"><span class="w">&lt;50ms mid-stream failover</span>; 100% observed uptime May–Aug 2026; 99.99% SLA (Enterprise)</td>
+          <td class="cell-t"><span class="t">Mature</span> — long track record, community-scale; no comparable SLA detail surfaced</td>
+          <td class="cell-t"><span class="t">Unverified</span></td>
+          <td class="cell-t"><span class="t">Unverified</span></td>
+          <td class="cell-t"><span class="t">Depends on you</span> — your ops, your uptime; Enterprise offers SLAs</td>
+        </tr>
+        <tr>
+          <td class="dim">Cache warmth</td>
+          <td class="cell-w"><span class="w">Session-pinned routing</span> — keeps prompt-cache discounts (provider cache rate)</td>
+          <td class="cell-t"><span class="t">Pass-through</span> — supports provider caching but no session-pinning guarantee</td>
+          <td class="cell-t"><span class="t">Unverified</span></td>
+          <td class="cell-t"><span class="t">Cache-aware</span> — routes on KV-cache state (their angle)</td>
+          <td class="cell-t"><span class="t">Config-level</span> — supports provider caching via config</td>
+        </tr>
+        <tr>
+          <td class="dim">Pricing model</td>
+          <td class="cell-w"><span class="w">Free tier + Team $49/mo + SLG committed minimum</span> — commit is a floor on spend, not a fee; "the only thing we sell you is a smaller bill"</td>
+          <td class="cell-l"><span class="l">Pay-as-you-go credits</span> + Enterprise; platform fees hidden in top-up</td>
+          <td class="cell-l"><span class="l">Free 2,500 req</span> + pay-as-you-go + fee</td>
+          <td class="cell-l"><span class="l">$0.05/M routed</span> + Enterprise; "book a demo" motion</td>
+          <td class="cell-l"><span class="l">Free OSS</span>; Enterprise annual, sized to request capacity</td>
+        </tr>
+        <tr>
+          <td class="dim">RouterArena accuracy</td>
+          <td class="cell-w"><span class="w">75.5%</span> (beats GPT-5 74.0); 99% with escalation</td>
+          <td class="cell-l"><span class="l">n/a</span> — not a learned router</td>
+          <td class="cell-l"><span class="l">61.6%</span></td>
+          <td class="cell-l"><span class="l">60.8%</span></td>
+          <td class="cell-l"><span class="l">n/a</span> — static rules</td>
+        </tr>
+        <tr>
+          <td class="dim">Traction signal</td>
+          <td class="cell-w"><span class="w">$10M annualized run-rate ~10 weeks post-launch (Aug 2026, PR)</span>; 1M peak simultaneous decisions</td>
+          <td class="cell-t"><span class="t">Category leader</span> — reportedly being acquired &gt;$7B (~40 mo after launch; unverified)</td>
+          <td class="cell-t"><span class="t">Reportedly nearing $1.3B valuation</span> (2026)</td>
+          <td class="cell-l"><span class="l">Early-stage</span> — demo-led</td>
+          <td class="cell-t"><span class="t">Widely adopted OSS</span> — now Berrie AI Inc.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="note"><strong>Honesty note (keeps you credible in the room):</strong> routing accuracy, savings %, run-rate and uptime figures are vendor-reported (deck + PR). OpenRouter's fee stack is from a third-party itemized analysis (ofox.ai, May 2026) corroborated by multiple pricing breakdowns. The $7B OpenRouter figure is single-source via your own PR — treat as category signal, not a claim to repeat.</div>
+
+    <h2>Quick Win / Loss Guide</h2>
+    <div class="winloss">
+      <div class="box win"><h4>vs OpenRouter — you win when</h4><ul>
+        <li>Prospect cares about total cost of ownership, not just per-token list price (5.5% + 5% fees compound)</li>
+        <li>FinOps/CFO involved in the decision</li>
+        <li>They want learned routing, not a model picker</li>
+        <li>Governance/compliance is on the checklist (SOC 2, HIPAA, 32 packs)</li>
+        <li>They run &gt;1M BYOK req/mo (5% fee bracket)</li>
+      </ul></div>
+      <div class="box lose"><h4>vs OpenRouter — you lose when</h4><ul>
+        <li>Decision is a solo developer who just wants credits fast</li>
+        <li>Community/marketplace size is the deciding factor</li>
+        <li>They already have OpenRouter credits sunk</li>
+        <li>Procurement mandates the incumbent</li>
+      </ul></div>
+      <div class="box win"><h4>vs Martian / NotDiamond — you win when</h4><ul>
+        <li>Benchmark evidence matters (75.5 vs 61.6 / 60.8)</li>
+        <li>They need general workloads, not just coding agents (NotDiamond)</li>
+        <li>They want zero margin and zero BYOK fees</li>
+        <li>They want governance and compliance built in, not bolted on</li>
+      </ul></div>
+      <div class="box lose"><h4>vs Martian / NotDiamond — you lose when</h4><ul>
+        <li>They're already embedded in a specific agent harness NotDiamond optimizes for</li>
+        <li>Their workload is narrow and the competitor's router is purpose-tuned</li>
+        <li>Price of entry matters: $0.05/M and 2,500 free requests are cheap to trial</li>
+      </ul></div>
+      <div class="box win"><h4>vs LiteLLM — you win when</h4><ul>
+        <li>They don't want to operate a gateway (no headcount for re-benchmarking)</li>
+        <li>They want learned routing, not YAML rules</li>
+        <li>They want attested compliance without running it themselves</li>
+        <li>Their model catalogue changes faster than their ops team can track</li>
+      </ul></div>
+      <div class="box lose"><h4>vs LiteLLM — you lose when</h4><ul>
+        <li>Air-gapped / fully on-prem is a hard requirement they must own</li>
+        <li>They have a strong platform team that WANTS to run it (it's free)</li>
+        <li>Data residency demands strict self-hosting only</li>
+      </ul></div>
+    </div>
+
+    <h2>Objections OrcaRouter will hear (and answers)</h2>
+    <details>
+      <summary>"We'll just run LiteLLM ourselves, it's free"</summary>
+      <div class="inner"><p>Free license, not free operation. Someone owns the gateway: upgrades, incidents, and the constant re-benchmarking of a moving model catalogue as prices and models change weekly. LiteLLM routes on static rules you write; when pricing shifts, your rules drift until a human notices. Our point: try the replay. We route your logged traffic offline for a week and show you the delta. If the numbers don't convince you, you keep the measurement and we part ways. No ops burden assumed.</p></div>
+    </details>
+    <details>
+      <summary>"OpenRouter has more models and no per-token markup either"</summary>
+      <div class="inner"><p>True that the catalog is big and per-token prices are passthrough. The margin lives elsewhere: a 5.5% platform fee on credit purchases (with a $0.80 minimum, so small top-ups pay 10-20%), and a 5% BYOK fee once you exceed 1M requests/month. At $10k/mo of spend that's $550+/mo in fees you don't see on a token chart. We charge $0 on tokens and $0 on BYOK. And we route for you: 75.5% RouterArena accuracy beats GPT-5, 99% with escalation. They give you a catalogue; we give you a decision engine.</p></div>
+    </details>
+    <details>
+      <summary>"We don't trust vendor benchmark claims"</summary>
+      <div class="inner"><p>Correct, you shouldn't. That's why the pilot starts with an offline replay of your own traffic, measured against your own quality bar, on your logs. Week 1: replay. Weeks 2-3: shadow. Week 4: canary. The delta is your number, not ours. Miss the agreed threshold and you walk, keeping the measurement.</p></div>
+    </details>
+    <details>
+      <summary>"We're locked into our OpenAI/Anthropic agreements"</summary>
+      <div class="inner"><p>Fine. Bring your own keys. We route over your existing provider contracts, your negotiated rates and data terms stay exactly as they are, and we charge 0% BYOK fees. What you gain is routing that sends each prompt to the cheapest model that clears your bar, plus session-pinned caching so you keep provider cache discounts. Your commitments still draw down; your bill gets smaller.</p></div>
+    </details>
+    <details>
+      <summary>"Security and compliance are dealbreakers"</summary>
+      <div class="inner"><p>Then we're the easy conversation. SOC 2, GDPR, HIPAA and ISO 27001 attested (reports under NDA), 32 compliance framework packs with exportable evidence, declared-region data residency with cross-region denial, RBAC, spend caps, full audit trail, PII shield enforced before you're billed, and an agent firewall that grades tool/MCP calls before they run. Self-host or private deployment if your policy requires it.</p></div>
+    </details>
+    <details>
+      <summary>"Switching costs / lock-in"</summary>
+      <div class="inner"><p>Swap base_url to api.orcarouter.ai/v1, live in 60 seconds, no credit card. It's an OpenAI-compatible surface, so your SDKs don't change. And OrcaRouter-Lite is open source with the same API surface: if you ever want to run it yourself, the escape hatch is sitting on GitHub. Lock-in is structurally moot.</p></div>
+    </details>
+  </section>
+
+  <!-- ======================= ORCAROUTER ======================= -->
+  <section id="orcarouter" class="tab-content">
+    <h2>Your Company Card</h2>
+    <div class="kvl">
+      <div class="kv"><div class="k">Founded / Launched</div><div class="v">X account Apr 2026 · launch ~Jun 2026 · SF + Tokyo datelines</div></div>
+      <div class="kv"><div class="k">Traction</div><div class="v">On track for $10M annualized run-rate ~10 weeks after launch (Aug 2026, PR)</div></div>
+      <div class="kv"><div class="k">Positioning</div><div class="v">"One AI gateway: adaptive LLM routing &amp; governance. Zero markup, ever."</div></div>
+      <div class="kv"><div class="k">Target market</div><div class="v">AI product teams, platform/infra, security &amp; compliance, FinOps, agent builders, enterprise</div></div>
+      <div class="kv"><div class="k">Pricing model</div><div class="v">Free tier · Team $49/mo · Enterprise/SLG = minimum committed spend (a floor, not a fee) · 0% token markup · 0% BYOK fees</div></div>
+      <div class="kv"><div class="k">Models</div><div class="v">200+ (OpenAI, Anthropic, Gemini, Llama, Mistral, DeepSeek, Grok, Qwen, Moonshot, Cohere, Bedrock, Azure)</div></div>
+    </div>
+    <h3>Key differentiators (with proof)</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li><strong style="color:var(--text-primary)">Learned, online routing</strong> — 75.5% RouterArena accuracy (beats GPT-5's 74.0), 99% with frontier escalation, &lt;1% quality degradation. Hybrid offline/online learning; microsecond decisions on CPU, no GPU in path.</li>
+      <li><strong style="color:var(--text-primary)">0% token markup, 0% BYOK fees</strong> — provider list price with glass-box receipts; cached reads at provider cache rate. Revenue model (subscriptions + committed minimums) is incentive-aligned: "the only thing we have to sell you is a smaller bill."</li>
+      <li><strong style="color:var(--text-primary)">Built-in governance</strong> — SOC 2, GDPR, HIPAA, ISO 27001; 32 compliance packs with exportable evidence; RBAC, spend caps, audit trail; Agent Firewall and PII shield enforced before billing; declared-region residency with cross-region denial.</li>
+      <li><strong style="color:var(--text-primary)">Reliability</strong> — &lt;50ms mid-stream failover; 100% observed uptime May-Aug 2026 (status page, zero incidents); 99.99% SLA on Enterprise; 1M peak simultaneous routing decisions.</li>
+      <li><strong style="color:var(--text-primary)">Cache warmth nobody counts</strong> — session-pinned routing preserves prompt-cache discounts; the saving other gateways destroy by load-balancing mid-conversation.</li>
+      <li><strong style="color:var(--text-primary)">No-lock-in escape hatch</strong> — OrcaRouter-Lite, open source, same API surface; self-host or private deployment available.</li>
+    </ul>
+    <h3>Recent releases / news (last 90 days)</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li><strong style="color:var(--text-primary)">2026-08-19</strong> — Pricing updated for SLG: committed minimums as floor-on-spend (internal revision)</li>
+      <li><strong style="color:var(--text-primary)">2026-08-18</strong> — PR: $10M annualized run-rate on track; OpenRouter $7B acquisition cited as category context</li>
+      <li><strong style="color:var(--text-primary)">2026-08-15</strong> — Qwen3.8-27B Uncensored FP8 open-weights release (7.3M X views, 6.9K likes) — red-team/security research credibility</li>
+      <li><strong style="color:var(--text-primary)">2026-08-17</strong> — Enterprise Briefing deck (12 pages) produced</li>
+      <li><strong style="color:var(--text-primary)">Research</strong> — 5 lines: routing, inference acceleration, red team, blue team, model security; open weights on Hugging Face (claimed top 20 globally)</li>
+    </ul>
+    <h3>Proof points / customer quotes</h3>
+    <p>No public named customers yet; the sales motion accounts for it: the replay pilot generates the proof per prospect. Use the run-rate, benchmark, uptime and attestation numbers as the standing proof set until named logos exist.</p>
+    <div class="note">Open weakness: savings/accuracy figures are vendor-reported until the prospect's own replay confirms them. That's by design: the pilot IS the proof. Also: 2 of 16 security controls partial (self-hosted Helm/K8s, scoped data-plane tokens), 2 roadmap.</div>
+  </section>
+
+  <!-- ======================= OPENROUTER ======================= -->
+  <section id="openrouter" class="tab-content">
+    <h2>OpenRouter</h2>
+    <div class="kvl">
+      <div class="kv"><div class="k">Type</div><div class="v">Model aggregator / gateway — category pioneer</div></div>
+      <div class="kv"><div class="k">Positioning</div><div class="v">"The unified interface for every model. Better prices, better uptime, no subscriptions."</div></div>
+      <div class="kv"><div class="k">Pricing model</div><div class="v">Pay-as-you-go credits + Enterprise. Per-token catalog = provider list price; fees live elsewhere</div></div>
+      <div class="kv"><div class="k">Deployment</div><div class="v">Hosted only</div></div>
+      <div class="kv"><div class="k">Momentum</div><div class="v">Reportedly being acquired for &gt;$7B ~40 months after launch (per OrcaRouter PR; unverified)</div></div>
+    </div>
+    <h3>The real fee stack (third-party itemized analysis, May 2026)</h3>
+    <div class="disclaimer">Their marketing claim "no markup on provider pricing" is technically true per-token. The money is extracted elsewhere, and this is the analysis that shows it.</div>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li><strong style="color:var(--text-primary)">5.5% platform fee</strong> on credit-card top-ups, with a $0.80 minimum — so small top-ups effectively pay 10-20%.</li>
+      <li><strong style="color:var(--text-primary)">5% BYOK fee</strong> on every request above 1M/month.</li>
+      <li>Currency conversion friction on Stripe (EUR→USD) before the platform even sees the charge.</li>
+      <li>Net effect at $10k/mo: roughly $550+/mo invisible on any per-token chart. Your 0%-markup story lands right here.</li>
+    </ul>
+    <h3>Where they win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Mindshare and community: the default "one key for everything" for developers</li>
+      <li>Model catalogue breadth and day-0 model availability</li>
+      <li>Simple credit UX; no subscription commitment</li>
+      <li>Mature platform, enterprise tier, brand trust</li>
+    </ul>
+    <h3>Where you win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Total cost of ownership: 0% vs 5.5% + 5% fees</li>
+      <li>Learned routing (75.5 / 99%) vs a model picker</li>
+      <li>Governance: SOC 2, HIPAA, 32 packs, agent firewall, residency vs limited</li>
+      <li>BYOK economics: $0 fees vs 5% over 1M req/mo</li>
+      <li>Cache warmth: session-pinned vs pass-through</li>
+    </ul>
+    <h3>Talk tracks</h3>
+    <details>
+      <summary>If they come up early in the conversation</summary>
+      <div class="inner"><p>"OpenRouter built the category and they did it well. They're an aggregator: per-token prices are passthrough, which is honest, but the economics sit in a 5.5% platform fee on credits and a 5% BYOK fee above a million requests a month. We removed the margin layer entirely and added learned routing on top. Same catalogue breadth, decision engine included, zero markup, zero BYOK fees."</p></div>
+    </details>
+    <details>
+      <summary>If the prospect is already using them (displacement)</summary>
+      <div class="inner"><p>"You're paying for routing you're not getting. With OpenRouter you choose the model per call or set a static fallback; the bill still carries the platform fee. Here's the honest part: don't take my word for it. Export your traffic, we replay it offline for a week, and you see what learned routing does to your spend with your own logs. Then decide."</p></div>
+    </details>
+    <details>
+      <summary>If they get added late to the evaluation</summary>
+      <div class="inner"><p>Don't fight the brand. Reframe the evaluation dimension from "which API has the most models" to "what does the total bill look like at scale and who keeps your routing policy current." Offer the replay as the tiebreaker both sides can agree on.</p></div>
+    </details>
+    <h3>Landmine questions (ask, don't accuse)</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>"What platform fee do you pay on credit purchases, and what's the minimum charge on small top-ups?"</li>
+      <li>"If you attach your own keys, what happens to your bill above 1M requests a month?"</li>
+      <li>"Who in your stack decides which model handles each prompt, and how is that decision kept current as prices change weekly?"</li>
+      <li>"What does the full cost look like including the fee layer, not just per-token price?"</li>
+    </ul>
+    <p class="src">Sources: openrouter.ai (pricing, FAQ), ofox.ai fee breakdown (May 2026), multiple 2026 pricing analyses, internal PR (acquisition claim, unverified).</p>
+  </section>
+
+  <!-- ======================= MARTIAN ======================= -->
+  <section id="martian" class="tab-content">
+    <h2>Martian</h2>
+    <div class="kvl">
+      <div class="kv"><div class="k">Type</div><div class="v">Learned model router (predictive) — hosted SaaS</div></div>
+      <div class="kv"><div class="k">Positioning</div><div class="v">Real-time per-prompt model selection; claims 20-97% cost reduction</div></div>
+      <div class="kv"><div class="k">Pricing model</div><div class="v">Passthrough + fee; free developer tier (2,500 requests)</div></div>
+      <div class="kv"><div class="k">API</div><div class="v">api.withmartian.com — OpenAI &amp; Anthropic compatible; 200+ models claimed</div></div>
+      <div class="kv"><div class="k">Momentum</div><div class="v">SF startup reportedly nearing $1.3B valuation (2026)</div></div>
+      <div class="kv"><div class="k">RouterArena</div><div class="v">61.6% routing accuracy (deck benchmark)</div></div>
+    </div>
+    <h3>Where they win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Purpose-built learned router with real-time prompt analysis; biggest-name routing competitor</li>
+      <li>Aggressive savings claims (20-97%) and startup momentum / valuation headlines</li>
+      <li>Low-friction free tier (2,500 requests)</li>
+    </ul>
+    <h3>Where you win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Benchmark: 75.5 vs 61.6 on RouterArena; 99% with escalation</li>
+      <li>Fee structure: 0% markup + 0% BYOK vs passthrough + fee</li>
+      <li>Governance/compliance surface is thin on their side; yours is attested and exportable</li>
+      <li>Deployment flexibility: self-host / private / open-source Lite vs hosted only</li>
+      <li>Evidence motion: offline replay on prospect's own logs vs their internal benchmarks</li>
+    </ul>
+    <h3>Talk tracks</h3>
+    <details>
+      <summary>If they come up early</summary>
+      <div class="inner"><p>"Martian is the closest thing to us in the market, credit where it's due. The difference you can actually verify: RouterArena puts their routing accuracy at 61.6 against our 75.5, and their model is passthrough plus a fee. Ours is zero markup with the benchmark gap and a replay pilot so you can check the savings on your own traffic."</p></div>
+    </details>
+    <details>
+      <summary>If the prospect is evaluating both (displacement / eval)</summary>
+      <div class="inner"><p>"Run the same offline replay against both. Same logs, same quality bar, same week. You'll have a side-by-side on your own data. That's the whole point of the pilot: it's your number, not our marketing."</p></div>
+    </details>
+    <h3>Landmine questions</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>"What exactly is the fee on top of provider passthrough, and where is it disclosed?"</li>
+      <li>"Can you replay my traffic offline before I commit anything?"</li>
+      <li>"What's your routing accuracy outside the leaderboard conditions, and what quality guarantee do you put in writing?"</li>
+      <li>"Where do my prompts go, and what's your data-retention policy?" (retention unverified per LLM Reference)</li>
+    </ul>
+    <p class="src">Sources: llmreference.com/router/martian (checked 2026-06-08), docs.withmartian.com, deck benchmark. Low-information on pricing details: verify before a deal that hinges on it.</p>
+  </section>
+
+  <!-- ======================= NOTDIAMOND ======================= -->
+  <section id="notdiamond" class="tab-content">
+    <h2>NotDiamond</h2>
+    <div class="kvl">
+      <div class="kv"><div class="k">Type</div><div class="v">RL-learned model router, positioned for coding agents</div></div>
+      <div class="kv"><div class="k">Positioning</div><div class="v">"The world's most powerful intelligent model router for coding agents. Frontier quality at a fraction of the price."</div></div>
+      <div class="kv"><div class="k">Pricing model</div><div class="v">Pay-as-you-go: $0.05 per million tokens routed + enterprise ("book a demo")</div></div>
+      <div class="kv"><div class="k">Claims</div><div class="v">5%+ accuracy gains, 20-40% cost savings, 2x faster dev cycles (their numbers)</div></div>
+      <div class="kv"><div class="k">RouterArena</div><div class="v">60.8% routing accuracy (deck benchmark — lowest of the four)</div></div>
+    </div>
+    <h3>Where they win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Purpose-tuned for coding agents (multi-harness, sub-agent architecture, compaction events)</li>
+      <li>Cache-aware routing: reasons over KV-cache state, payload semantics, session outcomes</li>
+      <li>Cheap trial: $0.05/M tokens routed is nearly free to test</li>
+      <li>RL feedback loops that learn from session outcomes in real time</li>
+    </ul>
+    <h3>Where you win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Benchmark: 75.5 vs 60.8; 99% with escalation — a 15-point gap</li>
+      <li>Breadth: general workloads, governance, compliance, residency vs a coding-agent specialist</li>
+      <li>Pricing philosophy: subscription/commit aligned to your savings vs a per-token fee on routed traffic</li>
+      <li>BYOK economics and attested compliance surface</li>
+    </ul>
+    <h3>Talk tracks</h3>
+    <details>
+      <summary>If they come up early</summary>
+      <div class="inner"><p>"NotDiamond does one thing well: routing inside coding-agent harnesses, with cache-aware decisions. If your whole spend is Claude Code, that's a fair conversation. The moment your workload spans agents, products, and batch jobs, you want a router that's benchmarked on general traffic, which is where we lead by 15 points on RouterArena."</p></div>
+    </details>
+    <details>
+      <summary>If the prospect is running coding agents at scale</summary>
+      <div class="inner"><p>Don't dismiss their angle; it's real. Shift to: who covers the rest of the stack, and what does the fee layer cost at volume. Offer the replay across their agent traffic too: cache warmth is where agent-heavy workloads bleed money, and session-pinned routing protects it.</p></div>
+    </details>
+    <h3>Landmine questions</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>"What's your routing accuracy on general workloads, not just coding agents?" (60.8 on RouterArena)</li>
+      <li>"The $0.05/M fee looks small. What does enterprise pricing actually look like, and what's the minimum?"</li>
+      <li>"When routing makes the wrong call mid-session, what's your recovery story?"</li>
+    </ul>
+    <p class="src">Sources: notdiamond.ai, notdiamond.ai/pricing (2026-08-19), deck benchmark.</p>
+  </section>
+
+  <!-- ======================= LITELLM ======================= -->
+  <section id="litellm" class="tab-content">
+    <h2>LiteLLM</h2>
+    <div class="kvl">
+      <div class="kv"><div class="k">Type</div><div class="v">Open-source AI gateway / LLM proxy (MIT) — now Berrie AI Incorporated</div></div>
+      <div class="kv"><div class="k">Positioning</div><div class="v">"The AI gateway for platform teams. Put your full AI stack behind one key. Self-host in minutes."</div></div>
+      <div class="kv"><div class="k">Pricing model</div><div class="v">Open Source $0 (free forever, self-hosted) · Enterprise annual, sized to request capacity — never per token</div></div>
+      <div class="kv"><div class="k">Deployment</div><div class="v">Self-host first (Docker, Helm, K8s, air-gapped); enterprise control plane</div></div>
+      <div class="kv"><div class="k">Capabilities</div><div class="v">100-140+ providers, virtual keys, budgets, teams, rate limits, fallbacks, logging, guardrails, Prometheus, MCP hub</div></div>
+    </div>
+    <h3>Where they win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Zero license cost, huge OSS adoption, "read every line on GitHub" trust</li>
+      <li>Full control: your keys, your infra, your audit trail; air-gapped capable</li>
+      <li>Deep platform-team features: SSO/SCIM, audit logs, secret managers, key rotation, multi-region control plane</li>
+      <li>Enterprise priced to scale/capacity, never per token</li>
+    </ul>
+    <h3>Where you win</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>Learned routing: they give you static YAML rules; we give you a router that learns your traffic (75.5/99% RouterArena)</li>
+      <li>Zero ops: no gateway to run, patch, or re-benchmark as the model catalogue moves weekly</li>
+      <li>Attested compliance out of the box: SOC 2, GDPR, HIPAA, ISO 27001, 32 packs vs "your infra, your attestation"</li>
+      <li>De-risked entry: replay pilot vs "build it and find out"</li>
+    </ul>
+    <h3>Talk tracks</h3>
+    <details>
+      <summary>If they come up early</summary>
+      <div class="inner"><p>"LiteLLM is a great proxy and the license is genuinely free. What it doesn't do is route. You write the rules: which model for which call, static fallbacks, hand-tuned load balancing. Someone on your team owns that policy forever, because the model catalogue and pricing change every week. We automate that decision with learned routing and charge you zero markup. If you want the escape hatch, our Lite is open source too."</p></div>
+    </details>
+    <details>
+      <summary>If the prospect already runs LiteLLM (displacement)</summary>
+      <div class="inner"><p>"You've already paid the integration cost, so keep the gateway if you love it. The question is what sits on top: your team's hand-maintained routing rules or a learned policy. Run the replay against your current rules and you'll see the delta in dollars. If it's small, we're the wrong conversation and you've lost nothing but a week."</p></div>
+    </details>
+    <details>
+      <summary>If the prospect is a platform team that WANTS to operate it</summary>
+      <div class="inner"><p>That's a values conversation, not a features one. Respect the control instinct; price the human time. Re-benchmarking a moving catalogue is a treadmill, and every model release restarts it. Offer the replay as a data point for their own decision.</p></div>
+    </details>
+    <h3>Landmine questions</h3>
+    <ul style="color:var(--text-secondary); font-size:0.9rem; padding-left:20px">
+      <li>"Who re-benchmarks your routing rules when model prices change, and how often?"</li>
+      <li>"What's your current gateway uptime, and who gets paged at 3am?"</li>
+      <li>"What does Enterprise actually cost at your request volume, and what's the minimum commitment?"</li>
+      <li>"Which compliance attestations do you currently hold on the gateway you operate?"</li>
+    </ul>
+    <p class="src">Sources: litellm.ai, litellm.ai/pricing (2026-08-19). Note: LiteLLM is now under Berrie AI Incorporated (2026 footer) — worth tracking what that means for licensing.</p>
+  </section>
+
+  <footer>
+    <strong>How to use this card</strong> — before a call, open the relevant competitor tab and review talk tracks. During a call, use landmine questions to expose fee layers and ops burden without badmouthing. After win/loss, feed new intel back so the card stays honest.<br><br>
+    <strong>Refresh cadence</strong> — monthly refresh; deep refresh before any major deal; immediate update on competitor announcements (OpenRouter pricing changes, Martian valuation news, NotDiamond enterprise pricing, LiteLLM/Berrie AI licensing moves).<br><br>
+    <strong>Sources &amp; honesty</strong> — compiled 2026-08-19 from live web research and internal wiki. Vendor-reported figures (OrcaRouter accuracy/savings/uptime; NotDiamond savings; Martian savings) are marked as claims. OpenRouter fee stack per third-party itemized analysis, May 2026, corroborated by multiple pricing breakdowns. Verify anything you plan to repeat in writing.
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll("nav.tabs button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("nav.tabs button").forEach(function (b) { b.classList.remove("active"); });
+      document.querySelectorAll(".tab-content").forEach(function (s) { s.classList.remove("active"); });
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+</script>
+</body>
+</html>
