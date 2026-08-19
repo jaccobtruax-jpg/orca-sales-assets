@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrcaRouter Enablement: The Enterprise Briefing, Presenter's Guide</title>
+<meta name="description" content="Enablement session guide for the OrcaRouter Enterprise Briefing: simplified slide-by-slide talk tracks, numbers to quote, claim hygiene rules, and a Q&A playbook.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,450;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090a;
+  --surface-1:#0d0e10;
+  --surface-2:#121316;
+  --surface-3:#17181c;
+  --surface-4:#1d1e23;
+  --border:rgba(255,255,255,0.08);
+  --border-strong:rgba(255,255,255,0.14);
+  --text:#e8e9eb;
+  --text-2:#9ba1ab;
+  --text-3:#6b7078;
+  --accent:#5e6ad2;
+  --accent-2:#8b93e8;
+  --green:#10b981;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-weight:500;
+  font-size:15.5px;
+  line-height:1.6;
+  font-feature-settings:"cv01" 1,"ss03" 1;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+a{color:var(--accent-2);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* nav */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(8,9,10,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+nav .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;letter-spacing:0.02em;color:var(--text);white-space:nowrap}
+.brand .dot{width:9px;height:9px;border-radius:3px;background:var(--accent);flex:none}
+.brand small{color:var(--text-3);font-weight:500;margin-left:2px}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  color:var(--text-2);font-size:13px;font-weight:500;
+  padding:6px 10px;border-radius:7px;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--text);background:var(--surface-2);text-decoration:none}
+.nav-links a.on{color:var(--text);background:var(--surface-3)}
+
+/* hero */
+header.hero{padding:72px 0 40px;border-bottom:1px solid var(--border)}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--accent-2);border:1px solid var(--border-strong);
+  padding:5px 12px;border-radius:999px;margin-bottom:20px;
+}
+h1{font-size:38px;line-height:1.15;font-weight:600;letter-spacing:-0.02em;margin-bottom:16px}
+h1 .dim{color:var(--text-3);font-weight:500}
+.lede{font-size:17px;color:var(--text-2);max-width:760px;margin-bottom:28px}
+.meta{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  font-family:var(--mono);font-size:12.5px;color:var(--text-2);
+  border:1px solid var(--border);background:var(--surface-1);
+  padding:6px 12px;border-radius:7px;
+}
+.chip b{color:var(--text);font-weight:600}
+
+/* sections */
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+section .tag{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:10px}
+h2{font-size:26px;font-weight:600;letter-spacing:-0.015em;margin-bottom:8px}
+.sub{color:var(--text-2);max-width:720px;margin-bottom:28px}
+
+/* overview cards */
+.grid{display:grid;gap:14px}
+.grid.c3{grid-template-columns:repeat(3,1fr)}
+.grid.c2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:860px){.grid.c3,.grid.c2{grid-template-columns:1fr}}
+.card{
+  background:var(--surface-1);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+}
+.card h3{font-size:15px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card h3 .num{
+  font-family:var(--mono);font-size:11.5px;color:var(--accent-2);
+  border:1px solid var(--border-strong);background:var(--surface-2);
+  padding:2px 7px;border-radius:5px;font-weight:500;
+}
+.card p{color:var(--text-2);font-size:14px}
+.card ul{list-style:none;margin-top:10px}
+.card li{color:var(--text-2);font-size:13.5px;padding:5px 0 5px 18px;position:relative;border-top:1px solid var(--border)}
+.card li:first-child{border-top:none}
+.card li::before{content:"";position:absolute;left:2px;top:12px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.card li b{color:var(--text);font-weight:600}
+
+/* timeline */
+.timeline{display:grid;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tline{display:grid;grid-template-columns:110px 1fr;background:var(--surface-1)}
+.tline:nth-child(even){background:var(--surface-2)}
+.tline .when{
+  font-family:var(--mono);font-size:12.5px;color:var(--accent-2);
+  padding:14px 16px;border-right:1px solid var(--border);
+  display:flex;align-items:center;font-weight:500;
+}
+.tline .what{padding:14px 16px}
+.tline .what b{font-size:14.5px;font-weight:600;display:block;margin-bottom:2px}
+.tline .what span{font-size:13.5px;color:var(--text-2)}
+@media(max-width:640px){.tline{grid-template-columns:1fr}.tline .when{border-right:none;border-bottom:1px solid var(--border);padding-bottom:6px}}
+
+/* slide map */
+.slidemap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:860px){.slidemap{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.slidemap{grid-template-columns:1fr}}
+.smap{
+  display:block;border:1px solid var(--border);border-radius:9px;
+  background:var(--surface-1);padding:12px 14px;color:var(--text-2);
+  transition:border-color .15s ease,background .15s ease;
+}
+.smap:hover{text-decoration:none;border-color:var(--border-strong);background:var(--surface-2)}
+.smap .sno{font-family:var(--mono);font-size:11px;color:var(--accent-2);display:block;margin-bottom:4px;letter-spacing:0.06em}
+.smap .st{font-size:13px;font-weight:600;color:var(--text);display:block;line-height:1.35}
+
+/* slide sections */
+.slide{padding:56px 0;border-bottom:1px solid var(--border)}
+.slide-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:6px}
+.slide-no{
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent-2);
+  border:1px solid var(--border-strong);background:var(--surface-2);
+  padding:3px 9px;border-radius:6px;letter-spacing:0.06em;
+}
+.slide-title{font-size:24px;font-weight:600;letter-spacing:-0.015em}
+.persona{
+  font-size:11.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
+  color:var(--text-3);border:1px solid var(--border);padding:3px 9px;border-radius:6px;
+  margin-left:auto;
+}
+.oneshot{color:var(--text-2);font-size:15px;margin-bottom:20px;max-width:760px}
+.oneshot b{color:var(--text);font-weight:600}
+.slide-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;align-items:start}
+@media(max-width:860px){.slide-grid{grid-template-columns:1fr}}
+.panel{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.panel h4{
+  font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.panel h4::before{content:"";width:14px;height:1.5px;background:var(--accent);border-radius:2px}
+.track{
+  font-size:14.5px;color:var(--text-2);font-style:italic;
+  border-left:2px solid var(--accent);padding-left:14px;margin:0;
+}
+.track p{margin-bottom:10px}
+.track p:last-child{margin-bottom:0}
+.track .core{color:var(--text);font-style:normal;font-weight:500;background:var(--surface-3);border:1px solid var(--border);border-radius:7px;padding:10px 12px;margin-top:10px}
+.copybtn{
+  margin-top:12px;font-family:var(--sans);font-size:12px;font-weight:600;
+  color:var(--accent-2);background:var(--surface-2);border:1px solid var(--border-strong);
+  border-radius:6px;padding:5px 10px;cursor:pointer;
+}
+.copybtn:hover{background:var(--surface-3);color:var(--text)}
+.copybtn:active{transform:translateY(1px)}
+.copybtn.ok{color:var(--green);border-color:rgba(16,185,129,0.35)}
+.nums{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.num{
+  font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text);
+  background:var(--surface-2);border:1px solid var(--border-strong);
+  padding:6px 10px;border-radius:7px;
+}
+.num em{color:var(--accent-2);font-style:normal}
+.dont{
+  font-size:13.5px;color:var(--text-2);border:1px solid rgba(239,68,68,0.28);
+  background:rgba(239,68,68,0.06);border-radius:8px;padding:11px 13px;margin-bottom:14px;
+}
+.dont b{color:var(--red);font-weight:600;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;display:block;margin-bottom:4px}
+details{border-top:1px solid var(--border);padding:10px 2px}
+details:first-of-type{border-top:none}
+summary{
+  cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text);
+  list-style:none;display:flex;align-items:center;gap:8px;
+}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:var(--mono);color:var(--accent-2);font-size:13px;width:14px;flex:none}
+details[open] summary::before{content:"\2212"}
+details p{font-size:13.5px;color:var(--text-2);margin:8px 0 0 22px}
+details p b{color:var(--text);font-weight:600}
+
+/* callouts */
+.callout{
+  border:1px solid var(--border-strong);border-radius:var(--radius);
+  padding:18px 20px;margin-top:22px;background:linear-gradient(180deg,var(--surface-2),var(--surface-1));
+}
+.callout.warn{border-color:rgba(245,158,11,0.35);background:rgba(245,158,11,0.05)}
+.callout.ok{border-color:rgba(16,185,129,0.35);background:rgba(16,185,129,0.05)}
+.callout h4{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.callout.warn h4{color:var(--amber)}
+.callout.ok h4{color:var(--green)}
+.callout p{font-size:14px;color:var(--text-2)}
+.callout p b{color:var(--text);font-weight:600}
+.callout .core{font-size:15px;color:var(--text);font-weight:500;margin-top:6px}
+
+/* QA table */
+.qa{display:grid;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.qrow{display:grid;grid-template-columns:1fr 1.6fr;background:var(--surface-1)}
+.qrow:nth-child(even){background:var(--surface-2)}
+.qrow .q{font-size:14px;font-weight:600;padding:14px 16px;border-right:1px solid var(--border);color:var(--text)}
+.qrow .a{font-size:13.5px;color:var(--text-2);padding:14px 16px}
+.qrow .a b{color:var(--text)}
+@media(max-width:720px){.qrow{grid-template-columns:1fr}.qrow .q{border-right:none;border-bottom:1px solid var(--border);padding-bottom:8px}}
+
+/* pilot */
+.pilot-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+@media(max-width:860px){.pilot-steps{grid-template-columns:1fr}}
+.ps{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.ps .pno{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--accent-2);
+  border:1px solid var(--border-strong);background:var(--surface-2);
+  display:inline-block;padding:2px 8px;border-radius:5px;margin-bottom:10px;letter-spacing:0.06em;
+}
+.ps b{font-size:15px;font-weight:600;display:block;margin-bottom:6px}
+.ps p{font-size:13.5px;color:var(--text-2)}
+
+footer{padding:40px 0 60px;color:var(--text-3);font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
+footer .mono{font-family:var(--mono);font-size:12px}
+
+@media print{
+  nav{display:none}
+  body{background:#fff;color:#111;font-size:12px}
+  section,header.hero,.slide{padding:20px 0;page-break-inside:avoid}
+  .card,.panel,.callout,.ps{background:#fff;border-color:#ccc}
+  .track,.dont,details p,.qrow .a,.card p,.card li,.tline .what span,.sub,.lede{color:#333}
+  .num{color:#111;border-color:#999}
+}
+</style>
+</head>
+<body>
+
+<nav aria-label="Section navigation">
+  <div class="wrap">
+    <span class="brand"><span class="dot" aria-hidden="true"></span>OrcaRouter<small>Enablement</small></span>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#arc">The arc</a>
+      <a href="#s1">Slides</a>
+      <a href="#qa">Q&amp;A playbook</a>
+      <a href="#appendices">Appendices</a>
+      <a href="#pilot">The pilot</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="overview">
+  <div class="wrap">
+    <span class="kicker">Internal enablement · Presenter's guide</span>
+    <h1>The Enterprise Briefing, <span class="dim">simplified.</span></h1>
+    <p class="lede">You are not reading the deck to the room. You are telling the story the deck proves. This page gives you the one-line point of every slide, the words to say it, the numbers to quote, and the traps to avoid. Open the deck on one screen, this page on the other.</p>
+    <div class="meta">
+      <span class="chip">Session: <b>45 min</b> (60 with Q&amp;A)</span>
+      <span class="chip">Deck: <b>12 slides</b></span>
+      <span class="chip">Audience: <b>AE · SDR · SE · CSM</b></span>
+      <span class="chip">Source: <b>Enterprise Briefing 2026, confidential</b></span>
+    </div>
+  </div>
+</header>
+
+<section id="arc">
+  <div class="wrap">
+    <div class="tag">Session plan</div>
+    <h2>How the session runs</h2>
+    <p class="sub">Three acts, one through-line: the market is moving, we are the only answer that checks all three boxes, and the pilot is designed so you never take our word for it.</p>
+
+    <div class="timeline">
+      <div class="tline"><div class="when">0–5 min</div><div class="what"><b>Context</b><span>Why this deck exists. The aggregator model just got owned by a payments company. Neutrality is now a structural question, and we are the answer with receipts.</span></div></div>
+      <div class="tline"><div class="when">5–15 min</div><div class="what"><b>Identity and problem (slides 1–02)</b><span>Researchers first. Four numbers. Then the gap: 62% of traffic is routine, 100% bills at the hard rate.</span></div></div>
+      <div class="tline"><div class="when">15–25 min</div><div class="what"><b>Method and evidence (slides 03–04)</b><span>The part engineers will grill. A learned policy, not if-statements. The leaderboard is a floor, the replay is the pitch.</span></div></div>
+      <div class="tline"><div class="when">25–33 min</div><div class="what"><b>Pricing, reliability, security (slides 05–07)</b><span>Subscriptions, not margin. Providers fail, users never find out. One point of control with real statuses.</span></div></div>
+      <div class="tline"><div class="when">33–40 min</div><div class="what"><b>Alternatives and the ask (slide 08)</b><span>Every other option leaves a job on your plate. Ours leaves you choosing the objective. The 30-day pilot.</span></div></div>
+      <div class="tline"><div class="when">40–45 min</div><div class="what"><b>Pilot mechanics and pricing semantics</b><span>The three weeks, the threshold, the walk-away. And the rule that wins deals: the commit is a floor on spend, never a fee.</span></div></div>
+      <div class="tline"><div class="when">45–60 min</div><div class="what"><b>Q&amp;A</b><span>Run the playbook below. Every skepticism ends the same way: open the replay.</span></div></div>
+    </div>
+
+    <div class="callout warn" style="margin-top:22px">
+      <h4>Claim hygiene, before anything else</h4>
+      <p>Every figure in this deck is vendor-reported: the 99%, the 40+%, the 75.5%, the 100% uptime. They are all true as published, and none of them are the pitch. The pitch is the <b>30-day replay pilot</b>, which turns a vendor claim into a customer measurement. When a number gets challenged, do not argue the number. Open the replay.</p>
+      <p class="core">Core line, learn it cold: "the only thing we have to sell you is a smaller bill."</p>
+    </div>
+  </div>
+</section>
+
+<section id="map">
+  <div class="wrap">
+    <div class="tag">The arc</div>
+    <h2>Twelve slides, one argument</h2>
+    <p class="sub">Who we are, what is broken, how it works, the proof, the economics, the trust, and the ask. Jump to any slide below.</p>
+    <div class="slidemap">
+      <a class="smap" href="#s1"><span class="sno">Cover</span><span class="st">Routing is a research problem</span></a>
+      <a class="smap" href="#s2"><span class="sno">01</span><span class="st">Who we are: four numbers</span></a>
+      <a class="smap" href="#s3"><span class="sno">02</span><span class="st">The problem: the hard-rate gap</span></a>
+      <a class="smap" href="#s4"><span class="sno">03</span><span class="st">The method: learned policy</span></a>
+      <a class="smap" href="#s5"><span class="sno">04</span><span class="st">Evidence: board and replay</span></a>
+      <a class="smap" href="#s6"><span class="sno">05</span><span class="st">Pricing: 0% markup</span></a>
+      <a class="smap" href="#s7"><span class="sno">06</span><span class="st">Reliability: failover</span></a>
+      <a class="smap" href="#s8"><span class="sno">07</span><span class="st">Security and governance</span></a>
+      <a class="smap" href="#s9"><span class="sno">08</span><span class="st">Alternatives and the ask</span></a>
+      <a class="smap" href="#s10"><span class="sno">A</span><span class="st">How the router decides</span></a>
+      <a class="smap" href="#s11"><span class="sno">B</span><span class="st">Security questionnaire</span></a>
+      <a class="smap" href="#s12"><span class="sno">C</span><span class="st">Deployment and integration</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s1">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">Cover</span><h2 class="slide-title">Routing is a research problem.</h2><span class="persona">Everyone</span></div>
+    <p class="oneshot">The paper came before the product. That ordering is the whole identity: a research group that shipped a router, not a vendor that wrote a whitepaper after the fact.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Routing is not plumbing. It is a research problem, and we solved it in the open. The paper, then the gateway, then the weights. Everything we claim is published and checkable. That is what the three badges at the bottom of the slide mean: the method on arXiv, the gateway open source, the model weights public."</p>
+          <div class="core">"From published paper to production router, in front of 200+ models, deciding per request which one is worth the tokens."</div>
+        </blockquote>
+        <button class="copybtn" data-copy="Routing is not plumbing. It is a research problem, and we solved it in the open. The paper, then the gateway, then the weights. Everything we claim is published and checkable." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">arXiv <em>2605.30736</em></span><span class="num">OrcaRouter-Lite <em>MIT</em></span><span class="num">HF <em>Top 20</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not let "top 20 on Hugging Face" float by unexplained. If it gets a look, add: across all published models, which is the flex.</div>
+        <details><summary>Likely question</summary><p><b>What is the paper about?</b> Adaptive model routing: deciding per request which model is worth the tokens. The product is the paper implemented, with the production layer around it.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">01</span><h2 class="slide-title">Who we are: four numbers</h2><span class="persona">Everyone</span></div>
+    <p class="oneshot">Accuracy, cost, quality risk, and business model. Read them in order and the story tells itself: we route better, we cost less, we do not degrade your quality, and we are not paid by your token volume.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"99% routing accuracy with escalation, sitting on a 75.5% base on RouterArena, ahead of GPT-5 at 74.0. That accuracy buys a 40+% lower inference cost with under 1% quality degradation. And the last number is the business model: 0% markup on tokens, on every tier, including bring-your-own contracts."</p>
+          <p>"Read the base and the escalated number together. 75.5 is the raw board score with escalation off. Turning it on recovers the requests the economy pool should not have taken, and that is how the same workload lands at 99% with a cost cut, not a quality cut."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="99% routing accuracy with escalation, sitting on a 75.5% base on RouterArena, ahead of GPT-5 at 74.0. That accuracy buys a 40+% lower inference cost with under 1% quality degradation. And the last number is the business model: 0% markup on tokens, on every tier, including bring-your-own contracts." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">99%</span><span class="num">75.5 vs <em>74.0</em></span><span class="num">40+% <em>lower</em></span><span class="num">&lt;1%</span><span class="num">0% <em>markup</em></span></div>
+        <div class="dont"><b>What not to say</b>Never say "we beat GPT-5" on its own. It is a routing decision score, not a capability comparison, and a sharp engineer in the room will make that correction for you. Also: these are vendor-reported numbers. The replay is the defense.</div>
+        <details><summary>Likely question</summary><p><b>How does 75.5 become 99?</b> Escalation. When a session outgrows its pool, it moves up to a stronger model, reversibly. The 75.5 is the board result with that safety net off.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">02</span><h2 class="slide-title">The problem: the hard-rate gap</h2><span class="persona">CFO · VP Engineering</span></div>
+    <p class="oneshot">89% of traffic is not hard, and 100% of it bills at the hard rate. The gap between the two bars on this slide is the money adaptive routing recovers, and the pilot measures your gap, not our illustration.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"62% routine, 27% mixed, 11% hard. That is the shape of most workloads. Now look at the second bar: one default frontier model, and 100% of traffic billed at the frontier rate. A static choice cannot tell a one-line classification from multi-step reasoning, so both pay the same expensive rate."</p>
+          <p>"The gap between those two bars is the money adaptive routing recovers. And the three costs of doing nothing: staleness, because frontier models ship weekly and nobody can re-benchmark by hand; governance, because teams adopt models faster than security reviews them; and all three are decided at the moment a request is assigned to a model, which is exactly where a router sits."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="62% routine, 27% mixed, 11% hard. That is the shape of most workloads. One default frontier model bills 100% of traffic at the frontier rate. The gap between those two bars is the money adaptive routing recovers." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">62 / 27 / 11</span><span class="num">100% <em>frontier-billed</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not present 62/27/11 as the prospect's actual traffic split. The deck labels it an illustrative distribution. The line that follows must be: the pilot measures yours.</div>
+        <details><summary>Likely question</summary><p><b>What if our traffic is mostly hard?</b> Then the savings are smaller and the pilot will show that. The threshold you set is judged on your own logs, which is exactly why the replay exists. We win on honest numbers.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s4">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">03</span><h2 class="slide-title">The method: a learned policy, not if-statements</h2><span class="persona">Platform · ML Engineering</span></div>
+    <p class="oneshot">A policy that learns from every request, with offline rehearsal before any change touches live traffic. This slide is where you earn the engineers.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"The difference between us and an OSS gateway is this: it is a learned policy, not a cost table with if-statements. Signals come off the request itself: length, reasoning cues, code and maths density, tools. The policy picks a pool: economy for routine, balanced for mixed, frontier for hard."</p>
+          <p>"Two learning loops. Online: every completed request writes quality-against-cost back into the policy, so it is different tomorrow because of what it served today. Offline: replay re-runs your logged traffic through a fresh policy, A/B testing a change against your own history before it touches live requests."</p>
+          <p>"And you keep the controls: the objective per router, explicit bypass, pin any workload, off without a deploy. The whole decision costs microseconds of CPU, no GPU, no added model call."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="It is a learned policy, not a cost table with if-statements. Signals come off the request itself. The policy picks a pool: economy, balanced, frontier. Online, every completed request writes quality-against-cost back into the policy. Offline, replay re-runs your logged traffic before any change goes live. You keep the controls: objective, bypass, pin, off without a deploy." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">0 <em>model calls</em></span><span class="num">0 <em>GPU</em></span><span class="num">microseconds <em>CPU</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not say "it learns like GPT" or anything suggesting a model in the request path. There is no added model call and no GPU. The learning is in the policy, the decision is CPU work.</div>
+        <details><summary>Likely question</summary><p><b>What if it routes hard work to an economy model?</b> Escalation promotes the whole session when a task outgrows its pool, reversibly, and the original channel pin is preserved so de-escalation and long-gap resumption return to the same model.</p></details>
+        <details><summary>Likely question</summary><p><b>Can we force a specific model?</b> Yes, two ways: an explicit model name bypasses routing entirely, and any workload can be pinned. The controls exist so the policy is a recommendation with a leash, not a black box.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s5">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">04</span><h2 class="slide-title">Evidence: measured on a public board, re-measured on your traffic</h2><span class="persona">Everyone</span></div>
+    <p class="oneshot">The leaderboard is a floor. The replay is the pitch. Nobody should buy the 40% on faith, and we do not ask them to.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"On RouterArena we score 75.5 on routing decision quality, ahead of GPT-5 at 74.0 and Azure at 72.8, and well clear of the routing peers you would compare us to. With escalation on, it is 99%. That is the public, reproducible board."</p>
+          <p>"But we do not ask you to take 40% on faith. A read-only replay of your logged traffic reports the cost and quality delta your workload would have seen, before a single live request routes through us. That number, not ours, builds the business case."</p>
+          <p>"Rollout is staged, never big-bang: replay offline, shadow mirrored traffic, canary by percentage."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="On RouterArena we score 75.5 on routing decision quality, ahead of GPT-5 at 74.0. But we do not ask you to take 40% on faith. A read-only replay of your logged traffic reports the cost and quality delta your workload would have seen, before a single live request routes through us. That number, not ours, builds the business case." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">75.5</span><span class="num">74.0 <em>GPT-5</em></span><span class="num">72.8 <em>Azure</em></span><span class="num">61.6 <em>Martian</em></span><span class="num">60.8 <em>NotDiamond</em></span><span class="num">99% <em>w/ escalation</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not let "ahead of GPT-5" stand uncorrected. RouterArena measures routing decision quality: how often the router picks a model that answers correctly at the lowest viable cost. It is not a model capability ranking. Say that before anyone asks.</div>
+        <details><summary>Likely question</summary><p><b>Is RouterArena just a leaderboard entry?</b> The 75.5 is the board result with escalation off, in production configuration. We publish the method and the prediction files, so the score is reproducible, not a screenshot.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s6">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">05</span><h2 class="slide-title">Pricing: funded by subscriptions, not by a margin on your tokens</h2><span class="persona">CFO · Procurement</span></div>
+    <p class="oneshot">The $0 markup is the business model, not a promotion. Token usage passes through at the provider's published rate. This is the slide where deals are won or lost, so the semantics matter.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Three tiers. Hacker is free forever with the full 200+ model catalogue and automatic failover. Team is $49 a month, up to 10 seats, with compliance enforcement, unlimited API keys and priority support. Enterprise is volume-based with dedicated infrastructure, residency, and a 99.99% SLA."</p>
+          <p>"The number that matters is in the second column: 0% token markup. Token usage is pass-through at the provider's published rate, the same number on OpenAI's or Anthropic's own pricing page. Cached reads bill at the provider's discounted cache rate."</p>
+          <div class="core">"A gateway paid a percentage of your tokens has an incentive to route you expensive. We take no spread, so the only thing we have to sell you is a smaller bill."</div>
+        </blockquote>
+        <button class="copybtn" data-copy="Token usage is pass-through at the provider's published rate, the same number on OpenAI's or Anthropic's own pricing page. A gateway paid a percentage of your tokens has an incentive to route you expensive. We take no spread, so the only thing we have to sell you is a smaller bill." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">$0 <em>markup</em></span><span class="num">$49/mo <em>Team</em></span><span class="num">5–20% <em>typical gateway</em></span><span class="num">$2M → <em>$800k</em></span></div>
+        <div class="dont"><b>What not to say</b>Never describe the Enterprise commitment as an extra fee. It is a floor: a minimum monthly spend routed through the platform. A fee sits on top of your bill and eats the saving. A floor is how the saving gets shared. And the $2M arithmetic is illustrative, not a customer result: the pilot replaces every line of it.</div>
+        <details><summary>Likely question</summary><p><b>Can we keep our existing OpenAI and Anthropic contracts?</b> Yes, BYOK: attach your own keys, and your negotiated rates, commitments and data terms stay unchanged. Routing runs across all of them, and committed spend still draws down. Fee specifics for BYOK live on the pricing page.</p></details>
+        <details><summary>Likely question</summary><p><b>What about caching?</b> Cache warmth. Prompt caching is priced per provider and per key, and a gateway that load-balances mid-conversation destroys it. We pin a session to the same channel and key, and account the saving per request.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s7">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">06</span><h2 class="slide-title">Reliability: providers fail, your users never find out</h2><span class="persona">Platform · SRE</span></div>
+    <p class="oneshot">Sitting in front of every provider is what lets us absorb any one of them failing, mid-stream, inside a single response. No single provider is a point of failure or a roadmap.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"100% observed uptime on core APIs and models, May through August. 99.99% contractual SLA on the Enterprise tier. Failover is mid-stream: an upstream outage, a rate limit, a deprecated model, and traffic moves to a healthy channel inside the same response, under 50 milliseconds."</p>
+          <p>"200+ models across 12 providers behind one endpoint: OpenAI, Anthropic, Google, Meta, Mistral, DeepSeek, xAI, Qwen, Moonshot, Cohere, Bedrock, Azure. No single provider is a point of failure, and no single provider's roadmap is your roadmap. And it is portable by construction: the gateway is open source, the weights are public, and with BYOK the keys stay yours."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="100% observed uptime, May through August. 99.99% contractual SLA on Enterprise. Failover is mid-stream, inside a single response, under 50 milliseconds. 200+ models across 12 providers behind one endpoint. No single provider is a point of failure, and no single provider's roadmap is your roadmap." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">100% <em>observed</em></span><span class="num">99.99% <em>SLA</em></span><span class="num">&lt;50ms <em>failover</em></span><span class="num">200+ <em>models</em></span><span class="num">12 <em>providers</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not let the uptime numbers pass as guarantees. 100% observed is a historical statement with a date range; 99.99% is the contractual SLA, and it lives on the Enterprise tier. Say the qualifier before a CISO does.</div>
+        <details><summary>Likely question</summary><p><b>What is your routing overhead?</b> Under 50ms at p50 and p99, no GPU, no added model call, decision in microseconds of CPU. We state it before you measure it.</p></details>
+        <details><summary>Likely question</summary><p><b>What happens when a model gets deprecated?</b> The policy stops selecting it. No code change, no incident, no action from your team.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s8">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">07</span><h2 class="slide-title">Security: every prompt passes through one point. Enforce policy there.</h2><span class="persona">CISO · GRC</span></div>
+    <p class="oneshot">Model governance is the control most gateways lack: allow-lists enforced at selection time, not by policy document. And every status in Appendix B is real.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Model allow-lists per key and per team, enforced at the moment the request is assigned. 'No models from vendor X' is structural, not aspirational. A ZDR-attested key is only offered models whose providers honor zero retention. Data residency comes with cross-region download denial, and honest disclosure that upstream providers process in their own regions."</p>
+          <p>"Full attribution on every request: which model, by whom, on what workload, at what cost. The blue team is available now: Agent Firewall for tool-level policy, Guardrails for inline screening, OrcaCode Review for pull requests. The red team, OrcaCyber, is coming. SOC 2, GDPR, HIPAA and ISO 27001 are attested, with reports under NDA."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="Model allow-lists per key and per team, enforced at the moment the request is assigned. 'No models from vendor X' is structural, not aspirational. Full attribution on every request: which model, by whom, on what workload, at what cost. SOC 2, GDPR, HIPAA and ISO 27001 attested, reports under NDA." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">SOC 2</span><span class="num">GDPR</span><span class="num">HIPAA</span><span class="num">ISO 27001</span></div>
+        <div class="dont"><b>What not to say</b>Do not claim we hold everything in the customer's region. Upstream providers process in their own regions, and the deck says so honestly. If a CISO tests that line, the honest answer is the one that holds.</div>
+        <details><summary>Likely question</summary><p><b>Zero data retention, really?</b> A ZDR-attested key is only offered models whose providers honor zero retention. The enforcement happens at selection, not in the fine print.</p></details>
+        <details><summary>Likely question</summary><p><b>What is your own security posture?</b> Appendix B lists every control with its real status: shipped, partial, or roadmap. Nothing gets discovered for the first time in diligence.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s9">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">08</span><h2 class="slide-title">Alternatives and the ask</h2><span class="persona">Everyone · Procurement</span></div>
+    <p class="oneshot">Every other option leaves a job on your plate. Ours leaves you choosing the objective. And the pilot is built so you never take the 40% on faith.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Run the table. Direct to providers: model choice, failover and cost control stay your job, in one console per vendor. In-house: you own re-benchmarking a moving catalogue forever, with your own headcount. OSS gateway: you operate it, and it has no routing policy. Aggregator: you accept a 5 to 20% margin whose incentive runs against your bill."</p>
+          <p>"With us, the job left is choosing the objective. We do the rest. The ask is a 30-day pilot with criteria agreed up front. Week one, replay: your logs, offline, no integration, and the output is measured deltas plus the threshold you judge us against. Weeks two and three, shadow: mirrored traffic on your own keys, production untouched, security review in parallel. Week four, ramp or walk: clear the threshold and we canary one workload. Miss it, and you walk, keeping the measurement."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="Every other option leaves a job on your plate. With us, the job left is choosing the objective. The ask is a 30-day pilot with criteria agreed up front: replay offline, shadow on your own keys, then ramp or walk. Miss the threshold and you walk, keeping the measurement." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">30 <em>days</em></span><span class="num">1 <em>replay</em></span><span class="num">2 <em>shadow</em></span><span class="num">3 <em>ramp or walk</em></span></div>
+        <div class="dont"><b>What not to say</b>Never promise the 40% as a guarantee. The pilot produces their number and the threshold is theirs. The walk-away keeps the measurement, which is the part that makes the offer credible.</div>
+        <details><summary>Likely question</summary><p><b>What if we clear the threshold and still say no?</b> You walk, and you keep the measurement: the replay harness, the deltas, the threshold you set. That is the deal. Our bet is that the number you produce is good enough to make walking the wrong answer.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s10">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">A</span><h2 class="slide-title">Appendix: how the router decides</h2><span class="persona">ML Engineering</span></div>
+    <p class="oneshot">Four stages, no extra model call. This is the depth slide for when an engineer wants the mechanics, not the story.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Four stages. Signal extraction reads structural and semantic signals straight off the request: prompt length, reasoning cues, system-prompt weight, code and maths density, tool presence, declared output budget. Conditional preference: the policy holds a separate preference per model, per output-budget band and per task class, so a model good at long-form reasoning is not automatically picked for a short tool call. Pool gating: a difficulty score narrows the candidates, so routine traffic never reaches a frontier model and hard traffic never lands on an economy one. Session escalation: sessions stick within a tier, and on threshold the session moves up with its channel pin following."</p>
+          <p>"Commercially, offline replay converts a vendor claim into a customer measurement. The harness reconstructs each historical request and drives the policy through your real traffic in order, so the number in the business case is yours, produced before any integration is committed."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="Four stages, no extra model call. Signal extraction reads the request. Conditional preference holds a separate preference per model, per budget band, per task class. Pool gating keeps routine traffic off frontier models. Session escalation moves a session up on threshold, reversibly, pin preserved." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">4 <em>stages</em></span><span class="num">0 <em>extra calls</em></span><span class="num">30 days <em>session continuity</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not imply the difficulty score is an LLM judge. Signals are read off the request; there is no auxiliary model call and no GPU in the path.</div>
+        <details><summary>Likely question</summary><p><b>One global ranking or per-task?</b> Not one global ranking. The preference is conditioned on output budget and task class, so the router learns that a reasoning specialist is not the right pick for a short tool call.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s11">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">B</span><h2 class="slide-title">Appendix: security questionnaire</h2><span class="persona">CISO · GRC · Procurement</span></div>
+    <p class="oneshot">Every control with its real status: shipped, partial, or roadmap. The honesty here is the feature.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Shipped: SAML 2.0 and OIDC single sign-on, WebAuthn with 2FA and PKCE, RBAC over a 30+ capability catalogue, insert-only admin and workspace audit logs, model allow-lists per key and team enforced at routing, IP allow-lists with key expiry, data residency with region-stamped evidence and cross-region denial, ZDR attestation, OpenTelemetry and Prometheus export, Guardrails and the Agent Firewall, SCIM 2.0 with Okta and Entra sync, and scoped data-plane tokens for model, spend and network."</p>
+          <p>"Partial: self-hosted deployment on Docker today with Helm and Kubernetes in progress. Roadmap: tamper-evident hash-chained audit logs and workload identity via RFC 8693. Attested: SOC 2, ISO 27001, HIPAA and GDPR, reports under NDA. Every control is stated at its real status, so nothing is discovered for the first time in diligence."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="Every control in Appendix B is stated at its real status: shipped, partial, or roadmap. SSO, WebAuthn, RBAC, audit logs, allow-lists, residency, ZDR, OTel, Guardrails and SCIM are shipped. Self-hosted is Docker today, Helm in progress. Attestation reports under NDA." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">30+ <em>RBAC caps</em></span><span class="num">SHIPPED ×<em>13</em></span><span class="num">2 <em>partial</em></span><span class="num">2 <em>roadmap</em></span><span class="num">4 <em>attested</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not hand-wave the partials and roadmaps. A CISO will read the appendix; pre-empt with the real status and the honest gap. That is exactly what the deck is designed to do.</div>
+        <details><summary>Likely question</summary><p><b>When does Helm support land?</b> Kubernetes support is in progress; Docker self-hosted is available today. The roadmap status is stated openly so diligence finds nothing new.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s12">
+  <div class="wrap">
+    <div class="slide-head"><span class="slide-no">C</span><h2 class="slide-title">Appendix: deployment and integration</h2><span class="persona">Platform · SRE</span></div>
+    <p class="oneshot">One line to adopt, four ways to run it, and an escape hatch by construction.</p>
+    <div class="slide-grid">
+      <div class="panel">
+        <h4>Say it like this</h4>
+        <blockquote class="track">
+          <p>"Adoption is a base URL swap: point a service at api.orcarouter.ai, set the model to orcarouter/auto, and your SDKs, tools, streaming and function calling all keep working. Naming a model explicitly still bypasses routing entirely."</p>
+          <p>"Four ways to run it: managed SaaS with region-selectable evidence, private deployment in your cloud and network boundary, self-hosted Docker with a health endpoint, or the open source Lite gateway on the same API surface. That last one is the escape hatch that makes lock-in moot. And it integrates with what you already run: OpenTelemetry, Prometheus, SAML and OIDC, any OpenAI-compatible SDK, audit log export."</p>
+        </blockquote>
+        <button class="copybtn" data-copy="Adoption is a base URL swap: point a service at api.orcarouter.ai with model orcarouter/auto, and SDKs, tools, streaming and function calling keep working. Four ways to run it: managed SaaS, private deployment, self-hosted Docker, or the open source Lite gateway on the same API surface. The escape hatch makes lock-in moot." aria-label="Copy talk track">Copy track</button>
+      </div>
+      <div class="panel">
+        <h4>Numbers to quote</h4>
+        <div class="nums"><span class="num">1 <em>line</em></span><span class="num">4 <em>run modes</em></span><span class="num">0 <em>SDK changes</em></span></div>
+        <div class="dont"><b>What not to say</b>Do not sell it as rip-and-replace. The per-workload adoption path is the point: one service at orcarouter/auto first, the rest keep naming models explicitly, expand as each workload clears the quality bar.</div>
+        <details><summary>Likely question</summary><p><b>How do we start small?</b> Point one service at orcarouter/auto and leave the rest alone. When that workload clears your quality bar, expand. Adoption is incremental by design.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="qa">
+  <div class="wrap">
+    <div class="tag">The grilling</div>
+    <h2>Q&amp;A playbook</h2>
+    <p class="sub">The objections that come up every time, with the answer that ends the argument. Note how many end the same way: open the replay.</p>
+    <div class="qa">
+      <div class="qrow"><div class="q">Is the 75.5% vendor-reported?</div><div class="a">Yes, and we say it first. The board is a floor; the replay produces <b>their</b> number on <b>their</b> traffic, and the threshold is theirs to set.</div></div>
+      <div class="qrow"><div class="q">Why not just use an OSS gateway like LiteLLM?</div><div class="a">A static rule engine with no routing policy, and you operate it. The comparison row says it: the routing policy it does not have is the whole product.</div></div>
+      <div class="qrow"><div class="q">Aggregators give us discounts.</div><div class="a">A 5–20% margin is an incentive that runs against your bill. We take zero spread, so the only thing we have to sell you is a smaller bill.</div></div>
+      <div class="qrow"><div class="q">What about latency?</div><div class="a">Under 50ms p50 and p99, no GPU, no added model call, decision in microseconds of CPU. We state it before they measure it.</div></div>
+      <div class="qrow"><div class="q">We have multi-year contracts with OpenAI and Anthropic.</div><div class="a">BYOK: attach your own keys, negotiated rates, commitments and data terms unchanged, and committed spend still draws down. Fee specifics are on the pricing page.</div></div>
+      <div class="qrow"><div class="q">Where does our data go?</div><div class="a">Region-stamped evidence with cross-region download denial, plus honest disclosure that upstream providers process in their own regions. The honest answer is the one that survives diligence.</div></div>
+      <div class="qrow"><div class="q">What if we want out?</div><div class="a">The Lite gateway runs the same API surface, open source, forever. The escape hatch is by construction, which is also why lock-in fear is not a valid objection.</div></div>
+      <div class="qrow"><div class="q">How is this actually priced?</div><div class="a">Subscriptions: free tier, $49 a month Team, volume-based Enterprise. Zero markup on tokens. The Enterprise commitment is a floor on spend routed through us, never a fee on top of your bill.</div></div>
+      <div class="qrow"><div class="q">Can't we just pin models ourselves?</div><div class="a">You can, and the controls let you. But the moment you pin everything, the 62% pays the hard rate again. Pinning is the override, not the default.</div></div>
+      <div class="qrow"><div class="q">What if the router is wrong?</div><div class="a">Escalation catches it, reversibly, and the offline loop learns from it. The measured cost of the saving is under 1% quality degradation, and the replay verifies that on their workload too.</div></div>
+    </div>
+    <div class="callout ok">
+      <h4>The pivot</h4>
+      <p>Every one of these ends the same way. "Fair question. That is exactly what the pilot measures, on your traffic, before you commit anything. Let me show you the replay."</p>
+    </div>
+  </div>
+</section>
+
+<section id="appendices">
+  <div class="wrap">
+    <div class="tag">Quick reference</div>
+    <h2>The appendices in one breath</h2>
+    <p class="sub">For when the room dives into the back of the deck. Three sentences, any one of them.</p>
+    <div class="grid c3">
+      <div class="card">
+        <h3><span class="num">A</span> How the router decides</h3>
+        <p>Four stages, no extra model call: signals off the request, a per-task preference, pool gating, session escalation. Microseconds of CPU, no GPU, and replay turns the vendor claim into their measurement.</p>
+      </div>
+      <div class="card">
+        <h3><span class="num">B</span> Security questionnaire</h3>
+        <p>Every control stated at its real status: shipped, partial, or roadmap. Thirteen controls shipped, two partial, two roadmap, four attestations under NDA. Nothing is discovered in diligence.</p>
+      </div>
+      <div class="card">
+        <h3><span class="num">C</span> Deployment and integration</h3>
+        <p>One line to adopt, four ways to run it, zero SDK changes. OSS Lite on the same API surface is the escape hatch that makes lock-in moot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pilot">
+  <div class="wrap">
+    <div class="tag">The ask</div>
+    <h2>The 30-day pilot, week by week</h2>
+    <p class="sub">Criteria agreed up front. Their logs, their keys, their threshold. That is the offer, and it is also the close.</p>
+    <div class="pilot-steps">
+      <div class="ps">
+        <span class="pno">Week 1</span>
+        <b>Replay</b>
+        <p>Their logs, offline, no integration. Output: measured cost and quality deltas, and the threshold they judge us against.</p>
+      </div>
+      <div class="ps">
+        <span class="pno">Weeks 2–3</span>
+        <b>Shadow</b>
+        <p>Mirrored traffic on their own keys. Production untouched. Security review runs in parallel.</p>
+      </div>
+      <div class="ps">
+        <span class="pno">Week 4</span>
+        <b>Ramp or walk</b>
+        <p>Clear the threshold and we canary one workload. Miss it and they walk, keeping the measurement.</p>
+      </div>
+    </div>
+    <div class="callout warn">
+      <h4>Pricing semantics, the deal-winning rule</h4>
+      <p>The Enterprise commitment is a <b>floor on spend routed through the platform</b>, never an extra fee. A fee sits on top of the bill and eats the savings math: a $5k fee against $10k of monthly spend destroys the 30–40% saving. A floor is how the saving gets shared: the customer commits a slice of the spend they are already routing, they keep the discount, and the revenue model stays subscriptions plus volume, never a token margin.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Internal enablement guide · OrcaRouter · 2026</span>
+    <span class="mono">Source deck: Enterprise Briefing 2026 (confidential) · figures vendor-reported unless re-measured in pilot</span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.getAttribute('data-copy');
+    function done(){
+      btn.textContent = 'Copied';
+      btn.classList.add('ok');
+      setTimeout(function(){
+        btn.textContent = 'Copy track';
+        btn.classList.remove('ok');
+      }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){ btn.textContent = 'Press Ctrl+C'; }
+      document.body.removeChild(ta);
+    }
+  });
+});
+</script>
+</body>
+</html>
