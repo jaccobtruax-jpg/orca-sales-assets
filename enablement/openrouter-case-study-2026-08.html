@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenRouter vs OrcaRouter — Competitor Case Study (Aug 2026)</title>
+<meta name="description" content="OrcaRouter sales enablement: deep-research case study on OpenRouter, the Stripe acquisition, fee stack, routing tech, and how it differs from OrcaRouter.">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; color: #1a1d21; background: #fafafa;
+    margin: 0; padding: 0;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 80px; }
+  header.doc {
+    background: #0f172a; color: #e2e8f0; border-radius: 12px;
+    padding: 28px 30px; margin-bottom: 28px;
+  }
+  header.doc h1 { margin: 0 0 6px; font-size: 1.55rem; line-height: 1.25; color: #fff; }
+  header.doc .sub { color: #94a3b8; font-size: .92rem; }
+  header.doc .badge {
+    display: inline-block; margin-top: 12px; padding: 4px 10px;
+    background: #14532d; color: #bbf7d0; border-radius: 999px;
+    font-size: .78rem; font-weight: 600;
+  }
+  main { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px 34px; }
+  h1 { font-size: 1.35rem; margin: 1.6em 0 .5em; }
+  h2 { font-size: 1.18rem; margin: 1.6em 0 .5em; padding-bottom: 4px; border-bottom: 1px solid #eceff3; }
+  h3 { font-size: 1.02rem; margin: 1.4em 0 .4em; }
+  h4, h5, h6 { font-size: .95rem; margin: 1.2em 0 .3em; }
+  p { margin: .6em 0; }
+  a { color: #0369a1; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul, ol { margin: .5em 0 .8em; padding-left: 1.5em; }
+  li { margin: .25em 0; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1.1em; font-size: .9rem; }
+  th, td { border: 1px solid #d8dee6; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #f1f5f9; font-weight: 600; }
+  tr:nth-child(even) td { background: #fafbfc; }
+  code { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1px 5px; font-size: .85em; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  blockquote { border-left: 3px solid #cbd5e1; margin: .8em 0; padding: 2px 14px; color: #475569; }
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.6em 0; }
+  .wikilink { color: #7c3aed; font-size: .9em; }
+  strong { color: #111827; }
+  @media print {
+    body { background: #fff; }
+    main { border: none; padding: 0; }
+    header.doc { background: #fff; color: #111; border: 1px solid #ddd; }
+    header.doc h1 { color: #111; }
+    header.doc .sub { color: #444; }
+    .wrap { max-width: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="doc">
+  <h1>OpenRouter vs OrcaRouter — Competitor Case Study</h1>
+  <div class="sub">OrcaRouter Sales Enablement · Snapshot date: August 22, 2026 · Deep research, 4 passes, all claims sourced in the ledger below</div>
+  <span class="badge">Internal — rep training</span>
+</header>
+<main>
+<h1>OpenRouter vs OrcaRouter: Competitor Case Study</h1>
+<p>Snapshot date: <strong>2026-08-22</strong>. This is the model case study for the rep competitor-series. Re-verify anything a prospect will see in front of them before quoting: vendor pages move, and the acquisition story is still settling.</p>
+<h2>TL;DR</h2>
+<p>OpenRouter is the largest AI model marketplace and gateway. It built the category, got acquired by Stripe for about $7.5B on 2026-08-19, and now makes money the way an aggregator always has: fees on your spend, not on routing intelligence. OrcaRouter makes money on subscriptions and charges $0 markup on tokens. The difference that sells: OpenRouter routes by what millions of other people spend on; OrcaRouter routes by what your workload actually needs. And the neutral-referee story that OpenRouter used for years is now owned by a payments company.</p>
+<h2>1. Who OpenRouter is</h2>
+<ul>
+<li>Founded early 2023 (their own blog: "We started OpenRouter in early 2023"). ~90 people at acquisition (own blog, 8/19/26).</li>
+<li>Founders sign posts as Alex, Chris, and Louis. Full names are not prominent on their public pages.</li>
+<li>Self-reported scale (8/19/26 blog): <strong>10+ trillion tokens/day, 400+ AI models, 10M+ developers and companies</strong>; "at least 10x growth in inference volume every year" since founding. Series B post (5/28/26): weekly volume grew 5T → 25T tokens in six months; "on pace to process over a quadrillion tokens this year", 8M+ developers. Homepage: 200T+ monthly tokens, 10M+ users, 250k+ apps (4.2M+ users) listed as featured-agent ecosystem.</li>
+<li>Public models API returns 420 model entries (fetched 8/22/26); pricing page advertises 500+ models / 80+ providers.</li>
+</ul>
+<h3>Funding and ownership timeline</h3>
+<table><thead><tr><th>Date</th><th>Event</th></tr></thead><tbody>
+<tr><td>early 2023</td><td>Founded</td></tr>
+<tr><td>2026-05-26</td><td>TechCrunch: valuation "more than doubled to $1.3B in a year"</td></tr>
+<tr><td>2026-05-28</td><td><strong>$113M Series B</strong> led by CapitalG (Alphabet); NVentures (NVIDIA), ServiceNow Ventures, MongoDB, Snowflake, Databricks, AMP PBC, Pace Capital join; a16z and Menlo Ventures continue</td></tr>
+<tr><td>2026-07-23</td><td>WSJ: Stripe in talks to buy OpenRouter</td></tr>
+<tr><td>2026-08-16</td><td>Bloomberg: deal clinched, "over $7B"</td></tr>
+<tr><td>2026-08-19</td><td><strong>Stripe acquires OpenRouter, ~$7.5B</strong> (NYT; Bloomberg, CNBC, Reuters, SiliconANGLE corroborate; Forbes says "over $8B"). Closing "in coming weeks" (own blog)</td></tr>
+</tbody></table>
+<p>That is roughly 82 days from a $1.3B valuation to a $7B+ deal (the Ask HN thread noticed it too). a16z and Menlo Ventures land a big payday (TradingView, 8/18/26).</p>
+<p>Two things about the investor list matter for us. First, ServiceNow Ventures, MongoDB, Snowflake and Databricks all hold equity in OpenRouter. Those are enterprise platform companies, and ServiceNow is an active OrcaRouter pipeline account. Second, the round was led by Alphabet's growth fund, with NVIDIA's venture arm in the cap table. This is not a scrappy dev tool anymore; it is a strategic asset with platform-company ownership.</p>
+<h2>2. What OpenRouter sells</h2>
+<p>One OpenAI-compatible endpoint in front of hundreds of models. Credits-based prepaid billing. Multimodal (text, image, video, audio, TTS, STT, embeddings). Fallbacks across providers, and a family of routing features:</p>
+<ul>
+<li><strong>Auto Router</strong> (<code>openrouter/auto</code>): classifies each prompt into one of ~30 task types, then picks models by what the OpenRouter community actually spends on for that task over a trailing 7-day window, filtered by a cost tier (low → max) and your policies. Market-share routing, in short.</li>
+<li><strong>Provider routing</strong>: explicit provider ordering, automatic failover, and variants like <code>:nitro</code> (fastest), <code>:floor</code> (cheapest), <code>:exacto</code> (tool-calling quality), <code>:free</code>, <code>:thinking</code>, <code>:extended</code>.</li>
+<li><strong>Fusion</strong> (<code>openrouter/fusion</code>): a panel of up to 8 models answers in parallel, an analyst model compares them, and returns structured JSON on consensus, contradictions, coverage gaps and blind spots.</li>
+<li><strong>Free Models Router</strong> and <strong>Pareto Router</strong> (pick a coding model by minimum coding score without naming one).</li>
+<li><strong>Enterprise controls</strong>: Workspaces, spend budgets, guardrails (budget enforcement, regex content filters, hierarchy, API access), SSO/SAML, SCIM group mappings, zero-data-retention (ZDR) policies, per-request data policies, structured outputs, response caching, and trace broadcast to 17+ observability backends.</li>
+<li><strong>Server tools</strong>: web search, web fetch, sandboxed shell, subagent, advisor, image generation.</li>
+<li><strong>BYOK</strong>: bring provider keys, with prioritized vs fallback sections, per-key model/member/API-key filters, and "always use for this provider" pinning.</li>
+<li><strong>Stripe Projects launch partner</strong> (post-acquisition): provision an OpenRouter account with <code>stripe projects add openrouter/api</code>, unified billing through Stripe, agent-friendly skill files.</li>
+</ul>
+<p>The catalog is genuinely broad. It is also a rented catalog: every model on OpenRouter is someone else's model, resold with a fee on top.</p>
+<h2>3. Pricing and the fee stack (live, fetched 2026-08-22)</h2>
+<p>Three plans: Free / Pay-as-you-go / Enterprise.</p>
+<ul>
+<li><strong>No markup on inference.</strong> Their FAQ says it plainly: "we pass through the pricing of the underlying providers; there is no markup on inference pricing." That sentence is doing a lot of work, because the fees are elsewhere.</li>
+<li><strong>5.5% fee on every credit top-up via Stripe, with a $0.80 minimum.</strong> (5% for crypto/USDC.) Small top-ups are effectively 10-20% in fees. This is in their own FAQ constants, verbatim: <code>5.5% ($0.80 minimum)</code>.</li>
+<li><strong>BYOK: 5% fee</strong> above a free allowance, now measured by list-price spend (not request count, which is what our Aug 19 intel said): $25,000/month of list-price inference free on Pay-as-you-go; $200,000/month on Enterprise; 5% of what the same model/provider would cost on OpenRouter after that.</li>
+<li><strong>Credits are prepaid deposits.</strong> They can expire after one year (per their terms). Refunds only within 24 hours of purchase, and platform fees are non-refundable. Crypto payments never refundable. Negative balance → 402 errors, even on free models.</li>
+<li><strong>Free tier</strong>: 50 requests/day on free models; 1,000/day if you have purchased $10+ in credits; 20 RPM. "Usually not suitable for production use" (their own FAQ).</li>
+<li><strong>No volume discounts</strong> currently ("reach out if you think you have an exceptional use case").</li>
+<li>Enterprise: SAML, contractual SLAs, invoicing, optional dedicated limits.</li>
+</ul>
+<p>How does OpenRouter make money? Their FAQ answers it: a fee when you purchase credits. Put differently: <strong>the bigger your inference bill, the more OpenRouter earns, regardless of whether routing saved you anything.</strong> That is the structural point for this case study.</p>
+<h2>4. How it differs from OrcaRouter</h2>
+<table><thead><tr><th>Dimension</th><th>OpenRouter</th><th>OrcaRouter</th></tr></thead><tbody>
+<tr><td>Category</td><td>Marketplace / aggregator: resells inference across providers, credits prepaid</td><td>Gateway: your keys or theirs, routed once, $0 markup</td></tr>
+<tr><td>Revenue model</td><td>Fees on spend: 5.5% top-ups + 5% BYOK over allowance; Enterprise contracts</td><td>Subscriptions: Hacker free, Team $49/mo, Enterprise custom. $0.00 routing fee (live page)</td></tr>
+<tr><td>Routing intelligence</td><td>Market-share routing: what millions spend on, trailing 7 days, ~30 task classes, cost tiers</td><td>Learned routing: hybrid offline+online learning (LinUCB), cache-aware, escalation, tuned to your workload</td></tr>
+<tr><td>Routing control</td><td>Cost tier, provider order, variants, BYOK key filters</td><td>Routing DSL (YAML+CEL), shadow/canary, Named Routers, per-user scoped keys with model limits</td></tr>
+<tr><td>Governance</td><td>Workspaces, guardrails (budgets, content filters), SSO/SCIM, ZDR policies</td><td>Guardrails + agent firewall + MCP security, signed verifiable compliance reports, zero retention as default</td></tr>
+<tr><td>Open source</td><td>Closed SaaS</td><td>Open core (Continuum-AI-Corp/OrcaRouter-O2: routing engine + gateway public)</td></tr>
+<tr><td>Independence</td><td>Was the neutral marketplace; now owned by a payments company (Stripe, closing pending)</td><td>Independent; "a neutral referee cannot also be the house accountant"</td></tr>
+<tr><td>Free tier</td><td>50 req/day (1,000 with $10+ credits), 20 RPM</td><td>Hacker tier: full gateway, no hard request limits, 3 API keys</td></tr>
+<tr><td>Scale</td><td>10T+ tokens/day, 400+ models (self-reported); 420 models on live API</td><td>200+ models / 40+ providers; $10M annualized run-rate ~10 weeks after launch (PR, self-reported)</td></tr>
+<tr><td>Benchmarks</td><td>Not on RouterArena board (no submission)</td><td>RouterArena-Adaptive: #12 of 31, accuracy 75.54, $1.00/1K queries (live board, pushed 8/20/26)</td></tr>
+</tbody></table>
+<h3>The three differences that matter</h3>
+<p><strong>1. The incentive is inverted.</strong> OpenRouter charges a percentage of your spend (5.5% top-ups, 5% BYOK above allowance). Their revenue goes up when your bill goes up. OrcaRouter charges a flat subscription and routes to reduce your bill; the incentive to save you money is the product, not a conflict. Their own deck frames it as the aggregator margin: 5-20% on tokens. OpenRouter's number is 5.5% + 5%, but the direction is the same.</p>
+<p><strong>2. The router learns on other people's traffic, not yours.</strong> OpenRouter's Auto Router is a market index: it classifies your prompt and picks what everyone else spends on for that task type. It is honest about this ("powered by the market"). OrcaRouter's router learns on your traffic, with offline replay on your logs before anything goes live, then online learning and escalation in production. One follows the crowd; the other tunes to your workload.</p>
+<p><strong>3. Neutrality is now a legacy brand.</strong> OpenRouter spent three years as the neutral referee of the model market. In August 2026 it sold to Stripe, a company whose business is processing payments and, increasingly, agent commerce. Their joining post says "routing decisions will remain driven by one thing: what's best for you" and that the mission "doesn't bend to any parent company." That is a letter to the market, not a contract. The governance, pricing and roadmap questions that follow are exactly the ones a buyer should ask in a room. Stripe now sees your inference spend data and your routing behavior in the same pane of glass where it sees your revenue.</p>
+<h2>5. Where OpenRouter wins, and how to counter</h2>
+<p>Be honest about these. A rep who pretends OpenRouter is weak loses credibility in the first ten minutes.</p>
+<ul>
+<li class="ordered"><strong>Catalog and ecosystem breadth.</strong> 400+ models, every modality, 10M+ developers, 250k+ apps. Counter: breadth is not control. Enterprises deploy a handful of approved models; OrcaRouter covers 200+ models / 40+ providers and adds governance those deployments need. BYOK means a prospect keeps their provider relationships either way.</li>
+<li class="ordered"><strong>Developer brand.</strong> "Stripe for LLMs" was earned. Community rankings, real-world usage data, Discord. Counter: consumer-grade reputation, enterprise-grade questions. Who audits the router? Where is the signed compliance evidence? What happens to your data when the parent company is a payment processor?</li>
+<li class="ordered"><strong>Feature velocity.</strong> They ship constantly (BYOK restrictions and availability-error codes landed the same week as the acquisition). Counter: velocity is not alignment. OpenRouter's roadmap now answers to a payments company's priorities, and its own post promises continuity in prose.</li>
+<li class="ordered"><strong>Stripe's distribution and fraud muscle.</strong> Counter: that is precisely the point. A routing layer inside a payment processor is a different product from an independent gateway. If the agent-payments thesis is right, your routing traffic is the input to their commerce flywheel.</li>
+<li class="ordered"><strong>Fusion and agent tooling.</strong> They shipped a Fusion router and server tools. Counter: OrcaRouter has Fusion too (parallel frontier panel + verbatim judge), and its N× token cost is transparent in the usage object. Feature parity is not the wedge; incentive alignment is.</li>
+</ul>
+<h2>6. Where OrcaRouter wins, with proof</h2>
+<ul>
+<li class="ordered"><strong>$0 markup on tokens, subscription-funded.</strong> Live pricing page: "$0.00 routing fee", "Provider price, $0 per token added, glass-box receipts." The same page admits "BYOK traffic may carry a platform fee" (docs default 5%, configurable to 0) — say this before a prospect finds it, it costs nothing and buys trust.</li>
+<li class="ordered"><strong>Learned routing beats market routing for your workload.</strong> RouterArena (live board, pushed 8/20/26): OrcaRouter-Adaptive at #12/31, accuracy 75.54, $1.00/1K queries. GPT-5's internal router: 64.32 arena score at $10.02/1K queries. OpenRouter has no submission; market-share routing is not evaluated on decision quality, which is itself telling. Caveat: 75.5 is a leaderboard number; "99% with escalation" and "40%+ savings" remain vendor-reported and must be labeled as such.</li>
+<li class="ordered"><strong>Built-in governance, zero retention as default.</strong> Signed verifiable compliance reports, guardrails + agent firewall + MCP security, per-user scoped keys. OpenRouter's guardrails and ZDR exist and are younger; ZDR is policy plumbing on top of a marketplace, not a default posture.</li>
+<li class="ordered"><strong>Open core.</strong> The routing engine and gateway are public (Continuum-AI-Corp/OrcaRouter-O2). OpenRouter is closed SaaS. Engineering buyers who want to see the router before trusting it have an answer here.</li>
+<li class="ordered"><strong>The $0 is the point.</strong> At a $2M annual spend, a 5.5% top-up fee is $110K/year before a single token is routed, and 5% BYOK over allowance compounds on top. OrcaRouter's committed-minimum model (a floor on routed spend, not a fee) keeps the incentive pointing the same way as the customer's.</li>
+</ul>
+<h2>7. Talk tracks</h2>
+<ul>
+<li><strong>Early mention</strong>: "OpenRouter built the category and they should get credit for it. We're the next step: same multi-model premise, but the router learns from your workload and nobody takes a cut of your tokens."</li>
+<li><strong>Displacement (they already use OpenRouter)</strong>: "Keep the catalog, drop the fee. Bring your keys, route through OrcaRouter at 0% markup, keep your provider pricing and credits. We'll prove it on your own logs first: week 1 is offline replay, no traffic touched."</li>
+<li><strong>Post-acquisition angle</strong>: "OpenRouter now sits inside Stripe. A payment processor owns the router's roadmap, and it sees your inference spend next to your revenue. A neutral referee cannot also be the house accountant."</li>
+<li><strong>ServiceNow / Databricks / Snowflake / MongoDB accounts</strong>: "OpenRouter's Series B investors include those companies' ventures arms. Their data plane and your routing layer are not independent, and they never will be."</li>
+<li><strong>Pricing conversation</strong>: "Their FAQ says no markup on inference. Read the next line: 5.5% on every top-up, 5% on BYOK over the allowance. The fee is on your spend, so their revenue grows with your bill."</li>
+</ul>
+<h2>8. Landmine questions (ask, don't assert)</h2>
+<ul>
+<li class="ordered">"What do your credit top-ups actually cost per month, 5.5% on top of what you spend?"</li>
+<li class="ordered">"When Auto Router picks a model, is it optimizing for your traffic or for what everyone else spends on?"</li>
+<li class="ordered">"Who decides OpenRouter's roadmap now that Stripe owns it?"</li>
+<li class="ordered">"What separation is there between your inference spend data and Stripe's commerce ambitions?"</li>
+<li class="ordered">"Your credits can expire after a year and refunds close after 24 hours. How does that fit your procurement cycle?"</li>
+</ul>
+<h2>9. Source ledger</h2>
+<table><thead><tr><th>Claim</th><th>Value</th><th>Source</th><th>Confidence</th></tr></thead><tbody>
+<tr><td>Stripe acquisition</td><td>~$7.5B</td><td>NYT, Bloomberg, CNBC, Reuters, SiliconANGLE; Forbes "&gt;$8B"</td><td>High (multi-outlet)</td></tr>
+<tr><td>Series B</td><td>$113M, led by CapitalG; NVentures, ServiceNow, MongoDB, Snowflake, Databricks, AMP, Pace + a16z/Menlo</td><td>OpenRouter blog (primary)</td><td>High</td></tr>
+<tr><td>Valuation May 2026</td><td>$1.3B</td><td>TechCrunch</td><td>Medium</td></tr>
+<tr><td>Scale</td><td>10T+ tokens/day, 400+ models, 10M+ devs, ~90 people</td><td>OpenRouter blog (self-reported)</td><td>Medium (self-reported)</td></tr>
+<tr><td>Top-up fee</td><td>5.5% Stripe ($0.80 min), 5% crypto</td><td>OpenRouter FAQ, live docs</td><td>High</td></tr>
+<tr><td>BYOK fee</td><td>5% above $25K/mo (PAYG) / $200K/mo (Ent) list-price allowance</td><td>OpenRouter BYOK doc, live</td><td>High</td></tr>
+<tr><td>Free tier</td><td>50 req/day; 1,000 with $10+ credits; 20 RPM</td><td>OpenRouter FAQ/limits docs, live</td><td>High</td></tr>
+<tr><td>Model count</td><td>420 live API entries; 500+ advertised</td><td>models API fetch 8/22; pricing page</td><td>High</td></tr>
+<tr><td>OrcaRouter RouterArena</td><td>#12/31, acc 75.54, $1.00/1K queries</td><td>RouterArena leaderboard JSON (raw snapshot 8/20/26)</td><td>High</td></tr>
+<tr><td>OrcaRouter pricing</td><td>$0 markup; Hacker free; Team $49/mo; BYOK may carry platform fee</td><td>orcarouter.ai/pricing, live 8/22</td><td>High</td></tr>
+<tr><td>$10M ARR, 40%+ savings, 99% quality, 1M decisions</td><td>vendor-reported</td><td>PR via Yahoo Finance (paid release)</td><td>Low (self-reported)</td></tr>
+<tr><td>"Neutral referee" quote</td><td>OrcaRouter blog voice</td><td>orcarouter.ai/blog</td><td>High (internal voice)</td></tr>
+</tbody></table>
+<h2>10. What changed since our Aug 19 intel</h2>
+<p>These are corrections to earlier wiki content, not just additions:</p>
+<ul>
+<li><strong>"No Fusion" was wrong.</strong> OpenRouter shipped a Fusion Router (panel of up to 8 + analyst) plus Fusion as a server tool and plugin.</li>
+<li><strong>"No guardrail content engine" was wrong.</strong> Guardrails now exist: budget enforcement, regex content filters, hierarchy, API access.</li>
+<li><strong>BYOK fee basis changed</strong>: our note said "5% above 1M req/month"; the live terms are 5% above $25K/$200K of list-price inference per month.</li>
+<li><strong>RouterArena ranking moved</strong>: OrcaRouter-Adaptive is #12 of 31 (was #8 of 27); Weave Router #10 and Nadir #11 (both still above us; Nadir-Tumbler #5 is also above). New entrants above us (Paix2, Sqwish, Divyam, Cross-Router, vllm, nadir-caliper, AgentForge, BARouter) are largely research submissions and free OSS baselines, not commercial competitors.</li>
+<li><strong>"$7B acquisition" upgraded</strong>: was a low-confidence single source (our own PR); now multi-outlet confirmed at ~$7.5B.</li>
+<li><strong>Founding, team and funding history</strong>: now documented (early 2023, ~90 people, $113M Series B, $1.3B May valuation).</li>
+</ul>
+<h2>Related</h2>
+<p><span class="wikilink">openrouter</span> · <span class="wikilink">orcarouter-vs-alternatives</span> · <span class="wikilink">orcarouter</span> · <span class="wikilink">routerarena</span> · <span class="wikilink">inference-gateway-economics</span> · <span class="wikilink">adaptive-model-routing</span></p>
+</main>
+</div>
+</body>
+</html>
