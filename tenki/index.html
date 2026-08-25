@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrcaRouter Trial Kickoff | Tenki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg0: #08090a;
+    --bg1: #0f1011;
+    --bg2: #191a1b;
+    --bg3: #23252a;
+    --tx0: #f7f8f8;
+    --tx1: #d0d6e0;
+    --tx2: #8a8f98;
+    --tx3: #62666d;
+    --acc: #5e6ad2;
+    --acc2: #7170ff;
+    --acc3: #828fff;
+    --win: #10b981;
+    --lose: #ef4444;
+    --tie: #f59e0b;
+    --bd: rgba(255,255,255,0.08);
+    --bd-s: rgba(255,255,255,0.05);
+    --card: rgba(255,255,255,0.02);
+    --card-h: rgba(255,255,255,0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg0);
+    color: var(--tx0);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'cv01', 'ss03';
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(94,106,210,0.35); color: #fff; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(8,9,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--bd-s);
+  }
+  .nav-inner { max-width: 1080px; margin: 0 auto; padding: 10px 24px 0; }
+  .nav-row1 { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; }
+  .wordmark { font-size: 15px; font-weight: 600; letter-spacing: -0.2px; color: var(--tx0); }
+  .wordmark .dot { color: var(--acc2); }
+  .pill {
+    display: inline-block; font-size: 10.5px; font-weight: 500; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--tx2);
+    border: 1px solid var(--bd); border-radius: 999px; padding: 2px 9px;
+  }
+  .pill.ver { color: #a5b0ff; border-color: rgba(94,106,210,0.4); background: rgba(94,106,210,0.12); }
+  .nav-right { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--tx3); }
+  .links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  .links::-webkit-scrollbar { display: none; }
+  .links a {
+    font-family: inherit; font-feature-settings: 'cv01','ss03';
+    color: var(--tx2); text-decoration: none;
+    border: 1px solid transparent; border-bottom: none;
+    padding: 9px 13px; border-radius: 6px 6px 0 0;
+    font-size: 13.5px; font-weight: 500; letter-spacing: -0.1px;
+    white-space: nowrap; transition: color 0.15s, background 0.15s;
+  }
+  .links a:hover { color: var(--tx0); background: var(--card); }
+  .links a.active { color: #c7ccff; background: rgba(94,106,210,0.14); border-color: rgba(94,106,210,0.35); }
+  .links a:focus-visible { outline: 2px solid var(--acc2); outline-offset: -2px; }
+
+  .hero {
+    position: relative; padding: 46px 0 30px;
+    background:
+      radial-gradient(600px 240px at 20% -40px, rgba(94,106,210,0.16), transparent 70%),
+      radial-gradient(500px 200px at 85% -60px, rgba(112,112,255,0.08), transparent 70%);
+  }
+  .hero h1 { font-size: 33px; font-weight: 500; letter-spacing: -1.06px; line-height: 1.12; color: var(--tx0); }
+  .hero .sub { margin-top: 12px; font-size: 15.5px; color: var(--tx2); max-width: 680px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-top: 28px; }
+  .stat { background: var(--card); border: 1px solid var(--bd); border-radius: 8px; padding: 14px 16px; }
+  .stat .v { font-family: 'JetBrains Mono', monospace; font-feature-settings: 'zero'; font-size: 20px; font-weight: 500; color: var(--tx0); letter-spacing: -0.5px; }
+  .stat .k { margin-top: 4px; font-size: 10.5px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--tx3); }
+
+  section { padding: 34px 0 10px; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--acc3); margin-bottom: 6px; }
+  h2 { font-size: 21px; font-weight: 600; letter-spacing: -0.24px; color: var(--tx0); margin: 0 0 8px; }
+  .lede { color: var(--tx1); font-size: 14.5px; margin-bottom: 18px; max-width: 720px; }
+  h3 { font-size: 14.5px; font-weight: 600; color: var(--tx0); margin: 22px 0 8px; letter-spacing: -0.15px; }
+  p { color: var(--tx1); font-size: 14.5px; margin-bottom: 12px; }
+  p b, li b { color: var(--tx0); font-weight: 600; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #a5b0ff; }
+  ul.list { list-style: none; margin: 0 0 12px; }
+  ul.list li { position: relative; padding: 5px 0 5px 20px; color: var(--tx1); font-size: 14px; }
+  ul.list li::before { content: ""; position: absolute; left: 5px; top: 13px; width: 5px; height: 5px; border-radius: 1.5px; background: var(--tx3); }
+  ol.steps { list-style: none; counter-reset: step; margin: 0 0 14px; }
+  ol.steps li { counter-increment: step; position: relative; padding: 10px 0 10px 44px; color: var(--tx1); font-size: 14.5px; border-bottom: 1px solid var(--bd-s); }
+  ol.steps li:last-child { border-bottom: none; }
+  ol.steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 11px;
+    width: 26px; height: 26px; border-radius: 7px;
+    background: rgba(94,106,210,0.14); border: 1px solid rgba(94,106,210,0.35);
+    color: #c7ccff; font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.steps li b { color: var(--tx0); font-weight: 600; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 6px 0 18px; }
+  .card { background: var(--card); border: 1px solid var(--bd); border-radius: 10px; padding: 18px; }
+  .card h3 { margin: 0 0 6px; }
+  .card .tag { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--acc3); margin-bottom: 8px; }
+  .card p { font-size: 13.5px; margin-bottom: 8px; }
+  .card .fix { font-size: 13px; color: var(--win); }
+  .card .fix b { color: var(--win); }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--bd); border-radius: 10px; background: var(--card); margin: 8px 0 18px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 720px; }
+  thead th {
+    background: var(--bg1); text-align: left;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase; color: var(--tx3);
+    padding: 11px 16px; border-bottom: 1px solid var(--bd);
+  }
+  tbody td { padding: 12px 16px; border-bottom: 1px solid var(--bd-s); color: var(--tx1); vertical-align: top; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody td:first-child { color: var(--tx0); font-weight: 500; }
+
+  pre {
+    background: var(--bg1); border: 1px solid var(--bd); border-radius: 10px;
+    padding: 16px 18px; overflow-x: auto; margin: 8px 0 18px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.65; color: #c9d1e6;
+  }
+  pre .cm { color: var(--tx3); }
+  pre .hl { color: #a5b0ff; }
+  pre .grn { color: var(--win); }
+
+  .note {
+    border: 1px solid rgba(245,158,11,0.35); background: rgba(245,158,11,0.06);
+    border-radius: 10px; padding: 14px 18px; margin: 10px 0 18px; font-size: 13.5px; color: var(--tx1);
+  }
+  .note b { color: var(--tie); }
+
+  .signoff { border-top: 1px solid var(--bd-s); margin-top: 30px; padding: 26px 0 8px; color: var(--tx2); font-size: 14px; }
+  .signoff b { color: var(--tx0); }
+  footer { border-top: 1px solid var(--bd-s); margin-top: 30px; padding: 22px 0 40px; color: var(--tx3); font-size: 12.5px; }
+  footer a { color: var(--tx2); text-decoration: none; border-bottom: 1px solid var(--bd); }
+  footer a:hover { color: var(--tx0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 26px; }
+    .nav-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-row1">
+      <span class="wordmark">OrcaRouter<span class="dot">.</span></span>
+      <span class="pill ver">TRIAL KICKOFF</span>
+      <span class="nav-right">PREPARED FOR TENKI · AUG 2026</span>
+    </div>
+    <div class="links">
+      <a href="#heard">What we heard</a>
+      <a href="#setup">Setup</a>
+      <a href="#code">Code</a>
+      <a href="#why">Your stack</a>
+      <a href="#measure">Measuring it</a>
+      <a href="#next">Next steps</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="kicker">ORCAROUTER · TRIAL KICKOFF</div>
+    <h1>One endpoint for every model.<br>No per-model ceilings. Failover that just works.</h1>
+    <p class="sub">This page is your trial setup for Tenki's code review pipeline. It covers what we heard on the call, the three changes we're making, and how we'll measure the difference. Everything here is live in the product today, not on a roadmap.</p>
+    <div class="stats">
+      <div class="stat"><div class="v">0%</div><div class="k">Token markup</div></div>
+      <div class="stat"><div class="v">5</div><div class="k">Models per fallback chain</div></div>
+      <div class="stat"><div class="v">429 / 5xx</div><div class="k">Auto-failover triggers</div></div>
+      <div class="stat"><div class="v">ZDR</div><div class="k">Zero data retention, default</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="heard">
+  <div class="wrap">
+    <div class="kicker">01 · WHAT WE HEARD</div>
+    <h2>Three things you said, three things we do</h2>
+    <p class="lede">You were clear on the call: reviews need to come back faster, they can't stall on provider hiccups, and you don't want to keep planning around account-level throughput caps. Here is each one, and the OrcaRouter mechanism that answers it.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">Reliability</div>
+        <h3>Reviews that stall on provider errors</h3>
+        <p>You've built retry handling into your product because a single provider error can stall a session for minutes, or drop a review outright.</p>
+        <p class="fix">Fix: <b>fallback chains.</b> A request that gets a 429 or 5xx from one provider is served by the next in the chain, automatically. No retry UI for your customers to watch.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Speed</div>
+        <h3>Review latency</h3>
+        <p>You shipped a Flash review variant to cut latency, which means you're maintaining a special low-latency code path in your pipeline.</p>
+        <p class="fix">Fix: <b>per-request routing.</b> Easy diffs go to a small, fast model; hard ones escalate to frontier. Flash becomes a routing policy, not a separate code path.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Throughput</div>
+        <h3>Provider account ceilings</h3>
+        <p>You're on direct Anthropic and OpenAI accounts, so your burst ceiling is their rate limit tier. Ten PRs landing Monday morning means ten concurrent review fleets hitting one meter.</p>
+        <p class="fix">Fix: <b>no per-model rate limits.</b> Bursts spread across every provider we carry instead of dying on one account cap. The only throttle is a workspace-level bucket, which we can size to your traffic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="wrap">
+    <div class="kicker">02 · SETUP</div>
+    <h2>Running in one afternoon</h2>
+    <ol class="steps">
+      <li><b>Create a workspace</b> at <span class="mono">orcarouter.ai/console</span> and generate an API key. Two minutes.</li>
+      <li><b>Decide on keys.</b> Either use platform routing, or attach your existing Anthropic and OpenAI keys under BYOK at <span class="mono">orcarouter.ai/console/byok</span>. BYOK keeps your current contracts and invoices; you pay a small platform fee instead of token markup. Your choice, and you can mix both per key.</li>
+      <li><b>Add a fallback chain to your scanner calls.</b> The code sample below is a drop-in: you keep your primary model, and the chain takes over if it fails.</li>
+      <li><b>Try <span class="mono">orcarouter/auto</span> on the Flash path.</b> It sizes each request to how hard it is, and learns from your traffic. If you need deterministic behavior anywhere, keep the model pinned there. You choose per call.</li>
+    </ol>
+    <div class="note"><b>One honest caveat before you see it live:</b> we don't expose per-model rate limits, but a workspace-level bucket does exist. It's there to keep the platform predictable, and we size it to your expected volume up front, so it never surprises you mid-burst.</div>
+  </div>
+</section>
+
+<section id="code">
+  <div class="wrap">
+    <div class="kicker">03 · CODE</div>
+    <h2>What the calls look like</h2>
+
+    <h3>Fallback chain, curl</h3>
+    <p>Your primary model stays first. On a 429, 5xx, or network error, the chain serves the request from the next model. Billing lands on whichever model actually served.</p>
+<pre><span class="cm"># One call. Up to 5 models in the chain.</span>
+curl https://api.orcarouter.ai/v1/chat/completions \
+  -H "Authorization: Bearer $ORCA_KEY" \
+  -H "Content-Type: application/json" \
+  -H "X-OrcaRouter-Include-Cost: true" \
+  -d '{
+    "model": "openai/gpt-4o",
+    "extra_body": {
+      "models": [
+        "openai/gpt-4o",
+        "anthropic/claude-haiku-4.5",
+        "google/gemini-2.5-pro"
+      ]
+    },
+    "messages": [
+      {"role": "user", "content": "Review this diff for correctness and security."}
+    ]
+  }'</pre>
+    <p>Response headers tell you what happened: <span class="mono">X-Orca-Fallback-Model</span> shows which model served the request, <span class="mono">X-Orca-Request-Id</span> is your lookup key for cost and logs, and with the cost header on, <span class="mono">usage.cost_usd</span> carries the settled price of that call.</p>
+
+    <h3>Same thing from Go</h3>
+    <p>Standard OpenAI client, base URL swapped, chain passed as an extra body field.</p>
+<pre><span class="cm">// go get github.com/openai/openai-go  (or your existing SDK)</span>
+client := openai.NewClient(openai.ClientConfig{
+    BaseURL: "https://api.orcarouter.ai/v1",
+    APIKey:  os.Getenv("ORCA_KEY"),
+})
+
+resp, err := client.Chat.Completions.New(ctx, openai.ChatCompletionNewParams{
+    Model: "openai/gpt-4o",
+    Messages: []openai.ChatCompletionMessageParamUnion{
+        openai.UserMessage("Review this diff."),
+    },
+    ExtraBody: map[string]any{
+        "models": []string{
+            "openai/gpt-4o",
+            "anthropic/claude-haiku-4.5",
+            "google/gemini-2.5-pro",
+        },
+    },
+})</pre>
+
+    <h3>Auto router for the Flash path</h3>
+    <p>Same endpoint, <span class="mono">orcarouter/auto</span> as the model. It weighs quality, cost, latency, and reliability per request. The <span class="mono">X-Orca-Resolved-Model</span> response header tells you what it picked.</p>
+<pre>curl https://api.orcarouter.ai/v1/chat/completions \
+  -H "Authorization: Bearer $ORCA_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "orcarouter/auto",
+    "messages": [
+      {"role": "user", "content": "Quick pass: obvious bugs or merge-blocking issues only."}
+    ]
+  }'</pre>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="kicker">04 · YOUR STACK</div>
+    <h2>Why this fits how Tenki actually runs</h2>
+    <ul class="list">
+      <li><b>You're on two providers today.</b> Your pipeline calls Anthropic and OpenAI directly. With OrcaRouter, a provider outage or 429 no longer needs a code path in your product. The chain handles it, and your customers never see a "retrying" message in their PR again.</li>
+      <li><b>Your reviews are a pipeline, not one call.</b> Scanners in parallel, a verification step, model overrides you A/B test. Every one of those calls can carry its own chain or routing policy. Nothing about the architecture changes; the endpoint and the fallback do.</li>
+      <li><b>The dollar per review is the margin.</b> You charge $1.00 per review. Routing the easy scans to small, cheap models while keeping 0% token markup drops your cost of goods on every review, not just the hard ones.</li>
+      <li><b>Your own benchmark says quality is your weapon.</b> 68.9% recall on the 2026 benchmark you published is a strong number. You should keep the frontier models on the hard reviews, and we give you a way to do that without paying frontier prices on the easy ones.</li>
+      <li><b>Zero data retention by default.</b> Customer code is the whole product. We keep no data by default, and if your workspace holds a ZDR grant it applies to BYOK keys too. Your data-handling story stays intact across every model in the catalog, not just the two providers you've signed agreements with.</li>
+    </ul>
+    <div class="note"><b>Determinism is yours.</b> If you need a pinned model for verification or for benchmark consistency, pin it. Per-request routing is a choice, not a requirement. You'll never see a model you didn't approve appear in a chain you didn't write.</div>
+  </div>
+</section>
+
+<section id="measure">
+  <div class="wrap">
+    <div class="kicker">05 · MEASURING IT</div>
+    <h2>How we'll know it's working</h2>
+    <p class="lede">Trials only count if the numbers are yours, measured on your traffic. We'll run the trial against your real review pipeline, mirroring traffic so nothing ships with an unproven model.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Metric</th><th>Baseline</th><th>With OrcaRouter</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Review latency, p50 / p95</td>
+            <td>Your current numbers from your dashboard</td>
+            <td>Same PRs, same scanners, measured per request via <span class="mono">X-Orca-Resolved-Model</span> and request IDs</td>
+          </tr>
+          <tr>
+            <td>Error and retry rate</td>
+            <td>Provider 429s and 5xx you log today</td>
+            <td>Calls the chain serves after a failover, visible in the response headers</td>
+          </tr>
+          <tr>
+            <td>Cost per review</td>
+            <td>What the account meters say today</td>
+            <td>Exact per-request cost from <span class="mono">usage.cost_usd</span>, aggregated at the workspace level</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>If the trial doesn't beat your baseline on the metrics you care about, we'll say so. The measurement belongs to you either way.</p>
+  </div>
+</section>
+
+<section id="next">
+  <div class="wrap">
+    <div class="kicker">06 · NEXT STEPS</div>
+    <h2>What we need from you</h2>
+    <ul class="list">
+      <li><b>Current provider tiers</b> for your Anthropic and OpenAI accounts, so we size the workspace bucket before your next Monday burst.</li>
+      <li><b>Weekly PR volume and burst pattern.</b> How many reviews per day, and when they cluster. That's the traffic shape we design the chains for.</li>
+      <li><b>Which pipeline stages pin models.</b> Tell us the calls that must stay deterministic (verification, benchmark runs) and the ones that can route (Flash scans).</li>
+    </ul>
+    <p>While the trial runs, you get a direct line to me for questions, plus the docs at <span class="mono">docs.orcarouter.ai</span> for the details. If anything on this page reads wrong against your architecture, tell me before you build around it.</p>
+    <div class="signoff">
+      <b>Jaccob Truax</b><br>
+      Head of Sales, OrcaRouter<br>
+      orcarouter.ai · reply to this thread anytime
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    OrcaRouter · <a href="https://orcarouter.ai">orcarouter.ai</a> · <a href="https://docs.orcarouter.ai">docs.orcarouter.ai</a> · prepared for Tenki, August 2026. Benchmark figure cited is Tenki's own published result. Product behavior described from current OrcaRouter documentation.
+  </div>
+</footer>
+
+</body>
+</html>
