@@ -118,7 +118,7 @@
     <span>Audience: sales, AEs, founding team</span>
   </div>
   <div class="metaline">
-    <span>Build: <span id="buildtag">v1.0 2026-08-26</span></span>
+    <span>Build: <span id="buildtag">v1.1 2026-08-26</span></span>
   </div>
 </header>
 
@@ -260,6 +260,20 @@
   </tbody>
 </table>
 
+<h3>The commitment pitch: the math behind the money line</h3>
+<p>The deal is not a fee and it is not a discount. It is a floor: the prospect keeps routing what they already route, at a commit that is the flip side of the savings. The rule is one line long: <b>the commit is 100 minus the savings.</b> Promise a 40% cut, the commit is 60% of today's spend, prepaid monthly as credit. The prepay locks the number in and funds the infrastructure that delivers it.</p>
+<table class="tbl">
+  <thead><tr><th>Spend today</th><th>Savings we prove</th><th>Commit (prepaid credit)</th><th>Their net bill</th></tr></thead>
+  <tbody>
+    <tr><td>$100,000/yr</td><td>30%</td><td>$70,000/yr ($5,833/mo)</td><td>$70,000/yr</td></tr>
+    <tr><td>$100,000/yr</td><td>40%</td><td>$60,000/yr ($5,000/mo)</td><td>$60,000/yr</td></tr>
+    <tr><td>$1,200,000/yr</td><td>40%</td><td>$720,000/yr ($60,000/mo)</td><td>$720,000/yr</td></tr>
+    <tr><td>$1,200,000/yr</td><td>50%</td><td>$600,000/yr ($50,000/mo)</td><td>$600,000/yr</td></tr>
+  </tbody>
+</table>
+<div class="quote"><span class="say">Say it like this</span>"You are spending about $100,000 a year on inference. We replay your logs, we prove the shave, and then you commit to the shaved-down number, prepaid monthly as credit. Your bill drops about 40 percent. Our infrastructure gets funded by the cash in hand. That is the whole deal, and the pilot proves the number before you commit a dollar."</div>
+<div class="quote"><span class="say">Say it like this</span>"Prepay is not a fee on your spend. It is a floor on your savings. The credit buys your tokens at the lower rate, you use what you use, and you add on as you grow. The lock is the thing that makes the savings real."</div>
+
 <h3>Before / after: demo narration</h3>
 <table class="tbl">
   <thead><tr><th>Before (feature talk)</th><th>After (benefit talk, straight line)</th></tr></thead>
@@ -308,6 +322,8 @@
     <li>How do you attribute cost back to teams today, or do you?</li>
     <li>Is that spend forecasted and budgeted, or is it running hot?</li>
     <li>What would a 30-40% reduction on that line fund instead?</li>
+    <li>If we prove a 40% cut on a 4-week pilot, could you commit 60% of that spend to us, prepaid monthly as credit?</li>
+    <li>Is your budget built for a monthly prepaid credit, or does procurement need an annual number?</li>
     <li>Who owns the AI budget, and when does the next budget cycle close?</li>
   </ul>
 </div>
@@ -349,6 +365,8 @@
     <tr><td>"Would your security team sign off on a gateway that screens prompts before billing?"</td><td>Surfaces the proxy objection early.</td></tr>
     <tr><td>"How much does one hour of model downtime cost your company?"</td><td>The money question. Write the number down.</td></tr>
     <tr><td>"What is 1% output quality worth to you in dollars?"</td><td>Quantifies the quality trade. Write it down.</td></tr>
+    <tr><td>"If a replay showed a 40% cut on your own logs, could you commit 60% of that spend, prepaid monthly?"</td><td>The commit question. The pilot proves, the commit locks.</td></tr>
+    <tr><td>"Does finance prefer a prepaid credit or a monthly invoice?"</td><td>Surfaces procurement mechanics early, before the close.</td></tr>
   </tbody>
 </table>
 
@@ -360,7 +378,7 @@
 </ol>
 
 <h3>Deal structure notes (from the playbook)</h3>
-<p>The 15-minute discovery call skeleton: 0-2 open with the signal, 2-5 diagnose, 5-10 show ONE pillar, 10-13 close, 13-15 next step. The typical SLG deal is a minimum monthly committed spend: a <b>floor on spend routed through the platform, never a fee</b>. Example shape (illustrative): a $10k/mo prospect commits $5k/mo, saves 30-40% net, and the floor is how the saving gets shared. Never describe the commitment as a fee; a fee against spend eats the entire savings math.</p>
+<p>The 15-minute discovery call skeleton: 0-2 open with the signal, 2-5 diagnose, 5-10 show ONE pillar, 10-13 close, 13-15 next step. The typical SLG deal is a minimum committed spend, prepaid monthly as credit: a <b>floor on spend routed through the platform, never a fee</b>. The rule: <b>commit % = 100 minus savings %</b>. Promise a 40% cut, the commit is 60% of today's spend. Two worked shapes (illustrative): a $10k/mo prospect commits $5k/mo; a $100k/yr prospect commits $60-70k/yr as roughly $5-5.8k/mo prepaid, netting 30-40% savings. Enterprise scale: $100k/mo spend, $60-70k/mo commit, same math. The prepay funds the infrastructure that delivers the savings. Never describe the commitment as a fee; a fee against spend eats the entire savings math.</p>
 </section>
 
 <!-- ================= LISTENING ================= -->
@@ -419,7 +437,7 @@
       <li>Loop the pain one last time, confirm the pillar.</li>
       <li>Offer the pilot: W1 replay offline, W2-3 shadow on their keys, W4 canary or walk.</li>
       <li>Set the next step: log export, trial workspace, security review in parallel.</li>
-      <li>If a deal shapes, name the shape: committed monthly floor, never a fee.</li>
+      <li>If a deal shapes, name the shape: committed spend prepaid monthly as credit, a floor never a fee.</li>
     </ul>
   </div>
 </div>
@@ -439,6 +457,7 @@
 <div class="card">
   <p><span class="timer">7-10</span><b>Act 3: Agree the target.</b> Loop the pain, quantify it, ask the permission question.</p>
   <div class="quote"><span class="say">Say it like this</span>"If a read-only replay of your own logs showed you exactly what that split is, and what a 30-40% reduction would look like at a quality bar you set, is that worth the next 15 minutes?"</div>
+  <p><b>Agree the target in numbers.</b> Get the spend base, name the savings target, and write the commit on the board: "You said about $100k a year. If the replay proves a 40% cut, the commit is 60% of that, about $5k a month, prepaid as credit. Is that a shape finance could sign?" The commit is the inverse of the savings, and the pilot proves the savings first.</p>
 </div>
 
 <div class="card">
@@ -455,6 +474,7 @@
 <div class="card">
   <p><span class="timer">22-25</span><b>Act 5: Prove.</b> The pilot is the proof. Give them the measurement before they give you anything.</p>
   <div class="quote"><span class="say">Say it like this</span>"Here is the offer: week one, we replay your logged traffic offline. No integration, no production traffic, your data stays yours. You see cost and quality deltas on your own workloads. Weeks two and three, shadow mode on your own keys: mirrored traffic, production untouched, while your security team reviews in parallel. Week four, you pick the threshold. Beat it and we canary one workload. Miss it and you walk, keeping the measurement. The numbers belong to you either way."</div>
+  <p><b>One KPI.</b> The replay has a single output: the measured spend delta on their traffic at a quality bar they set. That output is the draft contract. When they beat the threshold, the next conversation is not "do you like it" but "here is the number you already saw, here is the prepaid credit shape, who signs."</p>
 </div>
 
 <div class="card">
@@ -473,7 +493,7 @@
 
 <div class="warn">
   <div class="t">Demo traps</div>
-  Never demo more than one pillar. Never say "no limits" (a workspace bucket exists). Never quote a model name you have not verified against the docs. Never present 62/27/11 as their split; it is illustrative, and the pilot measures theirs. Never say $0 fees on BYOK or Enterprise without the pricing-page qualifiers.
+  Never demo more than one pillar. Never say "no limits" (a workspace bucket exists). Never quote a model name you have not verified against the docs. Never present 62/27/11 as their split; it is illustrative, and the pilot measures theirs. Never say $0 fees on BYOK or Enterprise without the pricing-page qualifiers. Never promise a savings percent without its matching commit: the commit is 100 minus the savings, and the pilot proves the savings before either is promised.
 </div>
 </section>
 
@@ -494,7 +514,10 @@
     <tr><td>"Weave is ranked above you on the board."</td><td>"Fair. We do not fight the board; we publish the method so you can audit the fight. What we measure is your traffic. And their router is a feature of a monitoring product priced per engineer; routing is all we do."</td><td>Your logs, your threshold, your measurement.</td></tr>
     <tr><td>"NotDiamond is cheaper per token."</td><td>"Cheaper than what? They charge per routed token and their savings math is modeled. We add zero on tokens and our savings math is measured on your logs. Modeled savings are a calculator; measured savings are a replay."</td><td>Run the replay before you compare calculators.</td></tr>
     <tr><td>"We need to see benchmarks first."</td><td>"You should. The public board is a useful baseline and we quote it with a date. But the benchmark that matters is yours, which is exactly what the replay measures."</td><td>Kick off the replay this week.</td></tr>
-    <tr><td>"This is a big commitment."</td><td>"It is a 30-day pilot with a threshold you set. Miss it and you walk, keeping the measurement. And when we do talk contracts, it is a floor on spend you were routing anyway, not a fee on top of it."</td><td>Sign nothing; export logs.</td></tr>
+    <tr><td>"Why would we prepay?"</td><td>"Because the prepaid credit is your money buying your tokens at the shaved-down rate. It funds the infrastructure that delivers the savings, and it is a floor, not a fee. You use the credit, you add on as you grow."</td><td>The pilot proves the number before you prepay anything.</td></tr>
+    <tr><td>"This locks us in."</td><td>"The lock is the flip side of the savings. We take the risk first: your logs, your threshold, your measurement, and you walk if we miss. The contract only locks the number you already saw proven."</td><td>Run the pilot, sign nothing.</td></tr>
+    <tr><td>"We want a discount, not a contract."</td><td>"A discount gets renegotiated every renewal and gives us nothing to invest. A committed credit gives you a locked rate and gives us the cash to run the routing that earns it. Same savings; one is a price cut, one is a partnership."</td><td>Prove the savings first; the shape is a formality.</td></tr>
+    <tr><td>"This is a big commitment."</td><td>"It is a 30-day pilot with a threshold you set. Miss it and you walk, keeping the measurement. And when we do talk contracts, it is a floor on spend you were routing anyway, prepaid as credit, not a fee on top of it."</td><td>Sign nothing; export logs.</td></tr>
   </tbody>
 </table>
 
@@ -524,6 +547,7 @@
     <tr><td>Stripe acquisition of OpenRouter, ~$7.5B, multi-outlet confirmed</td><td>News 2026-08-19</td></tr>
     <tr><td>Weave: $50/engineer/mo seat pricing (dated intel; re-verify); ranks above us on the board</td><td>Wiki intel 2026-08-19; board 2026-08-26</td></tr>
     <tr><td>Nadir: pays from savings, 25% of first $2k, 10% above; "60% cheaper, 98% of always-Opus quality"</td><td>getnadir.com 2026-08-26</td></tr>
+    <tr><td>Commit motion (internal framing, not a public claim): commit % = 100 minus savings %; prepaid monthly as credit; mid-market example $100k/yr spend commits $60-70k/yr as $5-5.8k/mo, netting 30-40% savings; enterprise scale $100k/mo spend, $60-70k/mo commit</td><td>Internal pricing goal 2026-08-26</td></tr>
   </tbody>
 </table>
 
@@ -538,6 +562,7 @@
     <li>"$499 Team plan": internal repos only; live page says $49.</li>
     <li>"No limits at all": a workspace rate bucket exists. The pitch is "no per-model ceilings," never "no limits."</li>
     <li>"40%+ savings" without the vendor-reported label.</li>
+    <li>A savings percent without its matching commit: the two are one number, promise them together. And never call the commit a fee; a fee on spend eats the savings math.</li>
     <li>Mixing units: board cost is per 1k queries, model prices are per 1M tokens. Never mix them in one claim.</li>
     <li>Unverified model names in code samples: only use names verified in the docs corpus (fallback example chain: openai/gpt-4o, anthropic/claude-haiku-4.5, google/gemini-2.5-pro).</li>
   </ul>
@@ -572,6 +597,7 @@
   <li><b>Portkey rebranded to Prisma Airs AI Gateway</b> and is running an enterprise webinar motion. Suite sprawl is the beatable part.</li>
   <li><b>OpenRouter is adding routing and guardrail features</b> (auto routing, guardrails, ZDR attribution, zero completion insurance) and its auto-routing is powered by NotDiamond. Feature state rots fast; re-verify any "they lack X" claim before quoting.</li>
   <li><b>Our own pricing page FAQ now admits</b> Enterprise may include a flat per-million-token routing fee. Quote zero-markup for Hacker/Team and let the pricing page speak for Enterprise.</li>
+  <li><b>Pricing motion decided:</b> the commit is the inverse of the savings (commit % = 100 minus savings %), prepaid monthly as credit, and the prepay funds the infrastructure. Worked example: $100k/yr spend commits $60-70k/yr as roughly $5-5.8k/mo, netting 30-40% savings. Scale note: "$60-70k monthly" reads as $60-70k per year billed monthly at mid-market scale; at enterprise scale ($100k/mo spend) the same ratio is a $60-70k/mo commit. Sales examples must pick one scale and stay consistent.</li>
 </ul>
 
 <h3>What we learned about the craft</h3>
@@ -592,7 +618,7 @@
 </section>
 
 <div class="foot">
-  <p><span class="mono">OrcaRouter enablement · internal · v1.0 2026-08-26</span></p>
+  <p><span class="mono">OrcaRouter enablement · internal · v1.1 2026-08-26</span></p>
   <p>Sources: Enterprise Briefing deck (confidential), live pricing and docs at orcarouter.ai and docs.orcarouter.ai, live competitor sites (openrouter.ai, litellm.ai, notdiamond.ai, weaveos.com, getnadir.com, portkey.ai, konghq.com, developers.cloudflare.com, helicone.ai), RouteWorks leaderboard JSON, and the internal wiki. Figures vendor-reported unless dated and sourced. Re-verify pricing and feature claims before prospect-facing use.</p>
   <p>Framework references: J. Belfort, The Way of the Wolf (straight line); S. Covey, The 7 Habits of Highly Effective People, Habit 5 (empathic listening); Gong-reported discovery benchmarks; MEDDIC and GPCTBA/C&amp;I for qualification structure.</p>
 </div>
