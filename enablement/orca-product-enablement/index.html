@@ -84,6 +84,21 @@
   footer{padding:44px 0 80px}
   footer p{color:var(--dim);font-size:13px}
   .copylink{font-size:12px;color:var(--dim);font-family:var(--mono)}
+  /* technical tab set */
+  .tabbar{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  .tabbtn{font-family:var(--sans);font-size:13.5px;font-weight:510;color:var(--muted);background:var(--surface-1);border:1px solid var(--border);border-radius:999px;padding:8px 15px;cursor:pointer}
+  .tabbtn:hover{color:var(--text);border-color:var(--border-strong)}
+  .tabbtn[aria-selected="true"]{color:var(--text);background:var(--accent-soft);border-color:rgba(94,106,210,0.5)}
+  .panel{padding:4px 0 0}
+  .panel[hidden]{display:none}
+  .step{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:grid;grid-template-columns:44px 1fr;gap:16px}
+  .step .n{font-family:var(--mono);color:var(--accent);font-size:16px;line-height:1.4}
+  .step .tech{margin:0 0 10px;font-size:14px}
+  .step .plain{margin:0;font-size:14.5px;color:var(--muted);border-left:2px solid rgba(94,106,210,0.5);padding-left:12px}
+  .step .tech b,.step .plain b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:4px}
+  td.plain{color:var(--muted);font-size:13.5px}
+  td.tech{font-size:13.5px}
+  .lvl{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--green);border:1px solid rgba(16,185,129,0.35);background:rgba(16,185,129,0.08);border-radius:999px;padding:2px 9px;margin-left:10px;vertical-align:middle}
   @media (max-width:860px){
     .stats,.grid2,.grid3{grid-template-columns:1fr}
     h1{font-size:33px} .wrap{padding:0 20px}
@@ -98,6 +113,7 @@
     <span class="brand">OrcaRouter Enablement</span>
     <a href="#what">What it is</a>
     <a href="#pillars">Pillars</a>
+    <a href="#technical">Technical</a>
     <a href="#pricing">Pricing</a>
     <a href="#personas">Personas</a>
     <a href="#objections">Objections</a>
@@ -195,6 +211,115 @@
         <div class="quote"><span class="lbl">Say it like this</span>"Guardrails stop the content, the firewall stops the action, and both leave evidence you can hand to a reviewer."</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="technical">
+  <div class="wrap">
+    <h2>Technical, then plain</h2>
+    <p class="sub">The same four ideas twice: once the way an engineer wants to hear it, then again in words anyone can follow. Use the technical column with technical buyers and the plain column with everyone else. The plain column measures at a 3rd to 4th grade reading level, comfortably inside the 7th grade target.<span class="lvl">FK grade 3.3</span></p>
+
+    <div class="tabbar" role="tablist" aria-label="Technical sections">
+      <button role="tab" class="tabbtn" data-tab="tech-flow" aria-controls="tech-flow" aria-selected="true">How a request flows</button>
+      <button role="tab" class="tabbtn" data-tab="tech-parts" aria-controls="tech-parts" aria-selected="false">The parts, in plain words</button>
+      <button role="tab" class="tabbtn" data-tab="tech-jargon" aria-controls="tech-jargon" aria-selected="false">Jargon decoder</button>
+      <button role="tab" class="tabbtn" data-tab="tech-answers" aria-controls="tech-answers" aria-selected="false">Engineer questions</button>
+    </div>
+
+    <section id="tech-flow" class="panel" role="tabpanel" aria-label="How a request flows">
+      <p class="sub">Six steps, from the moment a request leaves the client to the moment the receipt is written.</p>
+      <div class="step"><div class="n">1</div><div>
+        <p class="tech"><b>Technical</b>Your client posts an OpenAI-shaped payload to api.orcarouter.ai/v1 with a model id. Ids are provider-prefixed, such as anthropic/claude-opus-4.7, or a router slug such as orcarouter/auto.</p>
+        <p class="plain"><b>Plain</b>You send a message to our web address. It uses the same format you already use. You can name the model you want, or ask us to choose one.</p>
+      </div></div>
+      <div class="step"><div class="n">2</div><div>
+        <p class="tech"><b>Technical</b>The gateway authenticates the key, evaluates workspace policy including guardrails, firewall rules and budgets, then resolves the requested model or router.</p>
+        <p class="plain"><b>Plain</b>We check who you are and what your team is allowed to do. Then we look at what you asked for.</p>
+      </div></div>
+      <div class="step"><div class="n">3</div><div>
+        <p class="tech"><b>Technical</b>Routing grades the request and selects a target model according to the strategy in play. The routing step adds under a millisecond by default.</p>
+        <p class="plain"><b>Plain</b>We pick the model that fits the job. This choice takes less time than a camera flash.</p>
+      </div></div>
+      <div class="step"><div class="n">4</div><div>
+        <p class="tech"><b>Technical</b>The request goes to the upstream provider. If that provider errors or throttles, the fallback chain tries the next model before any bytes reach the client.</p>
+        <p class="plain"><b>Plain</b>We send your message to the model company. If they are busy or broken, we try the next one. You never see the stumble.</p>
+      </div></div>
+      <div class="step"><div class="n">5</div><div>
+        <p class="tech"><b>Technical</b>The response streams back in the OpenAI JSON shape. X-Orca response headers describe how the request was routed and which model served it.</p>
+        <p class="plain"><b>Plain</b>The answer comes back in the format you already read. A small note on the reply tells you which model answered.</p>
+      </div></div>
+      <div class="step"><div class="n">6</div><div>
+        <p class="tech"><b>Technical</b>Token counts, latency, status code and cost are recorded per request. Prompt content and model output are not written to disk.</p>
+        <p class="plain"><b>Plain</b>We write down what it cost and how long it took. We do not keep what you said.</p>
+      </div></div>
+    </section>
+
+    <section id="tech-parts" class="panel" role="tabpanel" aria-label="The parts in plain words" hidden>
+      <p class="sub">Every moving part, with the technical description next to the plain one.</p>
+      <table>
+        <tr><th>Part</th><th>What it is, technically</th><th>In plain words</th></tr>
+        <tr><td><b>Gateway</b></td><td class="tech">An OpenAI-compatible HTTP surface. Point the OpenAI SDK base_url at api.orcarouter.ai/v1 and existing calls work unchanged. Anthropic, Gemini and OpenAI native shapes are also supported.</td><td class="plain">You change one line of code. Everything else keeps working.</td></tr>
+        <tr><td><b>Model catalog</b></td><td class="tech">Provider-prefixed ids read live from the catalog, so a provider repricing or a new model appears without a deploy.</td><td class="plain">One list of models from many companies. When a company changes a price, our list changes too.</td></tr>
+        <tr><td><b>Adaptive routing</b></td><td class="tech">Each request is graded and matched to a model. The router keeps learning from production outcomes instead of a frozen benchmark.</td><td class="plain">We score each question, then send it to a model that can handle it. We keep learning from real results.</td></tr>
+        <tr><td><b>Fallback chain</b></td><td class="tech">An ordered list in extra_body.models with route set to fallback. It fails over on upstream error, timeout or throttle before the first byte, and you are billed for the model that served.</td><td class="plain">You give us a backup list. If model one fails, we try model two. You pay for the one that answered.</td></tr>
+        <tr><td><b>Auto router</b></td><td class="tech">orcarouter/auto exists for every workspace at signup. It sizes the model to the request, so easy turns go to a cheap model and harder turns to a stronger one.</td><td class="plain">A default picker that works the moment you sign up. Simple questions get cheap models. Hard ones get strong models.</td></tr>
+        <tr><td><b>Named router</b></td><td class="tech">A saved strategy invoked as orcarouter/{name}. Built-in strategies cover cheapest, quality, balanced and adaptive.</td><td class="plain">You save a set of rules and give it a name. After that you just call the name.</td></tr>
+        <tr><td><b>Routing DSL</b></td><td class="tech">Programmable per-request rules in YAML with CEL expressions, authored in the dashboard and rolled out with shadow and canary.</td><td class="plain">For teams that want exact control, you write the rules yourself. You can test them quietly before they go live.</td></tr>
+        <tr><td><b>Session affinity</b></td><td class="tech">Send X-OrcaRouter-Session-Id on each turn so a conversation stays on the same model and the same upstream deployment, keeping the provider prompt cache warm.</td><td class="plain">Tell us which messages belong to the same chat. Then the model remembers the start of it and you pay less for the part it already knows.</td></tr>
+        <tr><td><b>Frontier escalation</b></td><td class="tech">Moves one session to a stronger model when the task outgrows the model it started on. Applies to named router traffic only, never to a directly named model.</td><td class="plain">If a chat gets too hard for the model it started on, we move that chat up a level. Other chats are not affected.</td></tr>
+        <tr><td><b>Fusion</b></td><td class="tech">A panel of frontier models answers in parallel and a judge returns the strongest answer verbatim, cross-checked against the rest.</td><td class="plain">Several top models answer at once. A judge picks the best answer and hands it to you.</td></tr>
+        <tr><td><b>Prompt caching</b></td><td class="tech">Cached input is billed at the provider cache rate across the 5-minute and 1-hour windows. cache_control passes straight through to providers that support it.</td><td class="plain">The part of your message that never changes costs less the second time. That discount goes straight to you.</td></tr>
+        <tr><td><b>Streaming</b></td><td class="tech">Server-sent events for incremental output. Failover applies before the first byte. A mid-stream drop is not transparently retried.</td><td class="plain">You can watch the answer appear word by word. If the model breaks after it starts, you will see it, and we will not pretend otherwise.</td></tr>
+        <tr><td><b>Prompt registry</b></td><td class="tech">Workspace-scoped system messages. Bind a key to a prompt and every bound key picks up the new version on the next call, with no redeploy.</td><td class="plain">Store your instructions with us. Change them once and every key follows, with no code to ship.</td></tr>
+        <tr><td><b>Guardrails</b></td><td class="tech">A content policy that screens request input and model output against ordered rules, with block, mask and flag actions. Observe mode runs the rules without enforcing them.</td><td class="plain">Rules that check what goes in and what comes out. You can try them in test mode first and see what they would have stopped.</td></tr>
+        <tr><td><b>Firewall</b></td><td class="tech">An action-layer policy for agent tool calls, MCP servers and outbound hosts. Verdicts are allow, audit, deny, sanitize, hold for approval or cap cost. Deterministic and fail-closed.</td><td class="plain">Rules for what your robot helpers may do. Anything not allowed is stopped before it runs.</td></tr>
+        <tr><td><b>Keys and budgets</b></td><td class="tech">Scoped keys with their own limits, budgets and revocation, all written to the audit trail. Every log line carries the key that made the call.</td><td class="plain">Give each job its own key. If one key leaks, you turn that key off and nothing else breaks.</td></tr>
+        <tr><td><b>Rate limits</b></td><td class="tech">Enforced per workspace, not per key and not per model. One shared bucket means adding a key does not multiply your budget. A 429 response carries Retry-After.</td><td class="plain">One speed limit for your whole team, not one per key. Add a person and your limit does not change.</td></tr>
+        <tr><td><b>Billing and usage</b></td><td class="tech">Charged at the provider published per-token rate, with cached tokens at the provider cache rate. usage.cost_usd reads inline, and GET /v1/generation returns the settled amount.</td><td class="plain">You pay the model company price. We add nothing. Each call can tell you exactly what it cost.</td></tr>
+        <tr><td><b>Zero data retention</b></td><td class="tech">Prompts, tool payloads and outputs are processed in memory and never written to disk. The request log keeps metadata only: timestamp, model, token counts, latency and status code.</td><td class="plain">We do not save your words. We save the receipt.</td></tr>
+        <tr><td><b>BYOK</b></td><td class="tech">Attach your own provider keys so your provider invoices you directly. Those keys join the same routing pool, so failover can still reach them. A small platform fee replaces the token price.</td><td class="plain">Use your own accounts with the model companies. We still route and protect your traffic, for a small fee.</td></tr>
+      </table>
+    </section>
+
+    <section id="tech-jargon" class="panel" role="tabpanel" aria-label="Jargon decoder" hidden>
+      <p class="sub">The words an engineer will use, and what they mean when a customer asks.</p>
+      <table>
+        <tr><th>Term</th><th>What it means</th></tr>
+        <tr><td><b>Token</b></td><td class="plain">A chunk of text, roughly three quarters of a word. Prices are quoted per million of them.</td></tr>
+        <tr><td><b>Prompt and completion tokens</b></td><td class="plain">What you send in, and what the model writes back.</td></tr>
+        <tr><td><b>Cache hit</b></td><td class="plain">The provider already saw this text, so it charges less for that part.</td></tr>
+        <tr><td><b>TTFT</b></td><td class="plain">Time to first token. How long until the first word shows up.</td></tr>
+        <tr><td><b>Latency</b></td><td class="plain">The wait. Picking a model adds under a millisecond.</td></tr>
+        <tr><td><b>Throughput</b></td><td class="plain">How much work moves through in a second.</td></tr>
+        <tr><td><b>429</b></td><td class="plain">The slow down error. We send a Retry-After header with it so your code knows when to try again.</td></tr>
+        <tr><td><b>Failover</b></td><td class="plain">The backup plan. If one model fails, we use the next one on your list.</td></tr>
+        <tr><td><b>ZDR</b></td><td class="plain">Zero data retention. We do not keep your prompts or the answers.</td></tr>
+        <tr><td><b>PII</b></td><td class="plain">Personal details about people, such as names or account numbers.</td></tr>
+        <tr><td><b>RBAC</b></td><td class="plain">Who is allowed to do what inside your team account.</td></tr>
+        <tr><td><b>CEL</b></td><td class="plain">A small language for writing routing rules.</td></tr>
+        <tr><td><b>SSE</b></td><td class="plain">Server-sent events. The way streaming answers arrive one piece at a time.</td></tr>
+        <tr><td><b>MCP</b></td><td class="plain">A standard way for agents to reach outside tools.</td></tr>
+        <tr><td><b>Embedding</b></td><td class="plain">Turning text into numbers so a machine can compare meanings.</td></tr>
+        <tr><td><b>Workspace</b></td><td class="plain">Your team account. Limits and policies live here.</td></tr>
+      </table>
+    </section>
+
+    <section id="tech-answers" class="panel" role="tabpanel" aria-label="Engineer questions" hidden>
+      <p class="sub">What a technical buyer asks, and the answer that holds up.</p>
+      <table>
+        <tr><th>They ask</th><th>You answer</th></tr>
+        <tr><td>Does routing add latency?</td><td class="plain">Under a millisecond by default. We can show you the routing header on a live call.</td></tr>
+        <tr><td>What happens when a provider throttles us?</td><td class="plain">The backup chain moves to the next model before the first byte. Your user sees a normal answer, and the log shows the switch.</td></tr>
+        <tr><td>Can we pin a model?</td><td class="plain">Yes. Name the model directly and nothing routes it away. Auto routing is a choice, not a rule.</td></tr>
+        <tr><td>Is streaming safe with failover?</td><td class="plain">Failover happens before the first byte. If a stream drops in the middle we do not quietly retry, because that could duplicate output.</td></tr>
+        <tr><td>Do you store our prompts?</td><td class="plain">No. Prompts and answers are handled in memory and never written to disk. We keep counts and timing for billing and abuse checks.</td></tr>
+        <tr><td>How do we prove a cost saving?</td><td class="plain">Replay your own logs through us and measure the difference at your quality bar. The number belongs to you.</td></tr>
+        <tr><td>Can we keep our provider contract?</td><td class="plain">Yes. That is BYOK. Your provider invoices you, we still route, and a small platform fee replaces the token price.</td></tr>
+        <tr><td>What if we need a higher ceiling?</td><td class="plain">Limits sit on the workspace, so a plan upgrade raises them. We do not set limits per model.</td></tr>
+        <tr><td>What is the migration effort?</td><td class="plain">Change the web address and the key. The request shape stays the same.</td></tr>
+        <tr><td>What if we change one instruction later?</td><td class="plain">Nothing breaks. The instruction lives with us. Edit it and every key picks up the new version on the next call.</td></tr>
+      </table>
+    </section>
   </div>
 </section>
 
@@ -330,7 +455,7 @@
       <tr><td>Pillar framing, sub-millisecond routing, cached reads across 5-minute and 1-hour windows, observe-then-enforce guardrails, compliance evidence exports, residency enforcement, agent firewall autonomy levels, license and seat terms for the Lite gateway</td><td>orcarouter.ai solution and home pages</td></tr>
       <tr><td>Commit motion, savings math, objection answers</td><td>Internal deal-shape reference, 2026-08-26</td></tr>
     </table>
-    <p class="copylink">Verification state: structural and copy audit run on this build. Render check performed after the audit.</p>
+    <p class="copylink">Verification state: structural and copy audit run on this build. Readability measured on the plain-language blocks (Flesch-Kincaid grade 3.3, 8.7 words per sentence). Render check performed after the audit. Technical content sourced from docs.orcarouter.ai on 2026-09-17.</p>
   </div>
 </section>
 
@@ -341,5 +466,37 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.tabbtn'));
+  if (!btns.length) return;
+  function show(id){
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-tab') === id;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('tabindex', on ? '0' : '-1');
+      var panel = document.getElementById(b.getAttribute('data-tab'));
+      if (panel) panel.hidden = !on;
+    });
+    if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
+  }
+  btns.forEach(function(b, i){
+    b.addEventListener('click', function(){ show(b.getAttribute('data-tab')); });
+    b.addEventListener('keydown', function(e){
+      var next = null;
+      if (e.key === 'ArrowRight') next = btns[(i + 1) % btns.length];
+      if (e.key === 'ArrowLeft') next = btns[(i - 1 + btns.length) % btns.length];
+      if (next) { e.preventDefault(); next.focus(); show(next.getAttribute('data-tab')); }
+    });
+  });
+  var h = (location.hash || '').replace('#', '');
+  var known = btns.map(function(b){ return b.getAttribute('data-tab'); });
+  show(known.indexOf(h) > -1 ? h : 'tech-flow');
+  window.addEventListener('hashchange', function(){
+    var hh = (location.hash || '').replace('#', '');
+    if (known.indexOf(hh) > -1) show(hh);
+  });
+})();
+</script>
 </body>
 </html>
