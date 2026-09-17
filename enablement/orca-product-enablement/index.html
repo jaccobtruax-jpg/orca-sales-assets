@@ -346,10 +346,15 @@
     <h3>Plans change features, not token price</h3>
     <table>
       <tr><th>Plan</th><th>What it adds</th></tr>
-      <tr><td><b>Hacker</b> <span class="pill">free</span></td><td>The full gateway: 200+ models, one OpenAI-compatible API, automatic failover.</td></tr>
-      <tr><td><b>Team</b> <span class="pill">$49/mo, up to 10 seats</span></td><td>Compliance enforcement and audit reporting on top of the gateway.</td></tr>
-      <tr><td><b>Enterprise</b></td><td>Unlimited seats, priority access, plus the private and SLA conversation.</td></tr>
+      <tr><td><b>Hacker</b> <span class="pill">free</span></td><td>The full gateway on a single-user workspace: 200+ models, one OpenAI-compatible API, automatic failover, basic observability.</td></tr>
+      <tr><td><b>Team</b> <span class="pill">$49/mo, up to 10 seats</span></td><td>Everything in Hacker plus compliance enforcement and reports, unlimited API keys, and priority support. Billed from the first day, no trial, cancel any time.</td></tr>
+      <tr><td><b>Enterprise</b> <span class="pill">custom, volume based</span></td><td>Unlimited seats, priority access to new models, every hidden and beta capability, dedicated infrastructure, a 99.99% uptime SLA, dedicated support, and pricing quoted per contract. Contact sales from the pricing page.</td></tr>
     </table>
+    <p>Hacker is a single-user workspace, which is the cleanest upgrade trigger in the whole catalogue: the first time a second person needs access, the account is on Team. There is no Team trial, so do not offer one.</p>
+    <div class="callout">
+      <div class="h">Where the zero fee stops</div>
+      <p>The $0.00 fee applies to top-ups and subscriptions on Hacker and Team. BYOK traffic may carry a platform fee, and Enterprise contracts are quoted individually: pricing is volume based, and an Enterprise plan may include a flat per-million-token routing fee depending on the volume tier. Never carry the "no fee" line into an Enterprise or BYOK conversation. Read the quote, include the fee in the math, and only then talk about a saving.</p>
+    </div>
     <p>Caching is where an effective rate drops below list. Cached and repeated prompt tokens bill at the provider's cache rate across the 5-minute and 1-hour windows, and we add nothing on top.</p>
     <p>Free model ids end in <span class="mono">-free</span>. They carry the same weights as the paid model they shadow and cost nothing, but they run under their own rate limits, and the lowest tier applies a per-request prompt-size cap.</p>
 
@@ -409,6 +414,7 @@
       <tr><td>Can we get volume discounts, rebates, or pricing off list?</td><td>No, and it is structural rather than a policy choice. There is no margin to negotiate on tokens. Caching is the one place the effective rate moves, and it moves at the provider's cache rate.</td></tr>
       <tr><td>Higher rate limits or reserved capacity?</td><td>Limits are set per workspace, not per model, and we do not publish per-model ceilings. A higher ceiling comes from a plan upgrade. We do not offer reserved capacity.</td></tr>
       <tr><td>Is there a partner tier or program?</td><td>Nothing published. Take a proposal internally rather than inventing terms on the call.</td></tr>
+      <tr><td>Is the fee still zero if we move to Enterprise?</td><td>Not automatically. Hacker and Team run at a $0.00 fee. Enterprise is quoted individually, pricing is volume based, and the plan may include a flat per-million-token routing fee depending on the tier. Ask for the quote and price the fee in before you talk about a saving.</td></tr>
       <tr><td>How do we know the savings are real?</td><td>Run the replay. Their logs, their quality bar, their threshold. The measured delta belongs to them, and if we miss the threshold they walk and keep the measurement.</td></tr>
       <tr><td>What happens to our prompts?</td><td>Zero retention by default. Prompts and outputs are processed in memory and never written to disk. What we keep is request metadata for billing and abuse prevention, plus a truncated upstream error message when something fails.</td></tr>
       <tr><td>Does routing add latency?</td><td>Under a millisecond by default. Semantic embedding is opt-in, and if you enable it you pay for that embedding call.</td></tr>
@@ -540,7 +546,7 @@
     <p class="sub">Everything on this page traces to one of these, read on 2026-09-17.</p>
     <table>
       <tr><th>Claim area</th><th>Source</th></tr>
-      <tr><td>Fee column at $0.00, pass-through at provider list, cached reads at provider cache rate, Hacker and Team and Enterprise structure, three ways to pay, bonus credit on larger plans</td><td>orcarouter.ai/pricing</td></tr>
+      <tr><td>Fee column at $0.00, pass-through at provider list, cached reads at provider cache rate, three ways to pay, bonus credit on larger plans, plan tiers, Enterprise contract terms and the possible per-million-token routing fee, single-user Hacker workspace, no Team trial</td><td>orcarouter.ai/pricing including its FAQ</td></tr>
       <tr><td>Upstream provider count, model prefixes, routing behavior, fallback chains, session affinity header, frontier escalation scope, rate limit scoping, error envelope, billing and usage object, per-request cost lookup, BYOK platform fee default, data handling and zero retention detail, prompt registry, guardrails, firewall rules, free model tier, public leaderboard API</td><td>docs.orcarouter.ai pages (introduction, models, routing, operations, features)</td></tr>
       <tr><td>Pillar framing, sub-millisecond routing, cached reads across 5-minute and 1-hour windows, observe-then-enforce guardrails, compliance evidence exports, residency enforcement, agent firewall autonomy levels, license and seat terms for the Lite gateway</td><td>orcarouter.ai solution and home pages</td></tr>
       <tr><td>Model and provider counts (200+ models, 16 provider prefixes, 198 live entries), per-model pricing rows</td><td>live public endpoints: api.orcarouter.ai/v1/models and api.orcarouter.ai/api/pricing, read 2026-09-17 with no key</td></tr>
