@@ -44,7 +44,7 @@
   .stat .n{font-family:var(--mono);font-size:22px;color:var(--text);letter-spacing:-0.02em}
   .stat .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
   /* sections */
-  section{padding:56px 0;border-bottom:1px solid var(--border)}
+  section{padding:56px 0;border-bottom:1px solid var(--border);scroll-margin-top:72px}
   h2{font-size:27px;letter-spacing:-0.015em;margin:0 0 8px;font-weight:545}
   h3{font-size:16px;margin:26px 0 8px;font-weight:560}
   .sub{color:var(--muted);margin:0 0 26px;max-width:80ch}
@@ -98,6 +98,11 @@
   .step .tech b,.step .plain b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:4px}
   td.plain{color:var(--muted);font-size:13.5px}
   td.tech{font-size:13.5px}
+  .dns{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+  .dns .phrase{margin:0 0 12px;font-size:15.5px;font-weight:600;color:var(--text)}
+  .dns p{margin:0 0 12px;font-size:14px;color:var(--muted)}
+  .dns .lbl2{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+  .dns .instead{margin:0;font-size:14px;color:var(--text);border-left:2px solid rgba(94,106,210,0.5);padding-left:12px}
   .lvl{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--green);border:1px solid rgba(16,185,129,0.35);background:rgba(16,185,129,0.08);border-radius:999px;padding:2px 9px;margin-left:10px;vertical-align:middle}
   @media (max-width:860px){
     .stats,.grid2,.grid3{grid-template-columns:1fr}
@@ -475,18 +480,57 @@
 <section id="dontsay">
   <div class="wrap">
     <h2>Do not say these</h2>
-    <p class="sub">Each line below is either false, unverifiable, or a number we would have to walk back.</p>
-    <table>
-      <tr><th>Never say</th><th>Why</th><th>Say instead</th></tr>
-      <tr><td>No rate limits at all</td><td>A workspace bucket exists.</td><td>Limits are workspace scoped, not per model.</td></tr>
-      <tr><td>Zero percent BYOK fees</td><td>The docs default is a 5% platform fee and it is configurable.</td><td>BYOK replaces token price with a small platform fee.</td></tr>
-      <tr><td>Unlimited seats on Team</td><td>Team is up to 10 seats. Enterprise is the unlimited tier.</td><td>Team covers up to 10 seats; Enterprise removes the cap.</td></tr>
-      <tr><td>A savings percentage as a fact</td><td>Savings are proven by the replay, not published.</td><td>We prove the delta on your logs before you commit.</td></tr>
-      <tr><td>Any leaderboard rank from memory</td><td>Ranks move weekly as new research baselines land.</td><td>Check the live board and quote it with the date.</td></tr>
-      <tr><td>Free signup credit</td><td>There is no standing signup credit. Voucher drops happen.</td><td>No standing credit. If a voucher drop is live, we point you at it.</td></tr>
-      <tr><td>Failover covers everything</td><td>A mid-stream drop is not transparently retried once bytes flow.</td><td>Failover lands before the first byte. Mid-stream drops are not retried.</td></tr>
-      <tr><td>Competitor pricing as settled fact</td><td>Competitor terms change and single source claims are signal, not fact.</td><td>Attribute it, date it, or leave it out.</td></tr>
-    </table>
+    <p class="sub">Eight lines that have been said out loud, and the reason each one costs more than it wins. Every entry covers what the line actually means, why getting it wrong matters, and what to say in its place.</p>
+    <div class="grid2">
+      <div class="dns">
+        <p class="phrase">"No rate limits at all"</p>
+        <p><span class="lbl2">What it means</span>Limits are enforced per workspace, and every key in that workspace draws from the same shared bucket. A ceiling exists, it is just team scoped rather than per model.</p>
+        <p><span class="lbl2">Why it matters</span>A technical buyer can disprove it with one load test, and a demo is where they try. It also sets up a nasty surprise later: the launch day they hit the bucket is the day they stop trusting everything else we said.</p>
+        <p class="instead">Say: "Limits are workspace scoped, not per model. If a limit starts to bind, the fix is a plan upgrade."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"Zero percent BYOK fees"</p>
+        <p><span class="lbl2">What it means</span>BYOK replaces the token price with a small platform fee. The docs default is 5%, and it is configurable.</p>
+        <p><span class="lbl2">Why it matters</span>It is checkable in our own public docs in about ten seconds, and the buyer who cares about BYOK is exactly the buyer who reads docs. This is the worst possible audience to be loose in front of.</p>
+        <p class="instead">Say: "BYOK swaps the token price for a small platform fee, and your provider invoices you directly."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"Unlimited seats on Team"</p>
+        <p><span class="lbl2">What it means</span>Team covers up to 10 seats. Enterprise is the tier with no seat cap.</p>
+        <p><span class="lbl2">Why it matters</span>Seats are a budget line, and procurement checks budget lines. Overpromising turns a signed deal into a fight at signature, or worse, a surprise charge that sours an account in its first month.</p>
+        <p class="instead">Say: "Team covers up to 10 seats. If you need more than that, Enterprise is the tier."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"You will save 40 percent"</p>
+        <p><span class="lbl2">What it means</span>Savings are not published anywhere. They are measured by replaying the prospect's own logs at a quality bar they set, and the measured delta is the number.</p>
+        <p><span class="lbl2">Why it matters</span>A promised number is a number we owe. The replay is the stronger offer anyway, because the prospect owns the measurement and can walk if we miss it. Promising a figure throws that advantage away.</p>
+        <p class="instead">Say: "We prove the delta on your logs before you commit a dollar, and the number belongs to you."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"We are ranked number two"</p>
+        <p><span class="lbl2">What it means</span>The public board moves weekly as new research baselines land, so any rank is a snapshot with a date attached to it, not a standing fact.</p>
+        <p><span class="lbl2">Why it matters</span>The buyer can open the leaderboard while you are still talking. Quoting a stale rank makes us look careless at best, and dishonest at worst. Both are worse than saying nothing.</p>
+        <p class="instead">Say: "Let me pull the live board and give you the rank with today's date on it."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"There is signup credit"</p>
+        <p><span class="lbl2">What it means</span>There is no standing signup credit. Voucher drops, student offers and hackathon campaigns appear periodically and each carries its own terms.</p>
+        <p><span class="lbl2">Why it matters</span>Credit is the first thing a trial user looks for. If they sign up expecting it and find nothing, their first impression of the product is a broken promise, and the offers page makes that checkable in one click.</p>
+        <p class="instead">Say: "There is no standing signup credit. If an offer is live when you onboard, we will point you at it."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"Failover handles anything"</p>
+        <p><span class="lbl2">What it means</span>Failover applies before the first byte. Once bytes are streaming, a mid-stream drop is not transparently retried, because a silent retry could duplicate output.</p>
+        <p><span class="lbl2">Why it matters</span>This is the claim most likely to be tested live in a technical demo. An engineer who finds the edge case themselves stops believing the rest of the technical story, including the parts that are true.</p>
+        <p class="instead">Say: "Failover lands before the first byte. Mid-stream drops are not retried, and here is why that is the safer default."</p>
+      </div>
+      <div class="dns">
+        <p class="phrase">"Their pricing is X"</p>
+        <p><span class="lbl2">What it means</span>Competitor terms change, and single source figures are category signal rather than settled fact.</p>
+        <p><span class="lbl2">Why it matters</span>If our number has moved by the time they check, we did the competitor's selling for them, and we taught the buyer that our claims need independent verification. That lesson travels to every future claim.</p>
+        <p class="instead">Say: "Here is what is public, and here is the date I read it. Verify before you plan around it."</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -519,7 +563,8 @@
 (function(){
   var btns = Array.prototype.slice.call(document.querySelectorAll('.tabbtn'));
   if (!btns.length) return;
-  function show(id){
+  var known = btns.map(function(b){ return b.getAttribute('data-tab'); });
+  function show(id, setHash){
     btns.forEach(function(b){
       var on = b.getAttribute('data-tab') === id;
       b.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -527,7 +572,9 @@
       var panel = document.getElementById(b.getAttribute('data-tab'));
       if (panel) panel.hidden = !on;
     });
-    if (window.history && history.replaceState) history.replaceState(null, '', '#' + id);
+    if (setHash !== false && window.history && history.replaceState) {
+      history.replaceState(null, '', '#' + id);
+    }
   }
   btns.forEach(function(b, i){
     b.addEventListener('click', function(){ show(b.getAttribute('data-tab')); });
@@ -539,11 +586,10 @@
     });
   });
   var h = (location.hash || '').replace('#', '');
-  var known = btns.map(function(b){ return b.getAttribute('data-tab'); });
-  show(known.indexOf(h) > -1 ? h : 'tech-flow');
+  show(known.indexOf(h) > -1 ? h : 'tech-flow', false);
   window.addEventListener('hashchange', function(){
     var hh = (location.hash || '').replace('#', '');
-    if (known.indexOf(hh) > -1) show(hh);
+    if (known.indexOf(hh) > -1) show(hh, false);
   });
 })();
 </script>
