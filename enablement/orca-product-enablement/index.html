@@ -68,7 +68,7 @@
   table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
   th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
   th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);font-weight:500}
-  td b{font-weight:540}
+  td b{font-weight:600;color:var(--text)}
   .mono{font-family:var(--mono)}
   .val{font-family:var(--mono);font-size:13px}
   .ok{color:var(--green)} .warn{color:var(--amber)} .no{color:var(--red)}
@@ -117,6 +117,8 @@
     <a href="#pricing">Pricing</a>
     <a href="#personas">Personas</a>
     <a href="#objections">Objections</a>
+    <a href="#timing">Timing</a>
+    <a href="#oss">OSS program</a>
     <a href="#demo">Demo</a>
     <a href="#dontsay">Don't say</a>
     <a href="#sources">Sources</a>
@@ -134,9 +136,9 @@
     <p class="lede">Everything a rep needs on one page: what the product is, how it is priced, what to say to each persona, and what to do when a prospect pushes back. Every number here was read off the live pricing page or the docs on the build date. Nothing came from memory.</p>
     <div class="stats">
       <div class="stat"><div class="n">$0.00</div><div class="l">Our fee per token, on every model in the catalog</div></div>
-      <div class="stat"><div class="n">200+</div><div class="l">Models behind one OpenAI-compatible endpoint</div></div>
+      <div class="stat"><div class="n">200+</div><div class="l">Models, per the site, with 198 live in the catalog on 2026-09-17</div></div>
       <div class="stat"><div class="n">&lt;1ms</div><div class="l">Routing overhead by default, per the routing page</div></div>
-      <div class="stat"><div class="n">11</div><div class="l">Upstream providers listed in the docs models page</div></div>
+      <div class="stat"><div class="n">16</div><div class="l">Provider prefixes in the live catalog on 2026-09-17, out of the site's 40+ provider claim</div></div>
     </div>
   </div>
 </header>
@@ -149,7 +151,7 @@
     <p>The commercial point is not a feature list. We do not take a cut of token spend. Our revenue comes from optional team subscriptions, which means the token bill is pass-through by construction. That single fact answers most of the questions a technical buyer will ask in the first call.</p>
     <div class="callout">
       <div class="h">Claim hygiene, read this before you quote anything</div>
-      <p>Two inconsistencies are live right now. Marketing copy says 40+ providers while the docs models page lists 11 upstream providers, so say "200+ models across 11 upstream providers" unless someone confirms the wider count. And every leaderboard rank is a snapshot from a moving board, so check the live board and quote it with its date. If you are reading this page weeks after the build date, re-open the pricing page before you put a number in front of a customer.</p>
+      <p>Quote the model count, date the provider count. The site says 200+ models and the live catalog returned 198 entries on the build date, so 200+ is safe. Provider counts disagree across sources: the site claims 40+, the docs models page lists 11, and the live catalog shows 16 prefixes. Use the model count in conversation, and if a buyer pushes on providers, give the live catalog number with its date. Leaderboard ranks are snapshots from a moving board, so check the live board and quote it with the date. If you are reading this page weeks after the build date, re-open the pricing page before you put a number in front of a customer.</p>
     </div>
   </div>
 </section>
@@ -410,6 +412,50 @@
   </div>
 </section>
 
+<section id="timing">
+  <div class="wrap">
+    <h2>When to reach out</h2>
+    <p class="sub">Timing beats volume. These are the moments when the buyer is already thinking about the problem you solve, so the first sentence does not have to earn attention from nothing.</p>
+    <table>
+      <tr><th>Trigger</th><th>Why it opens the door</th><th>What to lead with</th></tr>
+      <tr><td><b>A provider moves its price</b><br><span class="mono">spot it: diff the public pricing catalog</span></td><td>Their unit economics changed overnight, with no meeting and no warning.</td><td>The number, not the pitch. What the change costs them, and what the same call costs routed cheaper.</td></tr>
+      <tr><td><b>A frontier model launches or retires</b><br><span class="mono">spot it: catalog feed and release notes</span></td><td>Teams have to switch models under a deadline they did not set.</td><td>Swapping the model behind one endpoint, with no redeploy. Fusion covers the gap while they evaluate.</td></tr>
+      <tr><td><b>A public company reports earnings</b><br><span class="mono">spot it: earnings calendar, then their AI cost commentary</span></td><td>Inference sits in cost of revenue, and guidance tightens in the weeks after.</td><td>A fee column at zero and a receipt per call, so the number is attributable rather than estimated.</td></tr>
+      <tr><td><b>A funding round closes</b><br><span class="mono">spot it: funding news feeds</span></td><td>New money means a new AI budget and a re-plan of the stack.</td><td>Replay their logs and prove the delta before anyone commits a dollar.</td></tr>
+      <tr><td><b>They post an LLM platform or AI infra role</b><br><span class="mono">spot it: careers pages</span></td><td>A team is forming, which means budget already exists.</td><td>One endpoint, no per-model ceilings, governance included on day one.</td></tr>
+      <tr><td><b>A provider outage or throttle hits them</b><br><span class="mono">spot it: status pages and incident feeds</span></td><td>Reliability pain is being felt, not imagined.</td><td>Failover lands before the first byte. Ask for their last incident and show them the log.</td></tr>
+      <tr><td><b>Their own changelog admits retry pain</b><br><span class="mono">spot it: read their changelog and terms</span></td><td>A prospect's changelog is a pain receipt in their own words.</td><td>They should not have to maintain a retry path. Quote their words back, then show the fix.</td></tr>
+      <tr><td><b>Quarter end or a new budget year</b><br><span class="mono">spot it: fiscal calendars</span></td><td>Spend decisions get made on a clock, and unspent budget is a real thing.</td><td>Prove the saving this quarter, commit next quarter. Keep the two as one number.</td></tr>
+      <tr><td><b>An audit or compliance review is scheduled</b><br><span class="mono">spot it: security page and audit calendar</span></td><td>Governance stops being abstract when a reviewer is asking.</td><td>Guardrails, firewall, evidence exports and zero retention, with the observe-first path.</td></tr>
+      <tr><td><b>A competitor changes price or terms</b><br><span class="mono">spot it: competitor pricing pages, dated</span></td><td>Vendor risk gets re-evaluated whenever the alternatives move.</td><td>Same models, fee column at zero, and they can keep their own provider keys.</td></tr>
+      <tr><td><b>An industry event is on the calendar</b><br><span class="mono">spot it: conference calendars</span></td><td>Everyone is in one place and thinking about the roadmap.</td><td>Book the meetings around the event, not at it. Use the event as the reason to talk.</td></tr>
+      <tr><td><b>A project already ships an integration</b><br><span class="mono">spot it: code search for our brand</span></td><td>Someone chose us in code before sales ever called.</td><td>They already support us. Here is what a workspace adds on top of the free tier.</td></tr>
+    </table>
+    <p>One trigger is worth automating: the pricing catalog is public and changes without a deploy, so a daily diff turns any provider repricing into an outreach list on the same morning. That is a watcher job, not a research project.</p>
+  </div>
+</section>
+
+<section id="oss">
+  <div class="wrap">
+    <h2>The OSS program, and who it is for</h2>
+    <p class="sub">Read this before you promise anything to a maintainer. The terms are specific, and they are narrow on purpose.</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>What it is</h3>
+        <p>The program funds the open source its community maintains. A maintainer adds OrcaRouter as one provider option in their tool, and earns a share of what their users spend, for as long as those users keep spending, paid in credit or cash.</p>
+        <p>The directory of integrations is attribution, not endorsement, so anyone installing from it should review the tool first. Say that out loud rather than implying we vetted the list.</p>
+      </div>
+      <div class="card">
+        <h3>What it is not</h3>
+        <p>It is not exclusivity. A maintainer keeps every other provider they support, ours included on the same shelf.</p>
+        <p>It is not lock in. Users pick a provider, and if they do not pick us, nothing about the tool changes for them. That is the line that makes it easy to say yes to.</p>
+      </div>
+    </div>
+    <div class="quote"><span class="lbl">Talk track when the prospect already uses another gateway</span>"You already support one gateway in your tool. Add ours as a second option. Your users choose. If they choose us, you earn a share of that spend for as long as it runs, and you keep every other provider you support. Nobody is locked into anything."</div>
+    <p>Two audiences, two different conversations. A maintainer gets the revenue share. A plain API customer gets the migration: change the base URL and the key, keep the request shape, and nothing else about their code moves.</p>
+  </div>
+</section>
+
 <section id="demo">
   <div class="wrap">
     <h2>Demo flow</h2>
@@ -453,6 +499,9 @@
       <tr><td>Fee column at $0.00, pass-through at provider list, cached reads at provider cache rate, Hacker and Team and Enterprise structure, three ways to pay, bonus credit on larger plans</td><td>orcarouter.ai/pricing</td></tr>
       <tr><td>Upstream provider count, model prefixes, routing behavior, fallback chains, session affinity header, frontier escalation scope, rate limit scoping, error envelope, billing and usage object, per-request cost lookup, BYOK platform fee default, data handling and zero retention detail, prompt registry, guardrails, firewall rules, free model tier, public leaderboard API</td><td>docs.orcarouter.ai pages (introduction, models, routing, operations, features)</td></tr>
       <tr><td>Pillar framing, sub-millisecond routing, cached reads across 5-minute and 1-hour windows, observe-then-enforce guardrails, compliance evidence exports, residency enforcement, agent firewall autonomy levels, license and seat terms for the Lite gateway</td><td>orcarouter.ai solution and home pages</td></tr>
+      <tr><td>Model and provider counts (200+ models, 16 provider prefixes, 198 live entries), per-model pricing rows</td><td>live public endpoints: api.orcarouter.ai/v1/models and api.orcarouter.ai/api/pricing, read 2026-09-17 with no key</td></tr>
+      <tr><td>OSS program terms (revenue share on user spend, non-exclusive, no user lock in, attribution not endorsement), built-with directory</td><td>orcarouter.ai/built-with</td></tr>
+      <tr><td>Free offers, student and hackathon campaigns, voucher expiry, free model eligibility</td><td>orcarouter.ai/offers</td></tr>
       <tr><td>Commit motion, savings math, objection answers</td><td>Internal deal-shape reference, 2026-08-26</td></tr>
     </table>
     <p class="copylink">Verification state: structural and copy audit run on this build. Readability measured on the plain-language blocks (Flesch-Kincaid grade 3.3, 8.7 words per sentence). Render check performed after the audit. Technical content sourced from docs.orcarouter.ai on 2026-09-17.</p>
