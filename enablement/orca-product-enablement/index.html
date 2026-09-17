@@ -356,7 +356,7 @@
       <p>The $0.00 fee applies to top-ups and subscriptions on Hacker and Team. BYOK traffic may carry a platform fee, and Enterprise contracts are quoted individually: pricing is volume based, and an Enterprise plan may include a flat per-million-token routing fee depending on the volume tier. Never carry the "no fee" line into an Enterprise or BYOK conversation. Read the quote, include the fee in the math, and only then talk about a saving.</p>
     </div>
     <p>Caching is where an effective rate drops below list. Cached and repeated prompt tokens bill at the provider's cache rate across the 5-minute and 1-hour windows, and we add nothing on top.</p>
-    <p>Free model ids end in <span class="mono">-free</span>. They carry the same weights as the paid model they shadow and cost nothing, but they run under their own rate limits, and the lowest tier applies a per-request prompt-size cap.</p>
+    <p>Free model ids end in <span class="mono">-free</span>. They carry the same weights as the paid model they shadow and cost nothing, but they run under their own rate limits, and the lowest tier applies a per-request prompt-size cap. They are also gated to established accounts: the workspace owner links a GitHub account with some history, or the workspace makes a paid purchase of any amount. If someone reports a declined free request, that gate is almost always the reason, not a rate limit.</p>
 
     <div class="callout">
       <div class="h">Internal only: the commit motion</div>
