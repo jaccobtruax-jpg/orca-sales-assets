@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrcaRouter Sales Enablement | Internal</title>
+<style>
+  :root{
+    --bg:#08090a; --surface-1:#0d0e10; --surface-2:#131417; --surface-3:#191a1e;
+    --border:rgba(255,255,255,0.08); --border-strong:rgba(255,255,255,0.14);
+    --text:#f7f8f8; --muted:#8a8f98; --dim:#62666d;
+    --accent:#5e6ad2; --accent-soft:rgba(94,106,210,0.14);
+    --green:#10b981; --amber:#f59e0b; --red:#ef4444;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:"Inter",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    font-feature-settings:"cv01" 1,"ss03" 1; font-weight:510; font-size:15.5px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+  /* nav */
+  nav.sticky{
+    position:sticky; top:0; z-index:50; background:rgba(8,9,10,0.86); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.sticky .wrap{display:flex;align-items:center;gap:8px;height:56px;overflow-x:auto}
+  nav.sticky .brand{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;white-space:nowrap;margin-right:16px}
+  nav.sticky a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap}
+  nav.sticky a:hover{color:var(--text);background:var(--surface-2)}
+  /* hero */
+  header.hero{padding:72px 0 40px;border-bottom:1px solid var(--border)}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .tag{border:1px solid var(--border-strong);border-radius:999px;padding:3px 10px;color:var(--muted)}
+  .tag.internal{color:var(--amber);border-color:rgba(245,158,11,0.34);background:rgba(245,158,11,0.08)}
+  h1{font-size:44px;line-height:1.12;letter-spacing:-0.02em;margin:22px 0 14px;font-weight:560}
+  .lede{font-size:17px;color:var(--muted);max-width:74ch}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:34px 0 4px}
+  .stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+  .stat .n{font-family:var(--mono);font-size:22px;color:var(--text);letter-spacing:-0.02em}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
+  /* sections */
+  section{padding:56px 0;border-bottom:1px solid var(--border)}
+  h2{font-size:27px;letter-spacing:-0.015em;margin:0 0 8px;font-weight:545}
+  h3{font-size:16px;margin:26px 0 8px;font-weight:560}
+  .sub{color:var(--muted);margin:0 0 26px;max-width:80ch}
+  p{margin:0 0 14px}
+  .callout{border:1px solid rgba(245,158,11,0.3);background:rgba(245,158,11,0.07);border-radius:12px;padding:18px 20px;margin:26px 0}
+  .callout .h{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .callout p{margin:0;color:var(--text);font-size:14.5px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+  .card h3{margin-top:0}
+  .card p{font-size:14.5px;color:var(--muted);margin-bottom:10px}
+  .card ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted)}
+  .card li{margin:5px 0}
+  .card li b{color:var(--text);font-weight:540}
+  .quote{
+    border-left:2px solid var(--accent); background:var(--accent-soft); border-radius:0 10px 10px 0;
+    padding:14px 18px; margin:16px 0 4px; font-style:italic; color:#dfe2ea; font-size:14.5px;
+  }
+  .quote .lbl{display:block;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:7px}
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);font-weight:500}
+  td b{font-weight:540}
+  .mono{font-family:var(--mono)}
+  .val{font-family:var(--mono);font-size:13px}
+  .ok{color:var(--green)} .warn{color:var(--amber)} .no{color:var(--red)}
+  .pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--border-strong);color:var(--muted)}
+  .pill.int{color:var(--amber);border-color:rgba(245,158,11,0.34)}
+  ol.acts{list-style:none;padding:0;counter-reset:act}
+  ol.acts li{counter-increment:act;background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:12px;display:grid;grid-template-columns:64px 1fr;gap:16px}
+  ol.acts li::before{content:counter(act);font-family:var(--mono);font-size:20px;color:var(--accent)}
+  ol.acts .t{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.06em}
+  details{background:var(--surface-1);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:8px 0}
+  summary{cursor:pointer;font-size:14.5px;color:var(--text)}
+  details p{margin:10px 0 0;color:var(--muted);font-size:14px}
+  footer{padding:44px 0 80px}
+  footer p{color:var(--dim);font-size:13px}
+  .copylink{font-size:12px;color:var(--dim);font-family:var(--mono)}
+  @media (max-width:860px){
+    .stats,.grid2,.grid3{grid-template-columns:1fr}
+    h1{font-size:33px} .wrap{padding:0 20px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="sticky">
+  <div class="wrap">
+    <span class="brand">OrcaRouter Enablement</span>
+    <a href="#what">What it is</a>
+    <a href="#pillars">Pillars</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#personas">Personas</a>
+    <a href="#objections">Objections</a>
+    <a href="#demo">Demo</a>
+    <a href="#dontsay">Don't say</a>
+    <a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span class="tag internal">Internal</span>
+      <span class="tag">Built 2026-09-17</span>
+      <span>Sources: orcarouter.ai + docs.orcarouter.ai</span>
+    </div>
+    <h1>The gateway pitch, with receipts</h1>
+    <p class="lede">Everything a rep needs on one page: what the product is, how it is priced, what to say to each persona, and what to do when a prospect pushes back. Every number here was read off the live pricing page or the docs on the build date. Nothing came from memory.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">$0.00</div><div class="l">Our fee per token, on every model in the catalog</div></div>
+      <div class="stat"><div class="n">200+</div><div class="l">Models behind one OpenAI-compatible endpoint</div></div>
+      <div class="stat"><div class="n">&lt;1ms</div><div class="l">Routing overhead by default, per the routing page</div></div>
+      <div class="stat"><div class="n">11</div><div class="l">Upstream providers listed in the docs models page</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <h2>What we sell</h2>
+    <p class="sub">One sentence, then the proof that follows it everywhere.</p>
+    <p>OrcaRouter is an OpenAI-compatible API gateway. Change the base URL to <span class="mono">https://api.orcarouter.ai/v1</span>, keep your existing SDK, and your requests route across the providers you already use at provider list price.</p>
+    <p>The commercial point is not a feature list. We do not take a cut of token spend. Our revenue comes from optional team subscriptions, which means the token bill is pass-through by construction. That single fact answers most of the questions a technical buyer will ask in the first call.</p>
+    <div class="callout">
+      <div class="h">Claim hygiene, read this before you quote anything</div>
+      <p>Two inconsistencies are live right now. Marketing copy says 40+ providers while the docs models page lists 11 upstream providers, so say "200+ models across 11 upstream providers" unless someone confirms the wider count. And every leaderboard rank is a snapshot from a moving board, so check the live board and quote it with its date. If you are reading this page weeks after the build date, re-open the pricing page before you put a number in front of a customer.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pillars">
+  <div class="wrap">
+    <h2>Four pillars, in the order buyers care about them</h2>
+    <p class="sub">This is the product's own framing: Route, Observe, Manage, Govern. Keep the language close to it, because it is what the site and docs already say.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Route</h3>
+        <p>Grade each request, then send it to the model that answers it best.</p>
+        <ul>
+          <li><b>Adaptive routing.</b> Every prompt is graded and matched to a model. Online learning means the router keeps updating from production outcomes rather than a frozen benchmark run.</li>
+          <li><b>Model fallbacks.</b> Chain up to five models. It fails over on upstream errors, and billing follows the model that actually served the request.</li>
+          <li><b>Named routers.</b> Save a strategy and call it by name. Built-in strategies cover cheapest, quality, balanced and adaptive; a YAML and CEL routing layer handles the rest.</li>
+          <li><b>Auto router.</b> <span class="mono">orcarouter/auto</span> exists the moment an account does and sizes the model to the request.</li>
+          <li><b>Session affinity.</b> One header keeps a conversation on the same model so the prompt cache stays warm.</li>
+          <li><b>Frontier escalation.</b> When a session outgrows the model it started on, that one session moves up. Named router traffic only.</li>
+        </ul>
+        <div class="quote"><span class="lbl">Say it like this</span>"One endpoint, every model. The router grades each request and sends it where it belongs, and if a provider wobbles the fallback chain catches it before your users notice."</div>
+      </div>
+
+      <div class="card">
+        <h3>Observe</h3>
+        <p>Show the work. Every call carries its own receipt.</p>
+        <ul>
+          <li><b>Request logs.</b> Grade, model, latency and cost on every call, with copy-as-cURL.</li>
+          <li><b>Per-request cost.</b> Read the exact billed cost inline on the response, or look it up afterwards by request id.</li>
+          <li><b>Cache arithmetic.</b> Cached tokens and the provider's own unit price appear on the receipt, so the saving is auditable instead of asserted.</li>
+          <li><b>Insights.</b> Routing, latency, spend and model quality in one view.</li>
+          <li><b>OrcaReplay.</b> Record an agent run, replay it, and re-ask a turn against a different model.</li>
+        </ul>
+        <div class="quote"><span class="lbl">Say it like this</span>"You get a receipt per call, not a monthly mystery. When finance asks what a feature costs, you answer from the logs."</div>
+      </div>
+
+      <div class="card">
+        <h3>Manage</h3>
+        <p>Change behavior without shipping code.</p>
+        <ul>
+          <li><b>Prompt registry.</b> Workspace-scoped system messages. Edit once and every bound key picks up the new version on the next call.</li>
+          <li><b>Playground.</b> Test models in the browser and battle two side by side.</li>
+          <li><b>Integrations.</b> Claude Code, Codex, Cursor, LangChain, n8n, the Vercel AI SDK, and an MCP server.</li>
+        </ul>
+        <div class="quote"><span class="lbl">Say it like this</span>"Change the prompt in the gateway, not in your deploy pipeline. The binding lives with us, not in your application."</div>
+      </div>
+
+      <div class="card">
+        <h3>Govern</h3>
+        <p>Stop things, don't just log them, and leave evidence behind.</p>
+        <ul>
+          <li><b>Guardrails.</b> A workspace content policy that screens input and output. Run observe mode first to see what would have blocked against real traffic.</li>
+          <li><b>Agent firewall.</b> Governs what agents are allowed to do. Tool calls, MCP dispatch and outbound hosts are graded before they run, and a rule can allow, audit, deny, sanitize, hold for approval or cap cost.</li>
+          <li><b>Compliance packs.</b> Promote policies from observe to enforce with an impact preview, then export evidence as a signed PDF or as raw CSV and JSON with a read-only link for reviewers.</li>
+          <li><b>Residency and retention.</b> A region you declare and can prove, where a cross-region read is denied rather than served. Prompts and outputs are processed in memory and never written to disk.</li>
+          <li><b>Keys and budgets.</b> Scoped keys with their own limits, seats, spend caps, roles and an audit trail.</li>
+        </ul>
+        <div class="quote"><span class="lbl">Say it like this</span>"Guardrails stop the content, the firewall stops the action, and both leave evidence you can hand to a reviewer."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>How the money works</h2>
+    <p class="sub">Verified against the live pricing page on 2026-09-17. Token pricing is pass-through, and the fee column reads zero on every model.</p>
+
+    <h3>The three ways a customer pays for tokens</h3>
+    <table>
+      <tr><th>Route</th><th>What it means</th><th>What to say</th></tr>
+      <tr><td><b>Top-up</b></td><td>Pay as you go at provider price, receipt on every call.</td><td>Start here. No commitment to get moving.</td></tr>
+      <tr><td><b>Credit subscription</b></td><td>Refills the wallet each period, any model, with bonus credit on larger plans.</td><td>Same rate, less admin.</td></tr>
+      <tr><td><b>BYOK</b></td><td>Attach your own provider keys. We charge a small platform fee in place of the token price.</td><td>For buyers who must keep the provider contract in their own name. The docs default for that platform fee is 5% and it is configurable, so never describe BYOK as zero fee.</td></tr>
+    </table>
+
+    <h3>Plans change features, not token price</h3>
+    <table>
+      <tr><th>Plan</th><th>What it adds</th></tr>
+      <tr><td><b>Hacker</b> <span class="pill">free</span></td><td>The full gateway: 200+ models, one OpenAI-compatible API, automatic failover.</td></tr>
+      <tr><td><b>Team</b> <span class="pill">$49/mo, up to 10 seats</span></td><td>Compliance enforcement and audit reporting on top of the gateway.</td></tr>
+      <tr><td><b>Enterprise</b></td><td>Unlimited seats, priority access, plus the private and SLA conversation.</td></tr>
+    </table>
+    <p>Caching is where an effective rate drops below list. Cached and repeated prompt tokens bill at the provider's cache rate across the 5-minute and 1-hour windows, and we add nothing on top.</p>
+    <p>Free model ids end in <span class="mono">-free</span>. They carry the same weights as the paid model they shadow and cost nothing, but they run under their own rate limits, and the lowest tier applies a per-request prompt-size cap.</p>
+
+    <div class="callout">
+      <div class="h">Internal only: the commit motion</div>
+      <p>Never recite this as public pricing. The shape is <span class="val">commit % = 100 − savings %</span>. Promise a 40% cut and the commit is 60% of what they spend today, prepaid monthly as credit. It is a floor on spend that already flows through the platform, not a fee, and not a discount. Worked at mid-market scale: $100k a year of spend, a proven 40% cut, a $60k annual commit billed at roughly $5k a month, and their net bill lands at $60k. The pilot proves the number before anyone commits a dollar, and the credit is what funds the infrastructure that delivers the saving. Full math table and the objection answers live in the deal-shape reference.</p>
+    </div>
+  </div>
+</section>
+
+<section id="personas">
+  <div class="wrap">
+    <h2>Who you are talking to</h2>
+    <p class="sub">Same product, five different opening lines. Lead with the thing that person is measured on.</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>FinOps and finance</h3>
+        <p>They are measured on unit cost and attribution. Lead with the zero-markup structure and the per-call receipt, not with routing cleverness.</p>
+        <p class="copylink">Ask: What does a request cost you today, and how long does it take to answer that?</p>
+      </div>
+      <div class="card">
+        <h3>Platform and infrastructure</h3>
+        <p>They own uptime and integration pain. Lead with one endpoint, fallback chains, and the fact that routing overhead sits under a millisecond by default.</p>
+        <p class="copylink">Ask: What happens today when a provider throttles you mid-sprint?</p>
+      </div>
+      <div class="card">
+        <h3>Security and compliance</h3>
+        <p>They need evidence, not assurances. Lead with zero retention, declared region, scoped keys, and the compliance packs that export as signed evidence.</p>
+        <p class="copylink">Ask: What does your reviewer need to see, and who signs it off?</p>
+      </div>
+      <div class="card">
+        <h3>AI product teams</h3>
+        <p>They want to ship on the best model without redeploying. Lead with named routers, the prompt registry, and swapping models without an SDK change.</p>
+        <p class="copylink">Ask: How often do you change models, and what does that cost you in engineering time?</p>
+      </div>
+      <div class="card">
+        <h3>Agent builders</h3>
+        <p>They worry about what their agents can reach. Lead with the firewall: tool calls graded before they run, MCP servers gated, cost caps per call.</p>
+        <p class="copylink">Ask: What is stopping your agent from doing something you would not approve of?</p>
+      </div>
+      <div class="card">
+        <h3>Inference platforms and gateways</h3>
+        <p>They may want to add us as an upstream and earn traffic automatically on price and performance. Lead with the numbers that their ranker measures: pass-through pricing, cache behaviour, failover semantics, error transparency.</p>
+        <p class="copylink">Ask: How does your scoring read our failovers and cache hits?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="objections">
+  <div class="wrap">
+    <h2>Objections you will actually get</h2>
+    <p class="sub">The first four come from live buyer email. The rest come from the questions that follow them.</p>
+    <table>
+      <tr><th>They say</th><th>You say</th></tr>
+      <tr><td>Other gateways add 5 to 20% on tokens. What is your cut?</td><td>Zero. The fee column reads $0.00 on every model in the catalog, and our revenue is the optional subscription. Ask them to compare fee columns, not headline model prices.</td></tr>
+      <tr><td>Can we get volume discounts, rebates, or pricing off list?</td><td>No, and it is structural rather than a policy choice. There is no margin to negotiate on tokens. Caching is the one place the effective rate moves, and it moves at the provider's cache rate.</td></tr>
+      <tr><td>Higher rate limits or reserved capacity?</td><td>Limits are set per workspace, not per model, and we do not publish per-model ceilings. A higher ceiling comes from a plan upgrade. We do not offer reserved capacity.</td></tr>
+      <tr><td>Is there a partner tier or program?</td><td>Nothing published. Take a proposal internally rather than inventing terms on the call.</td></tr>
+      <tr><td>How do we know the savings are real?</td><td>Run the replay. Their logs, their quality bar, their threshold. The measured delta belongs to them, and if we miss the threshold they walk and keep the measurement.</td></tr>
+      <tr><td>What happens to our prompts?</td><td>Zero retention by default. Prompts and outputs are processed in memory and never written to disk. What we keep is request metadata for billing and abuse prevention, plus a truncated upstream error message when something fails.</td></tr>
+      <tr><td>Does routing add latency?</td><td>Under a millisecond by default. Semantic embedding is opt-in, and if you enable it you pay for that embedding call.</td></tr>
+      <tr><td>Why not just self-host the open-source gateway?</td><td>OrcaRouter Lite is MIT licensed and readable before you install it. What the hosted product adds is governance, evidence and support. Self-hosting is a real answer, so do not pretend otherwise.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <h2>Demo flow</h2>
+    <p class="sub">Six acts, minute marked. Every objection ends by opening the pilot rather than a debate.</p>
+    <ol class="acts">
+      <li><div><div class="t">MIN 0-5 · OPEN</div><p>Set the frame in two sentences: one endpoint, provider price, receipts. Then stop talking and ask what they use today.</p></div></li>
+      <li><div><div class="t">MIN 5-12 · DISCOVER</div><p>Their stack, their model mix, what breaks, what a request costs, who signs. Listen for the pain they volunteer rather than the one you planned for.</p></div></li>
+      <li><div><div class="t">MIN 12-20 · PRESENT</div><p>Demo against their own pain. Swap a base URL live, show a fallback chain surviving a forced failure, then open a receipt and read the number out loud.</p></div></li>
+      <li><div><div class="t">MIN 20-27 · GOVERN</div><p>Show guardrails in observe mode, then the firewall grading a tool call. This is the act that wins security reviewers who join late.</p></div></li>
+      <li><div><div class="t">MIN 27-34 · NUMBERS</div><p>Walk the pricing model. Fee column at zero, cached reads at provider cache rate, plans that change features rather than token price. If a deal shape is in play, use the commit math and say plainly that the pilot proves it first.</p></div></li>
+      <li><div><div class="t">MIN 34-40 · CLOSE ON THE PILOT</div><p>Four weeks. Week one is an offline replay of their logs. Weeks two and three run shadow with no traffic shift while quality is compared against their bar. Week four is a canary. Nothing is signed until the measurement lands.</p></div></li>
+    </ol>
+    <details><summary>Talk ratio and listening mechanics</summary><p>Aim for them talking more than you. Loop what you heard back in their words, mirror the last few words before you answer, label the emotion you hear, and leave silence after a question instead of filling it. The rep who talks least in discovery usually wins the technical evaluation.</p></details>
+  </div>
+</section>
+
+<section id="dontsay">
+  <div class="wrap">
+    <h2>Do not say these</h2>
+    <p class="sub">Each line below is either false, unverifiable, or a number we would have to walk back.</p>
+    <table>
+      <tr><th>Never say</th><th>Why</th><th>Say instead</th></tr>
+      <tr><td>No rate limits at all</td><td>A workspace bucket exists.</td><td>Limits are workspace scoped, not per model.</td></tr>
+      <tr><td>Zero percent BYOK fees</td><td>The docs default is a 5% platform fee and it is configurable.</td><td>BYOK replaces token price with a small platform fee.</td></tr>
+      <tr><td>Unlimited seats on Team</td><td>Team is up to 10 seats. Enterprise is the unlimited tier.</td><td>Team covers up to 10 seats; Enterprise removes the cap.</td></tr>
+      <tr><td>A savings percentage as a fact</td><td>Savings are proven by the replay, not published.</td><td>We prove the delta on your logs before you commit.</td></tr>
+      <tr><td>Any leaderboard rank from memory</td><td>Ranks move weekly as new research baselines land.</td><td>Check the live board and quote it with the date.</td></tr>
+      <tr><td>Free signup credit</td><td>There is no standing signup credit. Voucher drops happen.</td><td>No standing credit. If a voucher drop is live, we point you at it.</td></tr>
+      <tr><td>Failover covers everything</td><td>A mid-stream drop is not transparently retried once bytes flow.</td><td>Failover lands before the first byte. Mid-stream drops are not retried.</td></tr>
+      <tr><td>Competitor pricing as settled fact</td><td>Competitor terms change and single source claims are signal, not fact.</td><td>Attribute it, date it, or leave it out.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <h2>Sources and build notes</h2>
+    <p class="sub">Everything on this page traces to one of these, read on 2026-09-17.</p>
+    <table>
+      <tr><th>Claim area</th><th>Source</th></tr>
+      <tr><td>Fee column at $0.00, pass-through at provider list, cached reads at provider cache rate, Hacker and Team and Enterprise structure, three ways to pay, bonus credit on larger plans</td><td>orcarouter.ai/pricing</td></tr>
+      <tr><td>Upstream provider count, model prefixes, routing behavior, fallback chains, session affinity header, frontier escalation scope, rate limit scoping, error envelope, billing and usage object, per-request cost lookup, BYOK platform fee default, data handling and zero retention detail, prompt registry, guardrails, firewall rules, free model tier, public leaderboard API</td><td>docs.orcarouter.ai pages (introduction, models, routing, operations, features)</td></tr>
+      <tr><td>Pillar framing, sub-millisecond routing, cached reads across 5-minute and 1-hour windows, observe-then-enforce guardrails, compliance evidence exports, residency enforcement, agent firewall autonomy levels, license and seat terms for the Lite gateway</td><td>orcarouter.ai solution and home pages</td></tr>
+      <tr><td>Commit motion, savings math, objection answers</td><td>Internal deal-shape reference, 2026-08-26</td></tr>
+    </table>
+    <p class="copylink">Verification state: structural and copy audit run on this build. Render check performed after the audit.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Internal enablement document. Not for customer distribution as-is: the commit motion section is internal framing, and the do-not-say table exists because those lines have been said before.</p>
+    <p class="copylink">build 2026-09-17 · sources retrieved 2026-09-17</p>
+  </div>
+</footer>
+
+</body>
+</html>
