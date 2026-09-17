@@ -138,12 +138,12 @@
       <span>Sources: orcarouter.ai + docs.orcarouter.ai</span>
     </div>
     <h1>The gateway pitch, with receipts</h1>
-    <p class="lede">Everything a rep needs on one page: what the product is, how it is priced, what to say to each persona, and what to do when a prospect pushes back. Every number here was read off the live pricing page or the docs on the build date. Nothing came from memory.</p>
+    <p class="lede">Everything a rep needs on one page: what the product is, how it is priced, what to say to each persona, and what to do when a prospect pushes back. Every number here was read off the live pricing page, the site pages, or the public catalog and pricing endpoints on the build date. Nothing came from memory.</p>
     <div class="stats">
       <div class="stat"><div class="n">$0.00</div><div class="l">Our fee per token, on every model in the catalog</div></div>
       <div class="stat"><div class="n">200+</div><div class="l">Models, per the site, with 198 live in the catalog on 2026-09-17</div></div>
       <div class="stat"><div class="n">&lt;1ms</div><div class="l">Routing overhead by default, per the routing page</div></div>
-      <div class="stat"><div class="n">16</div><div class="l">Provider prefixes in the live catalog on 2026-09-17, out of the site's 40+ provider claim</div></div>
+      <div class="stat"><div class="n">16</div><div class="l">Provider prefixes in the live catalog, against a "40+" claim in site copy that no list backs</div></div>
     </div>
   </div>
 </header>
@@ -156,7 +156,7 @@
     <p>The commercial point is not a feature list. We do not take a cut of token spend. Our revenue comes from optional team subscriptions, which means the token bill is pass-through by construction. That single fact answers most of the questions a technical buyer will ask in the first call.</p>
     <div class="callout">
       <div class="h">Claim hygiene, read this before you quote anything</div>
-      <p>Quote the model count, date the provider count. The site says 200+ models and the live catalog returned 198 entries on the build date, so 200+ is safe. Provider counts disagree across sources: the site claims 40+, the docs models page lists 11, and the live catalog shows 16 prefixes. Use the model count in conversation, and if a buyer pushes on providers, give the live catalog number with its date. Leaderboard ranks are snapshots from a moving board, so check the live board and quote it with the date. If you are reading this page weeks after the build date, re-open the pricing page before you put a number in front of a customer.</p>
+      <p>Quote the model count, date the provider count. The site says 200+ models and the live catalog returned 198 entries on the build date, so 200+ is safe. The provider count has no such backing: the site's copy claims 40+ providers, the same pages only enumerate 12 by name, the docs models page lists 11, and the live catalog shows 16 prefixes. If a buyer asks which 40, there is no list to hand them, so do not defend the figure. Give the catalog number with its date and move on. Leaderboard ranks are snapshots from a moving board, so check the live board and quote it with the date. If you are reading this page weeks after the build date, re-open the pricing page before you put a number in front of a customer.</p>
     </div>
   </div>
 </section>
@@ -407,7 +407,7 @@
 <section id="objections">
   <div class="wrap">
     <h2>Objections you will actually get</h2>
-    <p class="sub">The first four come from live buyer email. The rest come from the questions that follow them.</p>
+    <p class="sub">The first four come from live buyer email. The rest come from the questions that follow them. For head-to-head positioning against other gateways, use the separate battlecard; this page sticks to our own facts.</p>
     <table>
       <tr><th>They say</th><th>You say</th></tr>
       <tr><td>Other gateways add 5 to 20% on tokens. What is your cut?</td><td>Zero. The fee column reads $0.00 on every model in the catalog, and our revenue is the optional subscription. Ask them to compare fee columns, not headline model prices.</td></tr>
@@ -464,6 +464,7 @@
     </div>
     <div class="quote"><span class="lbl">Talk track when the prospect already uses another gateway</span>"You already support one gateway in your tool. Add ours as a second option. Your users choose. If they choose us, you earn a share of that spend for as long as it runs, and you keep every other provider you support. Nobody is locked into anything."</div>
     <p>Two audiences, two different conversations. A maintainer gets the revenue share. A plain API customer gets the migration: change the base URL and the key, keep the request shape, and nothing else about their code moves.</p>
+    <p>There is a third door for companies that run inference instead of consuming it. The site carries a For Providers program: run an inference platform and get your models on OrcaRouter, by writing to providers@orcarouter.ai. That is the right path for a platform or gateway prospect who wants distribution rather than a smaller bill, and it is a different conversation from the maintainer revenue share. Do not blend the two.</p>
   </div>
 </section>
 
