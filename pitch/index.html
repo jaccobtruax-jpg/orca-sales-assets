@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TITLE</title>
+<meta name="description" content="DESCRIPTION">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; color: #1a1d21; background: #fafafa;
+    margin: 0; padding: 0;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 80px; }
+  header.doc {
+    background: #0f172a; color: #e2e8f0; border-radius: 12px;
+    padding: 28px 30px; margin-bottom: 28px;
+  }
+  header.doc h1 { margin: 0 0 6px; font-size: 1.55rem; line-height: 1.25; color: #fff; }
+  header.doc .sub { color: #94a3b8; font-size: .92rem; }
+  header.doc .badge {
+    display: inline-block; margin-top: 12px; padding: 4px 10px;
+    background: #14532d; color: #bbf7d0; border-radius: 999px;
+    font-size: .78rem; font-weight: 600;
+  }
+  main { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px 34px; }
+  h1 { font-size: 1.35rem; margin: 1.6em 0 .5em; }
+  h2 { font-size: 1.18rem; margin: 1.6em 0 .5em; padding-bottom: 4px; border-bottom: 1px solid #eceff3; }
+  h3 { font-size: 1.02rem; margin: 1.4em 0 .4em; }
+  h4, h5, h6 { font-size: .95rem; margin: 1.2em 0 .3em; }
+  p { margin: .6em 0; }
+  a { color: #0369a1; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul, ol { margin: .5em 0 .8em; padding-left: 1.5em; }
+  li { margin: .25em 0; }
+  table { border-collapse: collapse; width: 100%; margin: .8em 0 1.1em; font-size: .9rem; }
+  th, td { border: 1px solid #d8dee6; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #f1f5f9; font-weight: 600; }
+  tr:nth-child(even) td { background: #fafbfc; }
+  code { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1px 5px; font-size: .85em; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  blockquote { border-left: 3px solid #cbd5e1; margin: .8em 0; padding: 2px 14px; color: #475569; }
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.6em 0; }
+  .wikilink { color: #7c3aed; font-size: .9em; }
+  strong { color: #111827; }
+  @media print {
+    body { background: #fff; }
+    main { border: none; padding: 0; }
+    header.doc { background: #fff; color: #111; border: 1px solid #ddd; }
+    header.doc h1 { color: #111; }
+    header.doc .sub { color: #444; }
+    .wrap { max-width: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="doc">
+  <h1>TITLE</h1>
+  <div class="sub">SUBTITLE</div>
+  <span class="badge">BADGE</span>
+</header>
+<main>
+<h1>Use cases and pitch, revisited</h1>
+<p><em>Refreshed 2026-09-18 against company text for 1,764 of the 2,385 companies in the OrcaRouter-High list.</em></p>
+<h2>Why the old pitch was off</h2>
+<p>Our memorized 30-second pitch opened with "OrcaRouter is an AI gateway" and then listed four benefits in one breath: one endpoint, failover, 30-50% savings, prompt security. It assumed a technical evaluator who already thinks in infrastructure terms, and it led with cost.</p>
+<p>Pulling company descriptions from Apollo and from the companies' own homepages tells a different story. Out of the High-fit companies we have text for:</p>
+<table><thead><tr><th>What they call themselves</th><th>Share</th></tr></thead><tbody>
+<tr><td>workflow automation</td><td>42%</td></tr>
+<tr><td>agents / agentic</td><td>26%</td></tr>
+<tr><td>compliance, privacy, PHI</td><td>12%</td></tr>
+<tr><td>foundation or generative models</td><td>10%</td></tr>
+<tr><td>personalization or recommendations</td><td>8%</td></tr>
+<tr><td>inference or model serving</td><td>5.5%</td></tr>
+<tr><td>RAG or retrieval</td><td>1.1%</td></tr>
+<tr><td>cost, spend, efficiency</td><td>3%</td></tr>
+</tbody></table>
+<p>The vocabulary gap is the first problem. One company in twenty says "inference," one in ninety says "RAG." When the opening sentence is about inference routing, most readers are translating before they get to decide anything.</p>
+<p>The second problem is the order. Only 3% describe themselves around spend. The bill is real and it is their COGS, but it is not how they introduce themselves, so it lands harder as the second beat than the first.</p>
+<p>And the buyer is usually not an AI specialist. Across the High-fit rows: founders and CEOs 158, engineering leadership 143, product 81, dedicated AI leadership 28. These companies are mostly small enough that whoever pays the model bill also runs the company, which means there is no infrastructure committee to sell past.</p>
+<h2>The use cases, ranked by how many of them apply</h2>
+<h3>Agents that call a model many times per task</h3>
+<p><em>26% of the list, and the fastest-growing share.</em></p>
+<p>An agent plans, then fires off sub-tasks, tool calls, retries and evals. One user action becomes dozens or hundreds of model calls, and they are not equally important. Sending all of them to a frontier model is the default, and it is the expensive one.</p>
+<p>This is where per-call routing does the most work: cheap models for the passes that can take it, frontier for the ones that cannot, and a cost policy a team can actually enforce. Per-workload spend so finance has a number.</p>
+<h3>Workflow automation with a model in the loop</h3>
+<p><em>42% of the list. The largest group, and the least AI-native in the way we usually mean it.</em></p>
+<p>Document processing, claims, intake, reconciliation, review queues. The model is one step in a pipeline they already run. Volume is high, per-call value is low, and reliability matters more than which model answers.</p>
+<p>Two things sell here rather than routing. One endpoint replacing N provider integrations, and failover so a lab wobble does not stall the queue. Zero retention by default does the rest, because it keeps us from reopening a data review.</p>
+<h3>Multi-model products and provider sprawl</h3>
+<p>Direct agreements accumulate, a couple of SDKs get bolted on, someone writes retry logic. It works fine until a person has to answer what this costs and what happens when a provider goes down.</p>
+<p>The answer is one OpenAI-compatible endpoint in front of 200+ models. Swapping <code>base_url</code> is the whole integration, and naming a model explicitly bypasses routing, so the calls that must not move do not move.</p>
+<h3>Regulated AI</h3>
+<p><em>12% mention compliance, privacy or PHI. Healthcare, fintech, insurance.</em></p>
+<p>Every new subprocessor triggers a review, which is why "just add another vendor" stalls here. What survives that is posture rather than features: zero retention enforced instead of logged, VPC deployment, BYOK so their lab contracts and negotiated rates stay theirs. The offline replay runs on redacted logs, which keeps the review small enough to finish.</p>
+<h2>The pitch</h2>
+<p><strong>One sentence</strong></p>
+<blockquote>One endpoint in front of 200+ models that picks per call, so the cheap passes</blockquote>
+<blockquote>stay cheap and a degraded lab does not take your product down. No markup on</blockquote>
+<blockquote>tokens.</blockquote>
+<p><strong>For an agent builder</strong></p>
+<blockquote>You have agents making hundreds of model calls per task. OrcaRouter puts one</blockquote>
+<blockquote>endpoint in front of 200+ models and picks per call, so the passes that can</blockquote>
+<blockquote>take a cheap model get one, and the ones that cannot stay on the frontier.</blockquote>
+<blockquote>When a lab degrades mid-run, traffic moves without a page. We charge for the</blockquote>
+<blockquote>plan, not your tokens. If you are north of $10k a month in inference, the</blockquote>
+<blockquote>replay runs on your own logs before any of it goes live.</blockquote>
+<p><strong>The close</strong></p>
+<blockquote>We do a 90-day POC on monthly terms. If it does not deliver by day 90, you</blockquote>
+<blockquote>walk.</blockquote>
+<h2>One line per segment</h2>
+<p>For the 606 AI-native companies, the orchestration and the eval harness already exist and are theirs. "You built the orchestration and your own eval. We sit at the model layer under it, and your harness measures us."</p>
+<p>The 1,244 AI-adjacent software companies are the largest group and the softest fit, shipping AI features on someone else's model. The routing story is premature for them. The reliability story is not: "your AI feature inherits whatever the model provider does at 3am."</p>
+<p>The 324 services and consultancies are a partner motion. They implement for clients who hold the inference bill.</p>
+<p>The 128 enterprise and hyperscaler accounts have real spend, build in-house, and run long cycles. Do not lead here.</p>
+<h2>What to drop</h2>
+<p>Do not open with "AI gateway." It is our taxonomy, not their language, and it costs a sentence of translation. Start with what their product does.</p>
+<p>Do not lead with cost. It is a 3% self-description, and the people who do care about it care because someone asked them for a number.</p>
+<p>Do not pitch the router as an AI product. They built the AI. Everything above the model layer is already theirs, and claiming it reads as not understanding their stack.</p>
+<p>Do not quote leaderboard ranks or vendor benchmarks. Their eval is the referee, or there is no proof at all.</p>
+<p>Do not trash the labs, OpenRouter, or LiteLLM. The $0 markup is the argument on its own.</p>
+<p>Do not frame $0 as a discount. It is the pricing structure: no markup on tokens, revenue from the plan. As a promotion it sounds temporary and invites a negotiation we do not need to have.</p>
+<p>And do not offer a demo when they asked for a pilot. They want the replay.</p>
+</main>
+</div>
+</body>
+</html>
