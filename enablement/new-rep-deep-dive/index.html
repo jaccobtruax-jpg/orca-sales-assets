@@ -4,8 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OrcaRouter - New Rep Deep Dive</title>
+<link rel="preload" href="fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Self-hosted variable fonts. These were previously pulled with a CSS @import to
+   fonts.googleapis.com, which serialises HTML -> stylesheet -> fonts across two
+   third-party origins and stalls wherever those are slow or unreachable. Same
+   bytes, same origin, preloaded. */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;
+           src:url('fonts/inter-var.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 500;font-display:swap;
+           src:url('fonts/jetbrains-mono-var.woff2') format('woff2')}
 
 :root{
   --bg:#08090a;
@@ -35,8 +44,8 @@ body{
 
 /* ---------- nav ---------- */
 nav{
-  position:sticky;top:0;z-index:50;background:rgba(8,9,10,.86);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:50;background:#0a0b0c;
+  border-bottom:1px solid var(--line);
 }
 nav .inner{max-width:1040px;margin:0 auto;padding:0 26px;display:flex;align-items:center;gap:20px;height:56px}
 nav .brand{font-weight:600;letter-spacing:-.01em;white-space:nowrap}
