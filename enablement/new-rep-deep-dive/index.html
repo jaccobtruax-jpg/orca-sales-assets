@@ -184,6 +184,83 @@ button.act:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 #scorebox .barwrap i{display:block;height:100%;background:var(--accent);width:0}
 @media (prefers-reduced-motion:reduce){#scorebox .barwrap i{transition:none}}
 
+/* ---------- scroll progress ---------- */
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:90}
+
+/* ---------- interactive stage stepper ---------- */
+.stepnav{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 0}
+.stepnav button{
+  font:inherit;font-size:12.5px;font-weight:600;color:var(--mut);background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;min-height:44px;padding:8px 13px;cursor:pointer;
+  font-family:var(--mono);
+}
+.stepnav button:hover{color:var(--ink);border-color:var(--line2)}
+.stepnav button[aria-selected="true"]{color:#fff;background:rgba(94,106,210,.2);border-color:rgba(94,106,210,.6)}
+.stepnav button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:17px 19px;margin:13px 0}
+.stage h4{margin:0 0 9px;font-size:16px;font-weight:600}
+.stage .cost{display:inline-block;font-family:var(--mono);font-size:11.5px;padding:3px 9px;
+             border-radius:20px;margin:11px 0 0}
+.cost-free{background:rgba(63,185,80,.12);color:#6ee787;border:1px solid rgba(63,185,80,.3)}
+.cost-bill{background:rgba(210,153,34,.13);color:#e3b341;border:1px solid rgba(210,153,34,.34)}
+.stagefoot{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.stagefoot button{font:inherit;font-size:13px;font-weight:600;min-height:44px;padding:8px 16px;
+                  border-radius:8px;cursor:pointer;color:var(--mut);background:transparent;
+                  border:1px solid var(--line2)}
+.stagefoot button:hover{color:var(--ink);border-color:var(--mut2)}
+.stagefoot button:disabled{opacity:.35;cursor:default}
+.stagefoot .count{font-family:var(--mono);font-size:12px;color:var(--mut2);margin-left:auto}
+
+/* ---------- objection drill ---------- */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:16px 18px;margin:13px 0}
+.drill .dq{margin:0 0 12px;font-size:14.5px;font-weight:600}
+.drill .dq em{font-style:normal;color:var(--accent2)}
+.drill .opt{
+  display:block;width:100%;text-align:left;font:inherit;font-size:13.5px;color:var(--mut);
+  background:transparent;border:1px solid var(--line);border-radius:8px;
+  min-height:44px;padding:10px 12px;margin:7px 0;cursor:pointer;line-height:1.5;
+}
+.drill .opt:hover:not(:disabled){color:var(--ink);border-color:var(--line2);background:rgba(255,255,255,.02)}
+.drill .opt:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.drill .opt:disabled{cursor:default}
+.drill .opt.good{border-color:rgba(63,185,80,.55);background:rgba(63,185,80,.08);color:var(--ink)}
+.drill .opt.weak{border-color:rgba(248,81,73,.5);background:rgba(248,81,73,.06);color:var(--ink)}
+.drill .opt .vf{display:block;font-size:12.5px;margin-top:6px;color:var(--mut)}
+.drill .opt.good .vf{color:#6ee787}
+.drill .opt.weak .vf{color:#ff9a92}
+.drill .verdict{font-size:13.5px;margin-top:9px}
+.drill .verdict b{font-weight:600}
+
+/* ---------- spot the overclaim ---------- */
+.stmtlist{display:grid;gap:8px;margin:14px 0}
+.stmt{
+  text-align:left;font:inherit;font-size:13.5px;color:var(--mut);background:var(--surface);
+  border:1px solid var(--line);border-radius:9px;min-height:44px;padding:12px 14px;cursor:pointer;
+}
+.stmt:hover{border-color:var(--line2);color:var(--ink)}
+.stmt:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.stmt.picked{border-color:rgba(94,106,210,.6);background:rgba(94,106,210,.09);color:var(--ink)}
+.stmt.hit{border-color:rgba(63,185,80,.55);background:rgba(63,185,80,.08)}
+.stmt.miss{border-color:rgba(248,81,73,.5);background:rgba(248,81,73,.07)}
+.stmt .why{display:block;font-size:12.5px;color:var(--mut);margin-top:7px}
+.stmt .flag{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+
+/* ---------- tally ---------- */
+.tally{background:var(--surface2);border:1px solid var(--line2);border-radius:9px;
+       padding:13px 16px;margin:14px 0;font-size:14px}
+.tally .tlabel{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+               color:var(--mut2);font-weight:600;margin-bottom:5px}
+.tally b{font-family:var(--mono);font-size:19px;font-weight:500;margin-right:10px}
+.tally .say{color:var(--ink)}
+
+/* ---------- jargon self-test toggle ---------- */
+.switch{display:flex;align-items:center;gap:10px;margin:12px 0 4px;font-size:13.5px;color:var(--mut)}
+.switch input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.jargon td:last-child{transition:opacity .15s ease}
+.jargon.hide td:last-child{opacity:0}
+.jargon.hide tr:hover td:last-child{opacity:1}
+.revealhint{font-size:12.5px;color:var(--mut2);margin:6px 0 0}
+
 @media (max-width:820px){
   .stats{grid-template-columns:1fr 1fr}
   .grid2,.grid3{grid-template-columns:1fr}
@@ -193,6 +270,7 @@ button.act:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
 </style>
 </head>
 <body>
+<div id="prog" aria-hidden="true"></div>
 
 <nav>
   <div class="inner">
@@ -206,6 +284,7 @@ button.act:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
       <a href="#who">Who buys</a>
       <a href="#limits">Limits</a>
       <a href="#never">Never say</a>
+      <a href="#practice">Practice</a>
       <a href="#quiz">Quiz</a>
       <a href="#week1">Week one</a>
       <a href="#sources">Sources</a>
@@ -325,47 +404,80 @@ decoder open in a second tab during your first calls.</p>
 
 <section id="tech-flow" class="panel" role="tabpanel" aria-labelledby="tech-flow">
   <p style="color:var(--mut);font-size:13.5px">One request walks these six layers in this order.
-  Each layer is workspace-scoped, attaches to an API key, and needs no code change.</p>
+  Each layer is workspace-scoped, attaches to an API key, and needs no code change. Step through
+  them and watch the cost line, because only one of the six ever bills.</p>
 
-  <div class="step"><div class="n">1</div><div class="b">
-    <h3 style="margin-top:0">Scoped API key</h3>
-    <div class="tech">Model allowlists, spend limits, and IP restrictions evaluated before anything else runs.</div>
-    <div class="plain">The key decides what this caller is even allowed to ask for.</div>
-    <p style="font-size:13px;color:var(--mut)"><b>Why it matters to a buyer:</b> a request that fails
-    key validation never reaches a model and is never metered. No cost, no side effect.</p>
-  </div></div>
+  <div class="stepnav" role="tablist" aria-label="Request stages">
+    <button role="tab" data-stg="s1" aria-controls="s1" aria-selected="true" tabindex="0">1 key</button>
+    <button role="tab" data-stg="s2" aria-controls="s2" aria-selected="false" tabindex="-1">2 input</button>
+    <button role="tab" data-stg="s3" aria-controls="s3" aria-selected="false" tabindex="-1">3 model</button>
+    <button role="tab" data-stg="s4" aria-controls="s4" aria-selected="false" tabindex="-1">4 firewall</button>
+    <button role="tab" data-stg="s5" aria-controls="s5" aria-selected="false" tabindex="-1">5 output</button>
+    <button role="tab" data-stg="s6" aria-controls="s6" aria-selected="false" tabindex="-1">6 audit</button>
+  </div>
 
-  <div class="step"><div class="n">2</div><div class="b">
-    <h3 style="margin-top:0">Input guardrails</h3>
-    <div class="tech">Content screening on the prompt. A block returns HTTP 400 <code>guardrail_blocked</code> and the quota is not charged. A mask redacts the text and lets it continue.</div>
-    <div class="plain">Checks the words going in, before you pay a model to read them.</div>
-  </div></div>
+  <div class="stage" id="s1" role="tabpanel">
+    <h4>1. Scoped API key</h4>
+    <div class="tech"><span class="lbl">Technically</span>Model allowlists, spend limits, and IP
+    restrictions, evaluated before anything else runs.</div>
+    <div class="plain"><span class="lbl pl">In plain words</span>The key decides what this caller is
+    even allowed to ask for.</div>
+    <span class="cost cost-free">no model spend</span>
+  </div>
 
-  <div class="step"><div class="n">3</div><div class="b">
-    <h3 style="margin-top:0">The model runs</h3>
-    <div class="tech">Routing picks the serving model, unless the caller named one explicitly, in which case routing steps aside.</div>
-    <div class="plain">The actual work happens here. This is the only layer that costs money.</div>
-  </div></div>
+  <div class="stage" id="s2" role="tabpanel" hidden>
+    <h4>2. Input guardrails</h4>
+    <div class="tech"><span class="lbl">Technically</span>Content screening on the prompt. A block
+    returns HTTP 400 <code>guardrail_blocked</code> and the quota is not charged. A mask redacts the
+    text and lets it continue.</div>
+    <div class="plain"><span class="lbl pl">In plain words</span>Checks the words going in, before you
+    pay a model to read them.</div>
+    <span class="cost cost-free">a block here bills nothing</span>
+  </div>
 
-  <div class="step"><div class="n">4</div><div class="b">
-    <h3 style="margin-top:0">Agent firewall</h3>
-    <div class="tech">Grades tool calls, MCP dispatch and outbound hosts before they execute. Verdicts: allow, audit, deny, sanitize, pending approval, cap cost.</div>
-    <div class="plain">Checks what the agent is about to <em>do</em>, not what it said.</div>
-    <p style="font-size:13px;color:var(--mut)"><b>Why it matters:</b> a denied inbound call costs no
-    model tokens. The dangerous action is stopped, not just logged.</p>
-  </div></div>
+  <div class="stage" id="s3" role="tabpanel" hidden>
+    <h4>3. The model runs</h4>
+    <div class="tech"><span class="lbl">Technically</span>Routing picks the serving model, unless the
+    caller named one explicitly, in which case routing steps aside.</div>
+    <div class="plain"><span class="lbl pl">In plain words</span>The actual work happens here. If you
+    are looking for the line item on the invoice, this is it.</div>
+    <span class="cost cost-bill">the only layer that bills</span>
+  </div>
 
-  <div class="step"><div class="n">5</div><div class="b">
-    <h3 style="margin-top:0">Output guardrails</h3>
-    <div class="tech">Screening on the response before it returns to the caller.</div>
-    <div class="plain">Checks the words coming back out.</div>
-  </div></div>
+  <div class="stage" id="s4" role="tabpanel" hidden>
+    <h4>4. Agent firewall</h4>
+    <div class="tech"><span class="lbl">Technically</span>Grades tool calls, MCP dispatch and outbound
+    hosts before they execute. Verdicts: allow, audit, deny, sanitize, pending approval, cap cost.</div>
+    <div class="plain"><span class="lbl pl">In plain words</span>Checks what the agent is about to
+    <em>do</em>, not what it said.</div>
+    <p style="font-size:13px;color:var(--mut)"><b>The honest nuance:</b> the model has already run by
+    this point, so an enforcing verdict here cannot refund that call. Where it saves real money is
+    <b>inbound</b>: a denied tool surface never reaches the model at all, so that costs no tokens.</p>
+    <span class="cost cost-bill">spend already incurred</span>
+  </div>
 
-  <div class="step"><div class="n">6</div><div class="b">
-    <h3 style="margin-top:0">Audit</h3>
-    <div class="tech">Runs alongside layers 2 to 5, correlated to the agent run and session.</div>
-    <div class="plain">Writes the record that makes the other five layers provable later.</div>
-  </div></div>
+  <div class="stage" id="s5" role="tabpanel" hidden>
+    <h4>5. Output guardrails</h4>
+    <div class="tech"><span class="lbl">Technically</span>Screening on the response before it returns
+    to the caller.</div>
+    <div class="plain"><span class="lbl pl">In plain words</span>Checks the words coming back out.</div>
+    <span class="cost cost-bill">spend already incurred</span>
+  </div>
+
+  <div class="stage" id="s6" role="tabpanel" hidden>
+    <h4>6. Audit</h4>
+    <div class="tech"><span class="lbl">Technically</span>Runs alongside layers 2 to 5, correlated to
+    the agent run and the session.</div>
+    <div class="plain"><span class="lbl pl">In plain words</span>Writes the record that makes the
+    other five layers provable later.</div>
+    <span class="cost cost-free">no extra cost</span>
+  </div>
+
+  <div class="stagefoot">
+    <button type="button" id="stgPrev">Back</button>
+    <button type="button" id="stgNext">Next layer</button>
+    <span class="count" id="stgCount">1 of 6</span>
+  </div>
 
   <div class="call hyg" style="margin-top:20px">
     <span class="h">The line that wins deals here</span>
@@ -404,6 +516,11 @@ decoder open in a second tab during your first calls.</p>
 <section id="tech-jargon" class="panel" role="tabpanel" hidden>
   <p style="color:var(--mut);font-size:13.5px">Keep this open on your first calls. Nobody expects you
   to know the first five on day one.</p>
+  <label class="switch"><input type="checkbox" id="jargonHide"> Hide the meanings and self-test, then
+  hover a row to peek</label>
+  <p class="revealhint">Covering the right column turns this into a flashcard drill. Hover any row to
+  reveal just that one.</p>
+  <div class="jargon" id="jargonWrap">
   <table>
     <thead><tr><th>Term</th><th>What it means when you hear it</th></tr></thead>
     <tbody>
@@ -433,6 +550,7 @@ decoder open in a second tab during your first calls.</p>
       <tr><td><b>Commit</b></td><td>A minimum monthly spend floor, prepaid as credit. Not a fee.</td></tr>
     </tbody>
   </table>
+  </div>
 </section>
 
 <section id="tech-questions" class="panel" role="tabpanel" hidden>
@@ -731,6 +849,92 @@ talking to, usually within a minute.</p>
 </div>
 </section>
 
+<!-- ================= PRACTICE ================= -->
+<section id="practice">
+<h2>Practice</h2>
+<p>Reading this page is not the same as surviving a call. Two exercises, both scored, both drawn from
+objections and lines that have actually come up. Pick your answer, then read why the other options
+are worse. That second part is the useful bit.</p>
+
+<h3 style="margin-top:26px">Drill 1: what do you say?</h3>
+<p style="color:var(--mut);font-size:13.5px">One answer per objection, scored on the first pick. Every
+option gets feedback once you choose, including the ones you did not pick.</p>
+
+<div class="drill" data-good="b">
+  <p class="dq">1. <em>"We already route models ourselves. What does yours add that our own code doesn't?"</em></p>
+  <button type="button" class="opt" data-k="a" data-v="weak" data-fb="Concedes the whole value proposition and then retreats to price. You have just agreed there is nothing here, and the rest of the call is a negotiation on a number you cannot move.">Honestly, not much, but we are cheaper.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="b" data-v="good" data-fb="Keeps their orchestration and their eval untouched, and puts you underneath it. This is the answer that survives a senior engineer telling you that you are redundant.">You keep the orchestration and your eval. We sit at the request layer under it: failover across labs, one endpoint, spend you can attribute, and your own keys stay yours. Your eval decides whether we are worth keeping.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="c" data-v="weak" data-fb="Claims routing intelligence beats their eval. For a team that built its own harness, this is the fastest way to lose the room, because they can test it and you cannot win that test.">Our routing intelligence is better than what you would build in house.<span class="vf"></span></button>
+  <div class="verdict" hidden></div>
+</div>
+
+<div class="drill" data-good="b">
+  <p class="dq">2. <em>"So the routing fee is zero. What is the catch?"</em></p>
+  <button type="button" class="opt" data-k="a" data-v="weak" data-fb="True on two tiers and false on the others. It survives this call and dies at the first quote, which reads as a bait and switch even though you did not intend one.">No catch. It is zero everywhere.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="b" data-v="good" data-fb="Names the boundary before they find it. Bringing the exact number to them instead of a headline is what makes the rest of your numbers believable.">Zero on Free and Team. Bring-your-own-key traffic can carry a platform fee, and Enterprise is quoted individually, so let me show you your exact number rather than promise you a headline.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="c" data-v="weak" data-fb="Vague, and it implies a hidden margin somewhere. If they are already suspicious of router pricing, this confirms it.">We make it up on volume.<span class="vf"></span></button>
+  <div class="verdict" hidden></div>
+</div>
+
+<div class="drill" data-good="b">
+  <p class="dq">3. <em>"Prove you are better than what we use. Where do you rank?"</em></p>
+  <button type="button" class="opt" data-k="a" data-v="weak" data-fb="Unverifiable and checkable in five seconds. The board that carries that claim could not be re-read on 2026-09-22, so this is a number you cannot defend when they ask to see it.">We are number one on the routing leaderboard.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="b" data-v="good" data-fb="Declines to quote what you cannot show, and replaces the benchmark with their own traffic. The pilot is the answer to every version of this question.">I will not quote a rank I cannot show you today. What I can do is replay your last month of logs through your own eval and let the delta decide.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="c" data-v="weak" data-fb="Dodges a fair question, and reads as evasive. They asked because vendor benchmarks burned them before, not because they are being difficult.">Rankings do not really matter, to be honest.<span class="vf"></span></button>
+  <div class="verdict" hidden></div>
+</div>
+
+<div class="drill" data-good="b">
+  <p class="dq">4. <em>"We cannot put anything in the request path until security signs off."</em></p>
+  <button type="button" class="opt" data-k="a" data-v="weak" data-fb="Dismisses their process, which is usually the one thing you cannot talk your way past. It also volunteers you as a person who does not understand why the gate exists.">It is fully transparent. There is nothing to review.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="b" data-v="good" data-fb="Turns the gate into the plan. Observe and shadow modes mean nothing enforces on day one, and the output is an inventory of what their agents actually did, which is a genuinely useful artifact for a security team.">Then do not. The firewall runs in shadow and guardrails run in observe, so nothing enforces on day one. You will come back with a list of what your agents actually did, which is usually the artifact security was going to ask for anyway.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="c" data-v="weak" data-fb="Does not answer the question they asked, and leans on a compliance artifact that has its own problem: what exists is a certificate, not an audit report.">We are SOC 2 compliant, so that covers it.<span class="vf"></span></button>
+  <div class="verdict" hidden></div>
+</div>
+
+<div class="drill" data-good="b">
+  <p class="dq">5. <em>"Can you do better on price? We need a discount to move on this."</em></p>
+  <button type="button" class="opt" data-k="a" data-v="weak" data-fb="Implies a lever that does not exist. You will come back with nothing, having spent the credibility you needed for the next ask.">Let me see what I can do on that.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="b" data-v="good" data-fb="Explains why there is no discount without sounding stubborn, and redirects to the thing that actually moves money: proving the saving on their own traffic, then locking it in.">There is no margin to discount because the fee on your tier is already zero. What I can do is prove the saving on your own traffic first. If the number holds, we can talk about a commit that locks it in.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="c" data-v="weak" data-fb="True, and useless. It ends the conversation without offering a path, and it makes a pricing question feel like a wall.">The price is the price, sorry.<span class="vf"></span></button>
+  <div class="verdict" hidden></div>
+</div>
+
+<div class="drill" data-good="b">
+  <p class="dq">6. <em>"When we mask sensitive data, does it also scrub what the tools send back?"</em></p>
+  <button type="button" class="opt" data-k="a" data-v="weak" data-fb="This is the documented misconception in our own FAQ. An engineer who reads the docs will catch it, and will quietly discount everything else you told them.">Yes, it cleans everything flowing through.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="b" data-v="good" data-fb="Precise, and it names the right mechanism for returned content instead of papering over the gap.">No, and I would rather be exact about that. Masking and sanitizing act on the arguments at dispatch. Whatever a tool returns is treated as untrusted content, which is what output guardrails are for.<span class="vf"></span></button>
+  <button type="button" class="opt" data-k="c" data-v="weak" data-fb="Sounds careful but is not true, and a security reviewer will treat a hand-wave as a gap they have to go and find themselves.">It depends on the tool, mostly.<span class="vf"></span></button>
+  <div class="verdict" hidden></div>
+</div>
+
+<div class="tally" id="drillTally"><span class="tlabel">Drill 1 score</span><b>0/6</b><span class="say">Answer all six to see where you stand.</span></div>
+
+<h3 style="margin-top:34px">Drill 2: spot the overclaim</h3>
+<p style="color:var(--mut);font-size:13.5px">Ten lines a rep could plausibly say on a call. Tap the
+ones that would get you caught, then check. The split is not fifty fifty, so do not just flag
+everything and hope.</p>
+
+<div class="stmtlist" id="stmtList">
+  <button type="button" class="stmt" data-bad="1" data-fb="Only true on Free and Team. Bring-your-own-key traffic can carry a platform fee and Enterprise is quoted individually.">Our routing fee is zero on every plan.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="0" data-fb="Correct and defensible. Free and Team, and it is what the fee column on the pricing page actually shows.">The routing fee reads zero on Free and Team.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="1" data-fb="A rank you cannot substantiate today. The leaderboard source could not be re-read on 2026-09-22, so quote the dated accuracy figure or nothing.">We are ranked eighth on the leaderboard.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="1" data-fb="Only the firewall has shadow mode. Guardrails fire or they do not, which a security team will discover while planning the rollout.">Everything can run in shadow before it enforces.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="1" data-fb="Sanitize cleans the tool-call arguments, never what a tool returns. Our own docs call this the common misconception.">Sanitizing scrubs the data your tools send back.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="0" data-fb="Accurate, and it is the cleanest upgrade trigger in the catalogue.">Team covers up to ten seats, and Enterprise removes the cap.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="1" data-fb="Failover lands before the first byte. Once bytes are flowing, a dropped stream is not transparently retried.">Failover recovers a stream that drops mid-response.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="0" data-fb="True, and it is one of the stronger trust answers you have for a team that does not want to hand over its lab contracts.">You can bring your own provider keys and keep your own contracts.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="0" data-fb="Documented and checkable: Fusion bills as the sum of the underlying completions, with no markup added on top.">Fusion bills as the sum of the underlying completions at cost.<span class="why" hidden></span></button>
+  <button type="button" class="stmt" data-bad="0" data-fb="Documented in the request path: a request that fails key validation never reaches a model and is never metered.">A request that fails key validation is never metered.<span class="why" hidden></span></button>
+</div>
+
+<div class="quizbar">
+  <button type="button" class="act" id="stmtCheck">Check my picks</button>
+  <button type="button" class="act ghost" id="stmtReset">Reset</button>
+</div>
+<div class="tally" id="stmtTally" hidden><span class="tlabel">Drill 2 score</span><b>0/10</b><span class="say"></span></div>
+</section>
+
 <!-- ================= QUIZ ================= -->
 <section id="quiz">
 <h2>Recap quiz</h2>
@@ -972,6 +1176,14 @@ when a number here disagrees with the live source, the live source wins.</p>
   var reset = document.getElementById('quizReset');
   if(!qs.length || !submit) return;
 
+  // Offset scroll instead of scrollIntoView, which parks the target under the
+  // sticky nav. Also honours prefers-reduced-motion.
+  function reveal(el){
+    var y = el.getBoundingClientRect().top + window.pageYOffset - 76;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({top: y, behavior: reduce ? 'auto' : 'smooth'});
+  }
+
   function feedback(q, cls, lead){
     var fb = q.querySelector('.fb');
     q.classList.remove('right', 'wrong');
@@ -1018,7 +1230,7 @@ when a number here disagrees with the live source, the live source wins.</p>
     }
     verdict.textContent = v;
     box.classList.add('on');
-    box.scrollIntoView({block: 'start'});
+    reveal(box);
   });
 
   reset.addEventListener('click', function(){
@@ -1032,7 +1244,193 @@ when a number here disagrees with the live source, the live source wins.</p>
     box.classList.remove('on');
     bar.style.width = '0';
     out.textContent = '0/' + qs.length;
-    sec.scrollIntoView({block: 'start'});
+    reveal(sec);
+  });
+})();
+</script>
+<script>
+/* ---------- reading progress ---------- */
+(function(){
+  var bar = document.getElementById('prog');
+  if(!bar) return;
+  function upd(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? (window.pageYOffset / h) * 100 : 0;
+    bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+  }
+  window.addEventListener('scroll', upd, {passive: true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+
+/* ---------- request-stage stepper ---------- */
+(function(){
+  var nav = document.querySelector('.stepnav');
+  if(!nav) return;
+  var btns = Array.prototype.slice.call(nav.querySelectorAll('[data-stg]'));
+  var ids = btns.map(function(b){ return b.getAttribute('data-stg'); });
+  var prev = document.getElementById('stgPrev');
+  var next = document.getElementById('stgNext');
+  var count = document.getElementById('stgCount');
+  var cur = 0;
+
+  function show(i, focus){
+    cur = Math.max(0, Math.min(ids.length - 1, i));
+    btns.forEach(function(b, n){
+      var on = n === cur;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+      // Each button owns its own stage. Reading the target id here instead of
+      // the button's own id leaves every other stage visible.
+      var p = document.getElementById(b.getAttribute('data-stg'));
+      if(p) p.hidden = !on;
+      if(on && focus) b.focus();
+    });
+    if(count) count.textContent = (cur + 1) + ' of ' + ids.length;
+    if(prev) prev.disabled = cur === 0;
+    if(next) next.disabled = cur === ids.length - 1;
+  }
+
+  btns.forEach(function(b, n){
+    b.addEventListener('click', function(){ show(n, false); });
+    b.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){ show(cur + 1, true); e.preventDefault(); }
+      else if(e.key === 'ArrowLeft'){ show(cur - 1, true); e.preventDefault(); }
+    });
+  });
+  if(prev) prev.addEventListener('click', function(){ show(cur - 1, true); });
+  if(next) next.addEventListener('click', function(){ show(cur + 1, true); });
+  show(0, false);
+})();
+
+/* ---------- objection drill ---------- */
+(function(){
+  var drills = Array.prototype.slice.call(document.querySelectorAll('#practice .drill'));
+  if(!drills.length) return;
+  var tally = document.getElementById('drillTally');
+
+  function updateTally(){
+    if(!tally) return;
+    var done = 0, good = 0;
+    drills.forEach(function(d){
+      if(d.getAttribute('data-done') === '1'){
+        done++;
+        if(d.getAttribute('data-hit') === '1') good++;
+      }
+    });
+    tally.querySelector('b').textContent = good + '/' + drills.length;
+    var say = tally.querySelector('.say');
+    if(done < drills.length){
+      say.textContent = done === 0
+        ? 'Answer all six to see where you stand.'
+        : (drills.length - done) + ' still to go.';
+    } else if(good === drills.length){
+      say.textContent = 'Clean sweep. You can hold the line on all of these.';
+    } else if(good >= 4){
+      say.textContent = 'Solid. Reread the two you missed before a live call.';
+    } else {
+      say.textContent = 'Worth another pass. These are the moments where calls turn.';
+    }
+  }
+
+  drills.forEach(function(d){
+    var goodKey = d.getAttribute('data-good');
+    var opts = Array.prototype.slice.call(d.querySelectorAll('.opt'));
+    var verdict = d.querySelector('.verdict');
+    opts.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(d.getAttribute('data-done') === '1') return;
+        d.setAttribute('data-done', '1');
+        var hit = btn.getAttribute('data-k') === goodKey;
+        d.setAttribute('data-hit', hit ? '1' : '0');
+        opts.forEach(function(o){
+          o.disabled = true;
+          var isGood = o.getAttribute('data-v') === 'good';
+          o.classList.add(isGood ? 'good' : 'weak');
+          var vf = o.querySelector('.vf');
+          vf.textContent = (isGood ? 'Strong answer. ' : 'This one costs you. ') + o.getAttribute('data-fb');
+        });
+        if(verdict){
+          verdict.hidden = false;
+          verdict.innerHTML = hit
+            ? '<b>You picked the strong one.</b> The other two are the traps.'
+            : '<b>That was one of the traps.</b> The strong answer is marked green above.';
+        }
+        updateTally();
+      });
+    });
+  });
+  updateTally();
+})();
+
+/* ---------- spot the overclaim ---------- */
+(function(){
+  var list = document.getElementById('stmtList');
+  if(!list) return;
+  var stmts = Array.prototype.slice.call(list.querySelectorAll('.stmt'));
+  var check = document.getElementById('stmtCheck');
+  var resetBtn = document.getElementById('stmtReset');
+  var tally = document.getElementById('stmtTally');
+
+  stmts.forEach(function(s){
+    s.setAttribute('aria-pressed', 'false');
+    s.addEventListener('click', function(){
+      if(s.getAttribute('data-locked') === '1') return;
+      var on = !s.classList.contains('picked');
+      s.classList.toggle('picked', on);
+      s.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
+
+  if(check) check.addEventListener('click', function(){
+    var right = 0;
+    stmts.forEach(function(s){
+      var bad = s.getAttribute('data-bad') === '1';
+      var picked = s.classList.contains('picked');
+      var ok = (bad === picked);
+      if(ok) right++;
+      s.setAttribute('data-locked', '1');
+      s.classList.remove('picked');
+      s.classList.add(ok ? 'hit' : 'miss');
+      var why = s.querySelector('.why');
+      var flag = bad ? 'OVERCLAIM' : 'SAFE';
+      var lead = ok
+        ? 'Correct. '
+        : (bad ? 'You missed this one. ' : 'This one is fine, so flagging it is a false alarm. ');
+      why.innerHTML = '<span class="flag">' + flag + '</span> ' + lead + s.getAttribute('data-fb');
+      why.hidden = false;
+    });
+    if(tally){
+      tally.hidden = false;
+      tally.querySelector('b').textContent = right + '/' + stmts.length;
+      tally.querySelector('.say').textContent = right === stmts.length
+        ? 'Every overclaim caught and no false alarms.'
+        : (right >= stmts.length - 2
+           ? 'Close. The ones in red above are the tells worth memorising.'
+           : 'The red ones above are the lines that end calls badly.');
+    }
+  });
+
+  if(resetBtn) resetBtn.addEventListener('click', function(){
+    stmts.forEach(function(s){
+      s.classList.remove('picked', 'hit', 'miss');
+      s.removeAttribute('data-locked');
+      s.setAttribute('aria-pressed', 'false');
+      var why = s.querySelector('.why');
+      why.hidden = true;
+      why.innerHTML = '';
+    });
+    if(tally) tally.hidden = true;
+  });
+})();
+
+/* ---------- jargon self-test ---------- */
+(function(){
+  var cb = document.getElementById('jargonHide');
+  var wrap = document.getElementById('jargonWrap');
+  if(!cb || !wrap) return;
+  cb.addEventListener('change', function(){
+    wrap.classList.toggle('hide', cb.checked);
   });
 })();
 </script>
