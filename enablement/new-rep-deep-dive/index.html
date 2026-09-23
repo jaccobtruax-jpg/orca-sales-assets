@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrcaRouter - New Rep Deep Dive</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#08090a;
+  --surface:rgba(255,255,255,.028);
+  --surface2:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.14);
+  --ink:#f7f8f8;
+  --mut:rgba(255,255,255,.62);
+  --mut2:rgba(255,255,255,.44);
+  --accent:#5e6ad2;
+  --accent2:#8b93e8;
+  --good:#3fb950;
+  --warn:#d29922;
+  --bad:#f85149;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:510;font-feature-settings:'cv01' 1,'ss03' 1;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 26px 90px}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(8,9,10,.86);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+}
+nav .inner{max-width:1040px;margin:0 auto;padding:0 26px;display:flex;align-items:center;gap:20px;height:56px}
+nav .brand{font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+nav .brand span{color:var(--accent2)}
+nav .links{display:flex;gap:15px;overflow-x:auto;scrollbar-width:none;font-size:13px}
+nav .links::-webkit-scrollbar{display:none}
+nav a{color:var(--mut);text-decoration:none;white-space:nowrap;padding:2px 0;border-bottom:1px solid transparent}
+nav a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+
+section{scroll-margin-top:80px}
+h2{font-size:12px;text-transform:uppercase;letter-spacing:.11em;color:var(--mut2);
+   font-weight:600;margin:52px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;font-weight:600;margin:22px 0 8px;letter-spacing:-.01em}
+p{margin:9px 0}
+a{color:var(--accent2)}
+code,.num{font-family:var(--mono);font-size:12.5px}
+code{background:var(--surface2);padding:1px 5px;border-radius:4px;color:#e6e8ff}
+
+/* ---------- hero ---------- */
+header.hero{padding:56px 0 8px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent2);font-weight:600}
+h1{font-size:38px;line-height:1.13;letter-spacing:-.025em;margin:12px 0 10px;font-weight:600}
+.lede{font-size:17px;color:var(--mut);max-width:74ch;margin:0 0 26px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:13px 14px}
+.stat b{display:block;font-family:var(--mono);font-size:21px;font-weight:500;letter-spacing:-.02em}
+.stat span{display:block;font-size:11.5px;color:var(--mut2);margin-top:3px;line-height:1.4}
+.dated{font-size:11.5px;color:var(--mut2);margin-top:8px}
+
+/* ---------- callouts ---------- */
+.call{border-radius:9px;padding:14px 17px;margin:18px 0;font-size:14px;border:1px solid var(--line)}
+.call.hyg{background:rgba(94,106,210,.07);border-color:rgba(94,106,210,.32)}
+.call.int{background:rgba(210,153,34,.06);border-color:rgba(210,153,34,.3)}
+.call.warn{background:rgba(248,81,73,.06);border-color:rgba(248,81,73,.3)}
+.call b{font-weight:600}
+.call .h{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+         color:var(--accent2);margin-bottom:6px;font-weight:600}
+.call.int .h{color:var(--warn)} .call.warn .h{color:var(--bad)}
+
+/* ---------- generic blocks ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:15px 17px}
+.card h4{margin:0 0 7px;font-size:14.5px;font-weight:600}
+.card p{margin:6px 0;font-size:13.5px;color:var(--mut)}
+.card .tagline{font-size:12px;color:var(--mut2);font-family:var(--mono)}
+
+ul,ol{margin:9px 0;padding-left:20px}
+li{margin:5px 0}
+li::marker{color:var(--mut2)}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:12px 0}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface2);font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+   color:var(--mut);font-weight:600}
+td b{font-weight:600}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+
+/* technical + plain pairing */
+.pair{border-left:2px solid var(--line2);padding:0 0 0 14px;margin:12px 0}
+.tech{font-size:13.5px;color:var(--mut)}
+.plain{background:rgba(94,106,210,.07);border-left:2px solid var(--accent);
+       padding:9px 13px;margin:8px 0 0;border-radius:0 6px 6px 0;font-size:14px}
+.lbl{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+     color:var(--mut2);margin-bottom:4px;font-weight:600}
+.lbl.pl{color:var(--accent2)}
+
+/* steps */
+.step{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .n{flex:0 0 30px;height:30px;border-radius:7px;background:var(--surface2);
+         border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;
+         font-family:var(--mono);font-size:13px;color:var(--accent2)}
+.step .b{flex:1}
+
+/* ---------- tabs ---------- */
+.tablist{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 0;border-bottom:1px solid var(--line);padding-bottom:12px}
+.tablist button{
+  font:inherit;font-size:13px;font-weight:500;color:var(--mut);background:var(--surface);
+  border:1px solid var(--line);border-radius:7px;padding:7px 13px;cursor:pointer;
+}
+.tablist button:hover{color:var(--ink);border-color:var(--line2)}
+.tablist button[aria-selected="true"]{
+  color:#fff;background:rgba(94,106,210,.18);border-color:rgba(94,106,210,.55);
+}
+.tablist button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.panel{padding-top:6px}
+.panel[hidden]{display:none}
+
+/* ---------- do-not-say cards ---------- */
+.dns{background:var(--surface);border:1px solid var(--line);border-radius:9px;
+     padding:15px 17px;display:flex;flex-direction:column;gap:11px}
+.dns .line{font-family:var(--mono);font-size:12.5px;color:var(--bad);
+           background:rgba(248,81,73,.07);border-radius:5px;padding:6px 9px}
+.dns .blk{font-size:13.5px}
+.dns .blk b{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+            color:var(--mut2);margin-bottom:3px;font-weight:600}
+.dns .fix{border-left:2px solid var(--good);background:rgba(63,185,80,.05);
+          padding:8px 12px;border-radius:0 6px 6px 0;font-size:13.5px}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;padding:0}
+.check li{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.check li:last-child{border-bottom:0}
+.check .box{flex:0 0 16px;height:16px;border:1.5px solid var(--line2);border-radius:4px;margin-top:3px}
+
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;
+       font-size:12.5px;color:var(--mut2)}
+
+/* ---------- quiz ---------- */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:16px 18px;margin:13px 0}
+.q .qt{font-weight:600;font-size:14.5px;margin:0 0 10px;letter-spacing:-.01em}
+.q label{display:flex;gap:10px;align-items:flex-start;padding:8px 11px;border:1px solid var(--line);
+         border-radius:7px;margin:6px 0;cursor:pointer;font-size:13.5px;color:var(--mut)}
+.q label:hover{border-color:var(--line2);color:var(--ink)}
+.q input{margin:3px 0 0;accent-color:var(--accent);flex:0 0 auto}
+.q label:has(input:checked){border-color:rgba(94,106,210,.55);background:rgba(94,106,210,.08);color:var(--ink)}
+.q.right{border-color:rgba(63,185,80,.45)}
+.q.wrong{border-color:rgba(248,81,73,.45)}
+.fb{margin-top:11px;padding:9px 13px;border-radius:0 6px 6px 0;font-size:13.5px;color:var(--ink)}
+.q.right .fb{border-left:2px solid var(--good);background:rgba(63,185,80,.06)}
+.q.wrong .fb{border-left:2px solid var(--bad);background:rgba(248,81,73,.06)}
+.quizbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0 4px}
+button.act{font:inherit;font-size:14px;font-weight:600;color:#fff;background:rgba(94,106,210,.92);
+           border:1px solid rgba(94,106,210,.92);border-radius:8px;padding:10px 18px;cursor:pointer}
+button.act:hover{background:var(--accent)}
+button.act.ghost{background:transparent;color:var(--mut);border-color:var(--line2)}
+button.act.ghost:hover{color:var(--ink);border-color:var(--mut2)}
+button.act:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+#scorebox{display:none;background:var(--surface2);border:1px solid var(--line2);border-radius:10px;
+          padding:18px 20px;margin:16px 0}
+#scorebox.on{display:block}
+#scorebox .big{font-family:var(--mono);font-size:34px;font-weight:500;letter-spacing:-.02em}
+#scorebox .verdict{font-size:14.5px;margin-top:6px;color:var(--ink)}
+#scorebox .barwrap{height:8px;background:rgba(255,255,255,.09);border-radius:99px;overflow:hidden;margin:13px 0 0}
+#scorebox .barwrap i{display:block;height:100%;background:var(--accent);width:0}
+@media (prefers-reduced-motion:reduce){#scorebox .barwrap i{transition:none}}
+
+@media (max-width:820px){
+  .stats{grid-template-columns:1fr 1fr}
+  .grid2,.grid3{grid-template-columns:1fr}
+  h1{font-size:29px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="brand">OrcaRouter <span>/ new rep</span></div>
+    <div class="links">
+      <a href="#what">What it is</a>
+      <a href="#how">How it works</a>
+      <a href="#ships">Routing</a>
+      <a href="#govern">Governance</a>
+      <a href="#money">Pricing</a>
+      <a href="#who">Who buys</a>
+      <a href="#limits">Limits</a>
+      <a href="#never">Never say</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#week1">Week one</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">Internal enablement &middot; new rep deep dive</div>
+  <h1>What OrcaRouter actually is</h1>
+  <p class="lede">One OpenAI-compatible endpoint in front of a few hundred models. It decides, per
+  request, which model serves it, and it governs what an agent is allowed to do while it runs.
+  That is the whole product. Everything below is detail on those two sentences.</p>
+
+  <div class="stats">
+    <div class="stat"><b>$0.00</b><span>routing fee on Free and Team</span></div>
+    <div class="stat"><b>~200</b><span>models in the catalog</span></div>
+    <div class="stat"><b>15</b><span>provider prefixes, dated</span></div>
+    <div class="stat"><b>99.99%</b><span>SLA, Enterprise tier</span></div>
+  </div>
+  <div class="dated">Counts pulled from the live public catalog on 2026-09-22. They drift. Re-check before quoting.</div>
+</header>
+
+<div class="call hyg">
+  <span class="h">Read this before you say a number</span>
+  <b>Nothing on this page is a benchmark we produced.</b> Model counts come from our own public
+  catalog and change weekly. The leaderboard accuracy figure is a dated snapshot, and the board
+  that produced it could not be re-read on 2026-09-22, so do not defend a rank position. Savings
+  percentages are vendor-reported. When a prospect challenges a number, the answer is the 30-day
+  replay against <em>their</em> traffic, not a louder version of our slide.
+</div>
+
+<!-- ================= WHAT ================= -->
+<section id="what">
+<h2>What it is</h2>
+
+<p>An adaptive model-routing <b>inference gateway</b>. You point your existing OpenAI client at our
+base URL, set the model to <code>orcarouter/auto</code>, and carry on. Requests keep the same shape
+they had before. What changes is that something now decides which model answers each one, instead of
+the model being hardcoded in your application months ago and never revisited.</p>
+
+<div class="pair">
+  <div class="tech">
+    <span class="lbl">Technically</span>
+    A reverse proxy in front of many upstream providers, holding one set of credentials, applying
+    workspace-scoped policy at several points in the request lifecycle, and returning standard
+    OpenAI-compatible response objects plus <code>X-Orca-*</code> headers.
+  </div>
+  <div class="plain">
+    <span class="lbl pl">In plain words</span>
+    Your app talks to one door instead of a dozen. Behind that door, someone chooses the right model
+    for each request, watches what the agent tries to do, and writes down what it cost.
+  </div>
+</div>
+
+<div class="grid3" style="margin-top:18px">
+  <div class="card">
+    <h4>Route</h4>
+    <p>Pick the model per request. Cheapest, best quality, or balanced. You stop hardcoding one vendor.</p>
+  </div>
+  <div class="card">
+    <h4>Observe</h4>
+    <p>Per-request cost, resolved model, latency and token counts, so spend becomes attributable.</p>
+  </div>
+  <div class="card">
+    <h4>Govern</h4>
+    <p>Guardrails on content, a firewall on agent actions, evidence you can hand an auditor.</p>
+  </div>
+</div>
+</section>
+
+<!-- ================= WHY ================= -->
+<section id="why">
+<h2>Why the category exists</h2>
+
+<p>Three things went wrong at once for teams shipping AI features, and each one is a separate reason
+someone takes this meeting.</p>
+
+<div class="grid3">
+  <div class="card">
+    <h4>1. The model you picked is now wrong</h4>
+    <p>A new model lands cheaper or better every few weeks. If the model name is a string in your
+    codebase, switching costs a deploy and a review cycle, so it does not happen. Teams end up paying
+    for last quarter's decision.</p>
+  </div>
+  <div class="card">
+    <h4>2. One vendor is a single point of failure</h4>
+    <p>Rate limits and outages arrive without warning. Handling that inside the application means
+    every team writes its own retry, backoff and fallback logic, badly, in a different repository.</p>
+  </div>
+  <div class="card">
+    <h4>3. Nobody can say what it cost</h4>
+    <p>Inference lands in cost of revenue or on a card statement with no per-call attribution. Finance
+    asks which feature is expensive and the honest answer is that nobody knows.</p>
+  </div>
+</div>
+
+<p style="margin-top:16px">Add a fourth once agents reach production: an agent can call tools, so it
+can also delete a database or post a secret to an outbound URL. That is a policy problem, and it is
+the part of this market that is least crowded.</p>
+</section>
+
+<!-- ================= HOW (tabbed) ================= -->
+<section id="how">
+<h2>How it works</h2>
+<p>The tabs below are the part new reps get asked about first. Read the flow once, keep the jargon
+decoder open in a second tab during your first calls.</p>
+
+<div class="tablist" role="tablist" aria-label="How it works">
+  <button role="tab" data-tab="tech-flow" aria-controls="tech-flow" aria-selected="true" tabindex="0">How a request flows</button>
+  <button role="tab" data-tab="tech-parts" aria-controls="tech-parts" aria-selected="false" tabindex="-1">The parts, in plain words</button>
+  <button role="tab" data-tab="tech-jargon" aria-controls="tech-jargon" aria-selected="false" tabindex="-1">Jargon decoder</button>
+  <button role="tab" data-tab="tech-questions" aria-controls="tech-questions" aria-selected="false" tabindex="-1">What engineers ask</button>
+</div>
+
+<section id="tech-flow" class="panel" role="tabpanel" aria-labelledby="tech-flow">
+  <p style="color:var(--mut);font-size:13.5px">One request walks these six layers in this order.
+  Each layer is workspace-scoped, attaches to an API key, and needs no code change.</p>
+
+  <div class="step"><div class="n">1</div><div class="b">
+    <h3 style="margin-top:0">Scoped API key</h3>
+    <div class="tech">Model allowlists, spend limits, and IP restrictions evaluated before anything else runs.</div>
+    <div class="plain">The key decides what this caller is even allowed to ask for.</div>
+    <p style="font-size:13px;color:var(--mut)"><b>Why it matters to a buyer:</b> a request that fails
+    key validation never reaches a model and is never metered. No cost, no side effect.</p>
+  </div></div>
+
+  <div class="step"><div class="n">2</div><div class="b">
+    <h3 style="margin-top:0">Input guardrails</h3>
+    <div class="tech">Content screening on the prompt. A block returns HTTP 400 <code>guardrail_blocked</code> and the quota is not charged. A mask redacts the text and lets it continue.</div>
+    <div class="plain">Checks the words going in, before you pay a model to read them.</div>
+  </div></div>
+
+  <div class="step"><div class="n">3</div><div class="b">
+    <h3 style="margin-top:0">The model runs</h3>
+    <div class="tech">Routing picks the serving model, unless the caller named one explicitly, in which case routing steps aside.</div>
+    <div class="plain">The actual work happens here. This is the only layer that costs money.</div>
+  </div></div>
+
+  <div class="step"><div class="n">4</div><div class="b">
+    <h3 style="margin-top:0">Agent firewall</h3>
+    <div class="tech">Grades tool calls, MCP dispatch and outbound hosts before they execute. Verdicts: allow, audit, deny, sanitize, pending approval, cap cost.</div>
+    <div class="plain">Checks what the agent is about to <em>do</em>, not what it said.</div>
+    <p style="font-size:13px;color:var(--mut)"><b>Why it matters:</b> a denied inbound call costs no
+    model tokens. The dangerous action is stopped, not just logged.</p>
+  </div></div>
+
+  <div class="step"><div class="n">5</div><div class="b">
+    <h3 style="margin-top:0">Output guardrails</h3>
+    <div class="tech">Screening on the response before it returns to the caller.</div>
+    <div class="plain">Checks the words coming back out.</div>
+  </div></div>
+
+  <div class="step"><div class="n">6</div><div class="b">
+    <h3 style="margin-top:0">Audit</h3>
+    <div class="tech">Runs alongside layers 2 to 5, correlated to the agent run and session.</div>
+    <div class="plain">Writes the record that makes the other five layers provable later.</div>
+  </div></div>
+
+  <div class="call hyg" style="margin-top:20px">
+    <span class="h">The line that wins deals here</span>
+    Nothing is enforced until you switch it on. A request that resolves to no policy is
+    <b>byte-identical to a workspace that never enabled the feature</b>. Roll it out in observe mode,
+    see what your real traffic does, then promote to enforcing. Nothing blocks on day one.
+  </div>
+</section>
+
+<section id="tech-parts" class="panel" role="tabpanel" hidden>
+  <table>
+    <thead><tr><th>Part</th><th>What it is</th><th>In plain words</th></tr></thead>
+    <tbody>
+      <tr><td><b>Workspace</b></td><td>The account boundary. Everything below is scoped to it.</td><td>Your company's box.</td></tr>
+      <tr><td><b>API key</b></td><td>Carries model allowlists, spend limits, IP rules.</td><td>A key with rules attached, not just a password.</td></tr>
+      <tr><td><b>Router</b></td><td>A named routing policy with allowed models and a strategy.</td><td>A recipe for picking models.</td></tr>
+      <tr><td><b>Auto router</b></td><td><code>orcarouter/auto</code>, created at signup. Balanced by default.</td><td>The default recipe, already made for you.</td></tr>
+      <tr><td><b>Model catalog</b></td><td>Model ids with per-million-token prices, served through one endpoint.</td><td>The menu.</td></tr>
+      <tr><td><b>Fallback chain</b></td><td>Up to five models tried in order when the primary fails.</td><td>A backup plan that runs itself.</td></tr>
+      <tr><td><b>Fusion</b></td><td>A curated panel answers in parallel, a judge returns the single strongest answer.</td><td>Ask several experts, hand you the best reply.</td></tr>
+      <tr><td><b>Escalation tier</b></td><td>Off by default. Moves a session to stronger models on difficulty or failure signals.</td><td>Call in the expensive model only when it is struggling.</td></tr>
+      <tr><td><b>Session affinity</b></td><td>Keeps a conversation on one model so the prompt cache stays warm.</td><td>Stop re-reading the same context at full price.</td></tr>
+      <tr><td><b>Guardrail</b></td><td>A rule that screens prompt or response content.</td><td>A content filter you own.</td></tr>
+      <tr><td><b>Firewall rule</b></td><td>A verdict on a tool call, MCP server or outbound host.</td><td>A rule about what the agent may do.</td></tr>
+      <tr><td><b>Prompt registry</b></td><td>Versioned, immutable prompt snapshots with labels and A/B splits.</td><td>Your prompts in version control, without a deploy.</td></tr>
+      <tr><td><b>Compliance pack</b></td><td>A bundle of guardrail and firewall rules mapped to a framework such as GDPR or HIPAA.</td><td>A prebuilt control set for an audit.</td></tr>
+      <tr><td><b>Evidence export</b></td><td>A signed report covering coverage, enforcement, gaps and subprocessors.</td><td>The document you hand the auditor.</td></tr>
+      <tr><td><b>BYOK key</b></td><td>Your own provider key, used instead of ours, optionally for specific models.</td><td>Bring your existing contract with you.</td></tr>
+      <tr><td><b>Residency region</b></td><td>A declared processing region for the workspace.</td><td>Where the work is allowed to happen.</td></tr>
+      <tr><td><b>Generation lookup</b></td><td><code>GET /v1/generation</code> returns the settled billed amount for one request id.</td><td>The receipt.</td></tr>
+      <tr><td><b>Free tier</b></td><td>Ids ending <code>-free</code>, with their own limits.</td><td>A trial lane, not a plan.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="tech-jargon" class="panel" role="tabpanel" hidden>
+  <p style="color:var(--mut);font-size:13.5px">Keep this open on your first calls. Nobody expects you
+  to know the first five on day one.</p>
+  <table>
+    <thead><tr><th>Term</th><th>What it means when you hear it</th></tr></thead>
+    <tbody>
+      <tr><td><b>Token</b></td><td>The unit models bill in. Roughly three quarters of a word.</td></tr>
+      <tr><td><b>Context window</b></td><td>How much text a model can consider at once. Bigger costs more per call.</td></tr>
+      <tr><td><b>Prompt cache</b></td><td>A provider remembering the front of your prompt so repeat calls bill less. This is why keeping a conversation on one model matters.</td></tr>
+      <tr><td><b>Cached input</b></td><td>The discounted rate for the part of the prompt the provider already saw.</td></tr>
+      <tr><td><b>TTFT</b></td><td>Time to first token. The number a user feels as responsiveness.</td></tr>
+      <tr><td><b>429</b></td><td>Provider saying you are going too fast. Usually arrives with a Retry-After header.</td></tr>
+      <tr><td><b>Retry-After</b></td><td>How many seconds to wait before trying again.</td></tr>
+      <tr><td><b>Failover</b></td><td>Automatically trying another model when one fails.</td></tr>
+      <tr><td><b>Fallback chain</b></td><td>The ordered list of models to try.</td></tr>
+      <tr><td><b>SSE</b></td><td>The streaming format that lets tokens appear as they are produced.</td></tr>
+      <tr><td><b>Tool call</b></td><td>An agent asking your code to run something, such as a database query or a shell command.</td></tr>
+      <tr><td><b>MCP</b></td><td>An open standard for handing tools to a model. Also where a lot of agent risk lives.</td></tr>
+      <tr><td><b>Prompt injection</b></td><td>Untrusted text, often from a web page, telling your agent to do something you did not intend.</td></tr>
+      <tr><td><b>Guardrail</b></td><td>A content rule.</td></tr>
+      <tr><td><b>Firewall</b></td><td>An action rule. Different thing, different engine.</td></tr>
+      <tr><td><b>Shadow mode</b></td><td>Firewall runs and logs the verdict it would have given without enforcing it.</td></tr>
+      <tr><td><b>Cap cost</b></td><td>A firewall verdict that stops an agent whose run spend crosses a ceiling.</td></tr>
+      <tr><td><b>BYOK</b></td><td>Bring your own key. You supply the provider credential.</td></tr>
+      <tr><td><b>Pass-through</b></td><td>We bill the provider's published token price without adding to it.</td></tr>
+      <tr><td><b>ZDR</b></td><td>Zero data retention. Prompts and outputs are not stored.</td></tr>
+      <tr><td><b>PII</b></td><td>Personal data, the kind a compliance reviewer cares about.</td></tr>
+      <tr><td><b>RBAC</b></td><td>Role-based access control. Who inside the customer's org can change what.</td></tr>
+      <tr><td><b>Residency</b></td><td>Which country the processing is allowed to happen in.</td></tr>
+      <tr><td><b>Commit</b></td><td>A minimum monthly spend floor, prepaid as credit. Not a fee.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="tech-questions" class="panel" role="tabpanel" hidden>
+  <table>
+    <thead><tr><th>They ask</th><th>You answer</th></tr></thead>
+    <tbody>
+      <tr><td>Does routing add latency?</td><td>The routing decision itself is small. The honest frame is that we add a hop, and the failover and cache behavior usually wins it back. Measure it on their traffic rather than quoting ours.</td></tr>
+      <tr><td>What happens if a provider dies mid-stream?</td><td>Failover lands <b>before the first byte</b>. Once bytes are flowing, a mid-stream drop is not transparently retried. Say this before they find it in staging.</td></tr>
+      <tr><td>Will routing change my outputs?</td><td>Yes, if you let it choose. Name a model explicitly and routing steps aside entirely, which is the answer for anyone who needs determinism.</td></tr>
+      <tr><td>How do you pick the cheapest model safely?</td><td>A learned strategy needs about ten observations before it starts steering, and it degrades to a balanced default rather than failing.</td></tr>
+      <tr><td>Can I keep my own provider contract?</td><td>Yes, BYOK. Note there may be a platform fee on BYOK traffic, and we show you the exact rate in the console.</td></tr>
+      <tr><td>Do you store our prompts?</td><td>No, by default. Request-body logging is opt-in and off. Some metadata is kept, and the retention windows differ by data class, so answer with the specific one rather than saying "we keep nothing".</td></tr>
+      <tr><td>Do your guardrails block before we pay?</td><td>A block at input returns before the model runs and does not charge quota.</td></tr>
+      <tr><td>Does sanitize clean tool results too?</td><td>No. Sanitize cleans tool-call <b>arguments</b>, not what a tool returns. This is the most common misconception in this space and the docs say so themselves.</td></tr>
+      <tr><td>Can we run everything in shadow first?</td><td>The firewall has shadow mode. Guardrails do not, they either fire or they do not. Do not promise a blanket shadow rollout.</td></tr>
+      <tr><td>Will routing escalate us to expensive models without asking?</td><td>Not by default. Escalation ships off, and it only ever applies to router traffic. A model you name directly is never escalated.</td></tr>
+      <tr><td>What are your rate limits?</td><td>Workspace-scoped, and reactive: a 429 with Retry-After. We do not publish a remaining-budget header, so do not promise predictive limits.</td></tr>
+      <tr><td>Is the free model the same as the paid one?</td><td>Same weights, its own limits. The suffix is the gate: dropping <code>-free</code> does not fail, it bills.</td></tr>
+    </tbody>
+  </table>
+</section>
+</section>
+
+<!-- ================= SHIPS ================= -->
+<section id="ships">
+<h2>What we ship, in routing terms</h2>
+
+<div class="grid2">
+  <div class="card">
+    <h4>One endpoint, many models</h4>
+    <p>Point <code>base_url</code> at our v1 URL and set the model to <code>orcarouter/auto</code>.
+    Naming a model explicitly bypasses routing, which is a feature, not a gap.</p>
+    <div class="tagline">X-Orca-Resolved-Model tells you what actually served it</div>
+  </div>
+  <div class="card">
+    <h4>Named routers</h4>
+    <p>Your own routing policies with allowed-model globs, a default safety net, and a strategy:
+    cheapest, quality, balanced, or adaptive.</p>
+    <div class="tagline">balanced is the default for a user-created router</div>
+  </div>
+  <div class="card">
+    <h4>Fusion</h4>
+    <p>A curated panel answers in parallel and a judge returns the single strongest complete answer.
+    Never a blend. You always get one real model's full response.</p>
+    <div class="tagline">billed as the sum of the underlying completions, at cost</div>
+  </div>
+  <div class="card">
+    <h4>Fallback chains</h4>
+    <p>Up to five models in order. Fails over on an upstream error. Fails only when every entry is
+    exhausted, and it never quietly drops into free capacity.</p>
+    <div class="tagline">fails over before the first byte</div>
+  </div>
+  <div class="card">
+    <h4>Frontier escalation</h4>
+    <p>A tier, not a second router. Off by default, then manual or automatic on difficulty and
+    failure signals. The base tier removes the strong pool from candidates entirely.</p>
+    <div class="tagline">router traffic only</div>
+  </div>
+  <div class="card">
+    <h4>Session affinity</h4>
+    <p>Keeps a conversation on one model so the prompt cache stays warm. The window you get depends
+    on the identifier you send, and pins are soft, never enforced when wrong.</p>
+    <div class="tagline">5 minutes by default, far longer with a session header</div>
+  </div>
+</div>
+
+<p style="margin-top:14px">Two marketing angles fall out of this, and both are checkable rather than
+rhetorical. Fusion is frontier-class output at cost with a judge as the mechanism, so the claim can
+be inspected. Escalation is the other half: pay frontier prices only when the work actually needs it.</p>
+</section>
+
+<!-- ================= GOVERN ================= -->
+<section id="govern">
+<h2>Governance: two engines, and mixing them up is a real bug</h2>
+
+<p>This is the section new reps get wrong most often, because the two systems sound like one thing.
+They are not. Guardrails govern <b>content</b>. The firewall governs <b>actions</b>.</p>
+
+<table>
+  <thead><tr><th></th><th>Guardrails</th><th>Agent firewall</th></tr></thead>
+  <tbody>
+    <tr><td><b>Governs</b></td><td>Prompts and responses</td><td>Tool calls, MCP dispatch, outbound hosts</td></tr>
+    <tr><td><b>Verdicts</b></td><td>block, mask, flag, annotate, spotlight</td><td>allow, audit, deny, sanitize, pending approval, cap cost</td></tr>
+    <tr><td><b>Shadow mode</b></td><td>No. They fire or they do not.</td><td>Yes. Downgrades an enforcing verdict to audit and says what it would have done.</td></tr>
+    <tr><td><b>Failure posture</b></td><td>Fails open by design</td><td>Fails open on the unknown, fails closed on the ambiguous</td></tr>
+    <tr><td><b>Default verdict</b></td><td>Not applicable</td><td>audit</td></tr>
+  </tbody>
+</table>
+
+<h3>Threat to layer</h3>
+<table>
+  <thead><tr><th>Threat</th><th>Which layer answers it</th></tr></thead>
+  <tbody>
+    <tr><td>Destructive shell command from an agent</td><td>Firewall, deny on a tool pattern</td></tr>
+    <tr><td>Data exfiltration through an outbound URL</td><td>Firewall, egress allow and deny list</td></tr>
+    <tr><td>Prompt injection from untrusted content</td><td>Both, input guardrail plus firewall allow list</td></tr>
+    <tr><td>A secret inside a tool argument</td><td>Firewall sanitize, plus a guardrail secrets rule</td></tr>
+    <tr><td>An agent stuck in a cost loop</td><td>Firewall cap cost</td></tr>
+    <tr><td>An unapproved MCP server</td><td>Firewall, MCP deny or hold for approval</td></tr>
+  </tbody>
+</table>
+
+<div class="call hyg">
+  <span class="h">The phrase that lands</span>
+  <b>Nothing blocks on day one.</b> The workspace has an observe mode that logs calls resolving to no
+  policy as coverage gaps, which populates a list of tools you did not know your agents were using.
+  Pair that with firewall shadow mode and the rollout story is: discover, review, enforce. That is the
+  sequence a security reviewer actually wants to hear.
+</div>
+</section>
+
+<!-- ================= MONEY ================= -->
+<section id="money">
+<h2>How the money works</h2>
+
+<p>Tokens are pass-through. We bill the provider's published price and add nothing to it. The routing
+fee column reads <code>$0.00</code> on every model. Revenue comes from plans, not from marking up
+model spend.</p>
+
+<h3>Plans change features, not token price</h3>
+<table>
+  <thead><tr><th>Plan</th><th>What it is</th><th>Where the zero fee applies</th></tr></thead>
+  <tbody>
+    <tr><td><b>Free</b></td><td>Full gateway, single-user workspace</td><td>Yes</td></tr>
+    <tr><td><b>Team</b></td><td>Around $49 per month, up to <b>10 seats</b>, adds compliance enforcement and reporting</td><td>Yes</td></tr>
+    <tr><td><b>Custom / Enterprise</b></td><td>Unlimited seats, dedicated infrastructure, 99.99% SLA, priority access to new models</td><td><b>No.</b> Quoted individually, possibly with a volume-tier routing fee.</td></tr>
+  </tbody>
+</table>
+
+<div class="call warn">
+  <span class="h">Where the zero fee stops</span>
+  The $0.00 routing fee covers <b>Free and Team</b>. BYOK traffic <b>may carry a platform fee</b>, and
+  the docs default is <b>5%</b> (configurable, and shown in the console). Enterprise is quoted
+  individually. Never carry the "we add nothing" line into a BYOK or Enterprise conversation. The
+  first quote makes it false, and that is how a warm deal goes cold.
+</div>
+
+<div class="grid2" style="margin-top:16px">
+  <div class="card">
+    <h4>Three ways to pay</h4>
+    <p>Top up a balance, take a credit subscription that refills each period, or bring your own
+    provider key. Larger subscription plans carry bonus credit.</p>
+  </div>
+  <div class="card">
+    <h4>Caching is the real lever</h4>
+    <p>Cached input bills at the provider's cache rate, and keeping a conversation on one model is
+    what keeps the cache warm. This is the honest mechanism behind most savings.</p>
+  </div>
+  <div class="card">
+    <h4>Free models are a trial lane</h4>
+    <p>Ids end in <code>-free</code> and run under their own limits. The tier is laddered by lifetime
+    spend, not by plan, and the lowest rung has a per-request prompt cap.</p>
+  </div>
+  <div class="card">
+    <h4>Refunds</h4>
+    <p>A top-up refund keeps a 10% fee. Know this before someone asks, and never promise a fee-free
+    refund.</p>
+  </div>
+</div>
+
+<div class="call int">
+  <span class="h">Internal only, do not put in writing to a prospect</span>
+  Deals at the top end are a minimum committed spend, prepaid monthly as credit. It is a <b>floor on
+  spend that already routes through us, never a fee on top</b>. The ratio is one number:
+  <b>commit percent equals 100 minus savings percent</b>. Promise a 40% cut and the commit sits at
+  60% of what they spend today. Never present a savings figure without its matching commit. Get the
+  user's sign-off before quoting this motion to anyone.
+</div>
+</section>
+
+<!-- ================= WHO ================= -->
+<section id="who">
+<h2>Who buys it, and what they care about</h2>
+
+<div class="grid2">
+  <div class="card">
+    <h4>Platform or infrastructure engineer</h4>
+    <p>Cares about failover, latency, one endpoint, and not maintaining retry logic in every service.</p>
+    <div class="tagline">Discovery: how many providers does your code talk to today?</div>
+  </div>
+  <div class="card">
+    <h4>Head of AI or VP Engineering</h4>
+    <p>Cares about shipping faster without a re-platform every time a model launches or retires.</p>
+    <div class="tagline">Discovery: who decides which model a feature uses, and how long does that take?</div>
+  </div>
+  <div class="card">
+    <h4>FinOps or finance</h4>
+    <p>Cares about attribution. Which feature, which team, which customer, and can the number be defended.</p>
+    <div class="tagline">Discovery: can you tell me what AI cost per feature last month?</div>
+  </div>
+  <div class="card">
+    <h4>CISO or security</h4>
+    <p>Cares about evidence, residency, access control, and what an agent is allowed to touch.</p>
+    <div class="tagline">Discovery: what stops an agent from reaching an internal host today?</div>
+  </div>
+</div>
+
+<p style="margin-top:14px">Two notes on who to skip. Pure GTM, legal, finance-ops and executive
+assistant titles rarely own this decision, so they are noise on a list. And companies whose own
+product <em>is</em> a gateway or router are competitors or partners, never prospects.</p>
+</section>
+
+<!-- ================= LIMITS ================= -->
+<section id="limits">
+<h2>Honest limits</h2>
+
+<p>Learn these before your first call. A rep who knows the edges of the product is more credible than
+one who knows the middle, and every item here is something a prospect can find in our own public docs.</p>
+
+<table>
+  <thead><tr><th>Limit</th><th>Say it like this</th></tr></thead>
+  <tbody>
+    <tr><td>A workspace rate-limit bucket exists</td><td>"No per-model ceilings, and limits are workspace-scoped." Do not say "no rate limits at all".</td></tr>
+    <tr><td>Mid-stream drops are not retried</td><td>"Failover covers the window before the first byte. Once it is flowing, we do not pretend to stitch it."</td></tr>
+    <tr><td>Guardrails have no shadow mode</td><td>"The firewall can run in shadow. Guardrails are on or off."</td></tr>
+    <tr><td>Sanitize does not clean tool results</td><td>"Sanitize cleans the arguments. What a tool returns is handled as untrusted output."</td></tr>
+    <tr><td>Retention differs by data class</td><td>Answer with the specific class. Captured request bodies, firewall events and metadata rows have three different windows.</td></tr>
+    <tr><td>Three separate retention clocks are documented</td><td>If a customer says our docs contradict themselves here, they are right to ask. Escalate it rather than improvising.</td></tr>
+    <tr><td>Compliance documentation has two halves</td><td>Certificates evidence the "sufficient guarantees" test. Only the DPA carries the contractual clauses. If they ask for a DPA, send the DPA.</td></tr>
+    <tr><td>The published SOC 2 artifact is a certificate</td><td>Do not send it in answer to "send us your SOC 2 Type II report" without legal checking first.</td></tr>
+    <tr><td>A free workspace cannot install a compliance pack</td><td>Installing packs needs a paid plan and an admin. The free tier can browse the catalog only.</td></tr>
+    <tr><td>Six Enterprise questions are still unanswered internally</td><td>Contract length, SLA credits, what dedicated infrastructure concretely means, seat pricing above ten, whether the per-million routing fee stacks, and migration mechanics. Take these inside, never invent them.</td></tr>
+  </tbody>
+</table>
+
+<div class="call warn">
+  <span class="h">One open item, do not improvise</span>
+  <b>orcaverify</b> appears in our live catalog and in the quality column on our own homepage, and it
+  appears <b>zero times</b> anywhere in our documentation. Somebody internal needs to explain what it
+  does before a prospect asks. Until then, do not describe it.
+</div>
+</section>
+
+<!-- ================= NEVER ================= -->
+<section id="never">
+<h2>Never say</h2>
+<p>Each of these has been said in a real conversation. Every one is checkable by the person you are
+talking to, usually within a minute.</p>
+
+<div class="grid2">
+  <div class="dns">
+    <div class="line">"We work with 40+ providers"</div>
+    <div class="blk"><b>What it means</b>Our own offers page carries this figure. Our live catalog shows 15 provider prefixes.</div>
+    <div class="blk"><b>Why it matters</b>The user can count them from the same public endpoint we can. If they do it while you are on the call, you have no recovery.</div>
+    <div class="fix">Say: quote the model count and date the provider count.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"Our routing fee is zero, full stop"</div>
+    <div class="blk"><b>What it means</b>True for Free and Team. BYOK may carry a platform fee, and Enterprise is quoted individually.</div>
+    <div class="blk"><b>Why it matters</b>It survives the first call and dies at the quote. That is a bait and switch even when we did not mean one.</div>
+    <div class="fix">Say: no fee on Free and Team; BYOK and Enterprise are priced in the contract.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"We beat GPT-5 on the leaderboard"</div>
+    <div class="blk"><b>What it means</b>The accuracy figure is a dated snapshot. The board that produced it could not be re-read on 2026-09-22.</div>
+    <div class="blk"><b>Why it matters</b>Our own promise is proof, not vibes. If they ask to see the board and it will not load, the whole pitch loses its spine.</div>
+    <div class="fix">Say: here is the dated accuracy snapshot, and here is the replay on your traffic.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"Everything can run in shadow first"</div>
+    <div class="blk"><b>What it means</b>Only the firewall has shadow mode. Guardrails fire or they do not.</div>
+    <div class="blk"><b>Why it matters</b>A security team will plan a rollout around this and discover the gap in staging, which is exactly where trust dies.</div>
+    <div class="fix">Say: firewall in shadow, guardrails in observe, then enforce.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"Sanitize scrubs whatever the tool returns"</div>
+    <div class="blk"><b>What it means</b>Sanitize cleans tool-call arguments. Tool results are untrusted content handled elsewhere.</div>
+    <div class="blk"><b>Why it matters</b>Our own docs call this the common misconception. An engineer who reads them will catch it and quietly downgrade everything else you said.</div>
+    <div class="fix">Say: arguments are sanitized at dispatch; returned content is treated as untrusted.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"Team has unlimited seats"</div>
+    <div class="blk"><b>What it means</b>Team is up to 10 seats. Enterprise is the unlimited tier.</div>
+    <div class="blk"><b>Why it matters</b>Seat count is the first thing a growing team checks, and it decides which plan they buy.</div>
+    <div class="fix">Say: Team covers ten seats, and Enterprise removes the cap.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"There is a $25 signup credit"</div>
+    <div class="blk"><b>What it means</b>It does not exist. There are voucher drops and free model ids.</div>
+    <div class="blk"><b>Why it matters</b>They will sign up to claim it, fail, and open the relationship on a broken promise.</div>
+    <div class="fix">Say: free models to start with, and voucher drops when they run.</div>
+  </div>
+
+  <div class="dns">
+    <div class="line">"Here is our SOC 2 Type II report"</div>
+    <div class="blk"><b>What it means</b>What exists is a one-page certificate from a certification body, not a report from a licensed audit firm.</div>
+    <div class="blk"><b>Why it matters</b>A compliance reviewer spots the difference in seconds, and that reviewer is often the person who can stop the deal.</div>
+    <div class="fix">Say: here is our compliance documentation, and route the report request through legal.</div>
+  </div>
+</div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section id="quiz">
+<h2>Recap quiz</h2>
+<p>Twelve questions on the things that get said wrong on live calls. Answer them, check your score,
+and read the feedback on anything you missed. Nothing is graded or sent anywhere, so guess freely.</p>
+
+<div class="q" data-answer="b" data-correct="Free and Team, on top-ups and subscriptions" data-why="BYOK traffic may carry a platform fee, and the docs default is 5%. Enterprise is quoted individually. Never carry the no-fee line into either conversation.">
+  <p class="qt">1. Where does the $0.00 routing fee actually apply?</p>
+  <label><input type="radio" name="q1" value="a"><span>Every plan, including BYOK and Enterprise</span></label>
+  <label><input type="radio" name="q1" value="b"><span>Free and Team, on top-ups and subscriptions</span></label>
+  <label><input type="radio" name="q1" value="c"><span>Only Enterprise contracts</span></label>
+  <label><input type="radio" name="q1" value="d"><span>Nobody, there is a platform fee everywhere</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="c" data-correct="Agent firewall" data-why="Only the firewall has shadow mode, and it downgrades an enforcing verdict to audit while recording what it would have done. Guardrails fire or they do not.">
+  <p class="qt">2. Which engine can run in shadow mode before it enforces anything?</p>
+  <label><input type="radio" name="q2" value="a"><span>Guardrails</span></label>
+  <label><input type="radio" name="q2" value="b"><span>Both of them</span></label>
+  <label><input type="radio" name="q2" value="c"><span>Agent firewall</span></label>
+  <label><input type="radio" name="q2" value="d"><span>Neither of them</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="The tool-call arguments" data-why="The docs call this the common misconception. Tool results are untrusted content handled by output guardrails, never by sanitize.">
+  <p class="qt">3. What does a firewall sanitize verdict clean?</p>
+  <label><input type="radio" name="q3" value="a"><span>Whatever the tool returns</span></label>
+  <label><input type="radio" name="q3" value="b"><span>The tool-call arguments</span></label>
+  <label><input type="radio" name="q3" value="c"><span>The model's final answer</span></label>
+  <label><input type="radio" name="q3" value="d"><span>The incoming prompt</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="c" data-correct="10" data-why="Team is up to 10 seats. Enterprise is the unlimited tier. Seat count is the first thing a growing team checks and it decides which plan they buy.">
+  <p class="qt">4. How many seats does Team include?</p>
+  <label><input type="radio" name="q4" value="a"><span>Unlimited</span></label>
+  <label><input type="radio" name="q4" value="b"><span>5</span></label>
+  <label><input type="radio" name="q4" value="c"><span>10</span></label>
+  <label><input type="radio" name="q4" value="d"><span>25</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="Routing steps aside and that model serves the request" data-why="Naming a model bypasses routing entirely. That is the answer for anyone who needs output determinism, and it is a feature rather than a gap.">
+  <p class="qt">5. A caller names a model explicitly. What happens to routing?</p>
+  <label><input type="radio" name="q5" value="a"><span>The router overrides the name</span></label>
+  <label><input type="radio" name="q5" value="b"><span>Routing steps aside and that model serves it</span></label>
+  <label><input type="radio" name="q5" value="c"><span>The request fails</span></label>
+  <label><input type="radio" name="q5" value="d"><span>It escalates to the strong tier</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="No, it ships off and only applies to router traffic" data-why="Escalation is off by default, and a directly named model is never escalated. The base tier removes the strong pool from candidates entirely.">
+  <p class="qt">6. Is frontier escalation on by default?</p>
+  <label><input type="radio" name="q6" value="a"><span>Yes, on every request</span></label>
+  <label><input type="radio" name="q6" value="b"><span>No, it ships off and applies to router traffic only</span></label>
+  <label><input type="radio" name="q6" value="c"><span>Yes, but only for named models</span></label>
+  <label><input type="radio" name="q6" value="d"><span>Only on Enterprise</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="c" data-correct="Nothing" data-why="The block happens before the model runs, so no quota is charged and there is no token spend. A denied inbound firewall call costs nothing either.">
+  <p class="qt">7. An input guardrail blocks a prompt. What does that request cost?</p>
+  <label><input type="radio" name="q7" value="a"><span>Full token price</span></label>
+  <label><input type="radio" name="q7" value="b"><span>Half price</span></label>
+  <label><input type="radio" name="q7" value="c"><span>Nothing</span></label>
+  <label><input type="radio" name="q7" value="d"><span>A small per-request fee</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="It bills at the paid rate" data-why="The suffix is the gate. Dropping it does not fail, it bills. Free models are a lane to start in, not a plan.">
+  <p class="qt">8. You drop the <code>-free</code> suffix from a free model id. What happens?</p>
+  <label><input type="radio" name="q8" value="a"><span>The request fails</span></label>
+  <label><input type="radio" name="q8" value="b"><span>It bills at the paid rate</span></label>
+  <label><input type="radio" name="q8" value="c"><span>It falls back to another free model</span></label>
+  <label><input type="radio" name="q8" value="d"><span>It is rate limited</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="Before the first byte only" data-why="Once bytes are flowing, a mid-stream drop is not transparently retried. Say this before a prospect finds it in staging.">
+  <p class="qt">9. What window does failover actually cover?</p>
+  <label><input type="radio" name="q9" value="a"><span>Any point in the stream</span></label>
+  <label><input type="radio" name="q9" value="b"><span>Before the first byte only</span></label>
+  <label><input type="radio" name="q9" value="c"><span>The first thirty seconds</span></label>
+  <label><input type="radio" name="q9" value="d"><span>Only non-streaming calls</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="Quote the model count and date the provider count" data-why="The live catalog shows 15 provider prefixes. Quote the count that has a backing list, date it, and never defend a figure you cannot produce a list for.">
+  <p class="qt">10. A prospect says your own site claims 40+ providers. What do you do?</p>
+  <label><input type="radio" name="q10" value="a"><span>Confirm it, it is on our site</span></label>
+  <label><input type="radio" name="q10" value="b"><span>Quote the model count and date the provider count</span></label>
+  <label><input type="radio" name="q10" value="c"><span>Move the conversation on</span></label>
+  <label><input type="radio" name="q10" value="d"><span>Say the catalog holds forty</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="b" data-correct="A one-page certificate from a certification body" data-why="It is a certificate of conformity, not a report from a licensed audit firm. Do not send it in answer to a request for a SOC 2 Type II report without checking with legal first.">
+  <p class="qt">11. What is our published SOC 2 artifact?</p>
+  <label><input type="radio" name="q11" value="a"><span>A Type II report from a CPA firm</span></label>
+  <label><input type="radio" name="q11" value="b"><span>A one-page certificate from a certification body</span></label>
+  <label><input type="radio" name="q11" value="c"><span>A self-assessment questionnaire</span></label>
+  <label><input type="radio" name="q11" value="d"><span>Nothing exists yet</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div class="q" data-answer="c" data-correct="That you will find out and come back, because it is undocumented internally" data-why="It appears in the live catalog and on our own homepage quality column, and it appears zero times in the documentation. Do not invent mechanics for it.">
+  <p class="qt">12. A prospect asks what <code>orcaverify</code> does. What do you say?</p>
+  <label><input type="radio" name="q12" value="a"><span>It verifies model output for quality</span></label>
+  <label><input type="radio" name="q12" value="b"><span>It is a routing quality score</span></label>
+  <label><input type="radio" name="q12" value="c"><span>That you will find out and come back, because it is undocumented</span></label>
+  <label><input type="radio" name="q12" value="d"><span>It is our newest frontier model</span></label>
+  <div class="fb" hidden></div>
+</div>
+
+<div id="scorebox" aria-live="polite">
+  <div class="big" id="scoreOut">0/12</div>
+  <div class="verdict" id="scoreVerdict"></div>
+  <div class="barwrap"><i id="scoreBar"></i></div>
+</div>
+
+<div class="quizbar">
+  <button type="button" class="act" id="quizSubmit">Check my score</button>
+  <button type="button" class="act ghost" id="quizReset">Reset</button>
+</div>
+</section>
+
+<!-- ================= WEEK 1 ================= -->
+<section id="week1">
+<h2>Your first week</h2>
+<ul class="check">
+  <li><span class="box"></span><span>Get your own workspace and make one call against <code>orcarouter/auto</code>. You cannot sell a thing you have not used.</span></li>
+  <li><span class="box"></span><span>Read the six-layer flow above until you can draw it from memory. It answers most technical questions you will get.</span></li>
+  <li><span class="box"></span><span>Learn the difference between the guardrails engine and the firewall engine, and the two facts that differ: shadow mode and failure posture.</span></li>
+  <li><span class="box"></span><span>Memorize where the zero fee stops. This is the single most likely thing to embarrass you on a call.</span></li>
+  <li><span class="box"></span><span>Read the honest limits table twice. Knowing the edges is what makes the rest believable.</span></li>
+  <li><span class="box"></span><span>Pull the current pricing page yourself before your first demo. Never recite a number from this document.</span></li>
+  <li><span class="box"></span><span>Sit in on one call before you run one. Ask the rep what they wished they had known.</span></li>
+  <li><span class="box"></span><span>Find one prospect who already uses a competing gateway, and write down what they say about why. That is your real training.</span></li>
+</ul>
+</section>
+
+<!-- ================= SOURCES ================= -->
+<section id="sources">
+<h2>Sources and retrieval dates</h2>
+<table>
+  <thead><tr><th>Fact area</th><th>Source</th><th>Retrieved</th></tr></thead>
+  <tbody>
+    <tr><td>Model count, provider prefixes, free ids, fee column</td><td>The public catalog and pricing endpoints, no key required</td><td>2026-09-22</td></tr>
+    <tr><td>Plan shape, seat caps, fee scope</td><td>The pricing page and its FAQ</td><td>2026-09-22</td></tr>
+    <tr><td>Control stack, routing surface, Fusion, escalation, session affinity</td><td>The docs site, routing and features sections</td><td>2026-09-22</td></tr>
+    <tr><td>Guardrails and firewall mechanics, verdicts, shadow mode</td><td>The docs site, features and security sections</td><td>2026-09-22</td></tr>
+    <tr><td>BYOK platform fee default, refund fee, free-tier ladder</td><td>The docs site, operations section</td><td>2026-09-22</td></tr>
+    <tr><td>Retention windows, ZDR, residency</td><td>The docs site, security and compliance sections</td><td>2026-09-18</td></tr>
+    <tr><td>Certificates, entity, DPA and SCC position</td><td>The marketing trust page and the published certificates</td><td>2026-09-18</td></tr>
+    <tr><td>Leaderboard accuracy figure</td><td>Homepage claim, dated snapshot. Board not re-readable on 2026-09-22.</td><td>2026-09-22</td></tr>
+  </tbody>
+</table>
+
+<p style="margin-top:14px;color:var(--mut);font-size:13.5px">Product facts rot faster than anything
+else in sales. The counts on this page will be wrong within weeks. Re-pull before you present, and
+when a number here disagrees with the live source, the live source wins.</p>
+</section>
+
+<footer>
+  Internal enablement. Not for prospect distribution.<br>
+  Built 2026-09-22 from the live product docs and the public catalog. Every number carries its
+  retrieval date. Question anything here that looks stale, because it probably is.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tablist [data-tab]'));
+  if(!tabs.length) return;
+  var ids = tabs.map(function(b){ return b.getAttribute('data-tab'); });
+
+  function show(id, setHash, focus){
+    tabs.forEach(function(b){
+      var own = b.getAttribute('data-tab');
+      var on = own === id;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+      // Each button controls ITS OWN panel. Using the target id here instead of
+      // the button's own id left every other panel un-hidden, so panels stacked
+      // up as visible and deep links showed two at once.
+      var p = document.getElementById(own);
+      if(p) p.hidden = !on;
+      if(on && focus) b.focus();
+    });
+    if(setHash && history.replaceState) history.replaceState(null, '', '#' + id);
+  }
+
+  function selectedIndex(){
+    var i = -1;
+    tabs.forEach(function(b, n){ if(b.getAttribute('aria-selected') === 'true') i = n; });
+    return i >= 0 ? i : 0;
+  }
+
+  tabs.forEach(function(b){
+    b.addEventListener('click', function(){ show(b.getAttribute('data-tab'), true, false); });
+    b.addEventListener('keydown', function(e){
+      // Advance from the SELECTED tab, not the focused one. Selection can move
+      // without focus (a hash change), and basing the step on focus made
+      // ArrowRight jump from the wrong tab.
+      var i = selectedIndex();
+      if(e.key === 'ArrowRight'){
+        var n = tabs[(i + 1) % tabs.length];
+        show(n.getAttribute('data-tab'), true, true); e.preventDefault();
+      } else if(e.key === 'ArrowLeft'){
+        var p = tabs[(i - 1 + tabs.length) % tabs.length];
+        show(p.getAttribute('data-tab'), true, true); e.preventDefault();
+      }
+    });
+  });
+
+  // A hash change while the page is already open must switch panels.
+  window.addEventListener('hashchange', function(){
+    var h = (location.hash || '').replace('#', '');
+    if(ids.indexOf(h) >= 0) show(h, false, true);
+  });
+
+  // Deep link on a fresh load, but NEVER rewrite the URL on first paint and do
+  // not steal focus on load.
+  var h = (location.hash || '').replace('#', '');
+  show(ids.indexOf(h) >= 0 ? h : ids[0], false, false);
+})();
+</script>
+<script>
+(function(){
+  var sec = document.getElementById('quiz');
+  if(!sec) return;
+  var qs = Array.prototype.slice.call(sec.querySelectorAll('.q'));
+  var box = document.getElementById('scorebox');
+  var out = document.getElementById('scoreOut');
+  var verdict = document.getElementById('scoreVerdict');
+  var bar = document.getElementById('scoreBar');
+  var submit = document.getElementById('quizSubmit');
+  var reset = document.getElementById('quizReset');
+  if(!qs.length || !submit) return;
+
+  function feedback(q, cls, lead){
+    var fb = q.querySelector('.fb');
+    q.classList.remove('right', 'wrong');
+    q.classList.add(cls);
+    fb.innerHTML = lead + ' ' + q.getAttribute('data-why');
+    fb.hidden = false;
+  }
+
+  submit.addEventListener('click', function(){
+    var got = 0, blank = 0;
+    qs.forEach(function(q){
+      var want = q.getAttribute('data-answer');
+      var sel = q.querySelector('input:checked');
+      if(!sel){
+        blank++;
+        feedback(q, 'wrong', '<b>Not answered.</b>');
+        return;
+      }
+      if(sel.value === want){
+        got++;
+        feedback(q, 'right', '<b>Correct.</b>');
+      } else {
+        feedback(q, 'wrong', '<b>Not quite.</b> Correct answer: <b>' +
+                 q.getAttribute('data-correct') + '</b>.');
+      }
+    });
+
+    var pct = Math.round(got / qs.length * 100);
+    out.textContent = got + '/' + qs.length + '   ' + pct + '%';
+    bar.style.width = pct + '%';
+
+    var v;
+    if(pct === 100){
+      v = 'Ready. You can take a call today.';
+    } else if(pct >= 80){
+      v = 'Solid. Re-read the items flagged red below before your first demo.';
+    } else if(pct >= 60){
+      v = 'Not yet. Go back to the sections behind the questions you missed.';
+    } else {
+      v = 'Read the page end to end, then retake. These are the exact things a prospect will check.';
+    }
+    if(blank){
+      v += ' ' + blank + (blank === 1 ? ' question was' : ' questions were') + ' left blank.';
+    }
+    verdict.textContent = v;
+    box.classList.add('on');
+    box.scrollIntoView({block: 'start'});
+  });
+
+  reset.addEventListener('click', function(){
+    qs.forEach(function(q){
+      q.classList.remove('right', 'wrong');
+      Array.prototype.slice.call(q.querySelectorAll('input')).forEach(function(i){ i.checked = false; });
+      var fb = q.querySelector('.fb');
+      fb.hidden = true;
+      fb.innerHTML = '';
+    });
+    box.classList.remove('on');
+    bar.style.width = '0';
+    out.textContent = '0/' + qs.length;
+    sec.scrollIntoView({block: 'start'});
+  });
+})();
+</script>
+</body>
+</html>
