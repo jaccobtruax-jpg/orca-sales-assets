@@ -124,15 +124,16 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
        padding:11px 15px;border-radius:0 7px 7px 0;margin:11px 0;font-size:14px}
 .never .lbl{font-style:normal}
 
-/* ---------- stepper ---------- */
-.stepnav{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 0}
-.stepnav button{background:var(--surface2);border:1px solid var(--line2);color:var(--mut);
+/* ---------- stepper + tabs (shared chip look) ---------- */
+.stepnav,.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 0}
+.stepnav button,.tabs button{background:var(--surface2);border:1px solid var(--line2);color:var(--mut);
   border-radius:999px;padding:8px 14px;font-size:12.5px;cursor:pointer;font-family:inherit;
   min-height:44px;display:inline-flex;align-items:center;gap:7px}
-.stepnav button:hover{color:var(--ink);border-color:var(--accent)}
-.stepnav button[aria-selected="true"]{background:rgba(94,106,210,.16);border-color:var(--accent);
-  color:#fff;font-weight:600}
+.stepnav button:hover,.tabs button:hover{color:var(--ink);border-color:var(--accent)}
+.stepnav button[aria-selected="true"],.tabs button[aria-selected="true"]{background:rgba(94,106,210,.16);
+  border-color:var(--accent);color:#fff;font-weight:600}
 .stepnav button .sn{font-family:var(--mono);font-size:11px;opacity:.75}
+.tabpanel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0}
 .stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0}
 .stagefoot{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:12px}
 .stagefoot .cnt{font-family:var(--mono);font-size:12px;color:var(--mut2)}
@@ -159,6 +160,19 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .calc .out b{display:block;font-family:var(--mono);font-size:21px;font-weight:500;color:var(--accent2)}
 .calc .out span{display:block;font-size:11.5px;color:var(--mut2);margin-top:3px}
 .calc .row label{color:var(--mut)}
+
+/* ---------- copyable query blocks ---------- */
+.codebox{position:relative;background:var(--surface2);border:1px solid var(--line2);border-radius:8px;
+  padding:12px 60px 12px 14px;margin:8px 0;font-family:var(--mono);font-size:12.5px;
+  white-space:pre-wrap;word-break:break-word;line-height:1.5;color:#e6e8ff}
+.copy{position:absolute;top:8px;right:8px;background:var(--surface);border:1px solid var(--line2);
+  color:var(--mut);border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:inherit;
+  min-height:30px}
+.copy:hover{color:var(--ink);border-color:var(--accent)}
+.copy.done{color:var(--good);border-color:rgba(63,185,80,.5)}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:14px 16px;margin:10px 0}
+.qcard h4{margin:0 0 4px;font-size:14px}
+.qcard .qwhy{font-size:12.5px;color:var(--mut);margin:0 0 8px}
 
 /* ---------- drills ---------- */
 .drill{background:var(--surface);border:1px solid var(--line);border-radius:10px;
@@ -267,6 +281,7 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
       <a href="#scoreboard">Scoreboard</a>
       <a href="#product">Product</a>
       <a href="#prospecting">Prospecting</a>
+      <a href="#on-x">On X</a>
       <a href="#discovery">Discovery</a>
       <a href="#demo">Demo</a>
       <a href="#followup">Follow-up</a>
@@ -293,7 +308,7 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
     <div class="stat"><b>5</b><span>discovery questions that carry an entire first call.</span></div>
     <div class="stat"><b>$0.00</b><span>the routing fee you can promise without checking a thing.</span></div>
   </div>
-  <p class="dated">Built Thursday, September 24, 2026 &middot; 14 sections &middot; internal training,
+  <p class="dated">Built Thursday, September 24, 2026 &middot; 15 sections &middot; internal training,
   not for prospects</p>
 </header>
 
@@ -622,11 +637,294 @@ filler, and it never asks to pick your brain over coffee.</p>
   Fake urgency. A claim you cannot source. And any sentence that would read identically if you
   pasted in a different company name.
 </div>
+
+<div class="call good">
+  <span class="h">There is a whole section on this next</span>
+  Most of our larger leads come from X, and it does not work like email. The next section covers the
+  search operators that find buying signals, the reply-first sequence, and the documented reason you
+  cannot skip straight to a message.
+</div>
 </section>
 
-<!-- ============ 5. DISCOVERY ============ -->
+<!-- ============ 5. ON X ============ -->
+<section id="on-x">
+<h2>5. Prospecting on X</h2>
+
+<p>Most of our larger leads come from X. That is not chance. Our buyer has a specific problem they
+talk about in public, in their own words, long before they will take a call from a stranger. A rate
+limit. An outage. A model bill nobody can explain. By the time a company is filling in an evaluation
+spreadsheet, the useful conversation on X already happened weeks earlier.</p>
+
+<p>That makes X unlike every other channel here in one important way: the reason to reach out is
+already written down, publicly, by the person you want to talk to. Your job is to find it, and then
+to be worth replying to.</p>
+
+<div class="call hyg">
+  <span class="h">Where this guidance comes from, and what it does not cover</span>
+  The search operators below come from <b>X's own developer documentation</b> on building queries, and
+  the direct-message rules from <b>X's help centre</b>. Both retrieved 24 September 2026. Two help
+  centre pages would not load, so treat the operator list as authoritative and the search box inside
+  the app as close to it but not identical. You will notice there is nothing here about how X ranks
+  posts. That is deliberate: we have not verified it, and a rep should not be repeating claims about
+  an algorithm to a buyer who builds things for a living.
+</div>
+
+<div class="tabs" role="tablist" aria-label="Prospecting on X">
+  <button role="tab" data-tab="onx-why" aria-selected="true" aria-controls="onx-why">Why X works</button>
+  <button role="tab" data-tab="onx-find" aria-selected="false" aria-controls="onx-find">Find them</button>
+  <button role="tab" data-tab="onx-earn" aria-selected="false" aria-controls="onx-earn">Earn the reply</button>
+  <button role="tab" data-tab="onx-dm" aria-selected="false" aria-controls="onx-dm">The DM</button>
+  <button role="tab" data-tab="onx-never" aria-selected="false" aria-controls="onx-never">What not to do</button>
+</div>
+
+<section id="onx-why" class="tabpanel" role="tabpanel">
+  <h3>What X gives you that email cannot</h3>
+  <table>
+    <thead><tr><th>What you get</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><b>A dated reason for now</b></td><td>They posted the problem, publicly, on a specific day. That is a real trigger you can reference, not a manufactured one.</td></tr>
+      <tr><td><b>The person, not a role</b></td><td>No gatekeeper and no contact form. You are talking to the engineer or the founder who feels the problem.</td></tr>
+      <tr><td><b>Evidence of what they run</b></td><td>Their posts tell you which providers, which stack, whether they build in house, and whether they are technical enough to care about your answer.</td></tr>
+      <tr><td><b>Their own vocabulary</b></td><td>You can copy how they describe the problem instead of guessing. This is worth more than any script.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>What X does not give you</h3>
+  <ul>
+    <li><b>Volume.</b> You cannot send two hundred a day. Ten thoughtful replies will outperform a hundred generic ones, and there is no tool that changes that.</li>
+    <li><b>Privacy.</b> Every reply is public. A bad reply is a public bad reply, and buyers in a niche all know each other.</li>
+    <li><b>Permission to skip discovery.</b> A warm post is not a qualified deal. It is an opening, and the discovery still has to happen.</li>
+  </ul>
+
+  <div class="call int">
+    <span class="h">The mindset shift</span>
+    On email you are interrupting. On X you are joining a conversation that was already happening. That
+    difference changes everything about what works: you contribute first and ask second, and the ask
+    gets smaller, not bigger.
+  </div>
+</section>
+
+<section id="onx-find" class="tabpanel" role="tabpanel" hidden>
+  <h3>The operators worth knowing</h3>
+  <p>These are from X's developer documentation. Paste them into the search box, or save them as a
+  column if you use a tool that supports it.</p>
+  <table>
+    <thead><tr><th>Operator</th><th>What it does</th><th>Why a rep uses it</th></tr></thead>
+    <tbody>
+      <tr><td><code>"exact phrase"</code></td><td>Matches the exact phrase</td><td>Pin down a real complaint instead of a vague word.</td></tr>
+      <tr><td><code>OR</code></td><td>Matches either side</td><td>Cover the two or three words people use for the same thing.</td></tr>
+      <tr><td><code>-word</code></td><td>Excludes (dash is NOT)</td><td>Kill the noise. Minus <code>-hiring</code>, <code>-crypto</code>, <code>-giveaway</code>.</td></tr>
+      <tr><td><code>( )</code></td><td>Groups logic</td><td>Keep the OR group together and the exclusions outside it.</td></tr>
+      <tr><td><code>from:</code></td><td>Posts by one account</td><td>Follow one engineer's build log over months.</td></tr>
+      <tr><td><code>to:</code></td><td>Replies to one account</td><td>See what people ask a provider publicly. Complaints cluster here.</td></tr>
+      <tr><td><code>is:reply</code> <code>is:quote</code> <code>is:retweet</code></td><td>Filters by post type</td><td><code>-is:retweet</code> is the single biggest quality improvement you can make.</td></tr>
+      <tr><td><code>has:links</code></td><td>Posts containing a link</td><td>Build logs and announcements usually carry one.</td></tr>
+      <tr><td><code>min_replies:</code></td><td>At least N replies</td><td>Find posts a community already found interesting.</td></tr>
+      <tr><td><code>lang:</code></td><td>Language filter</td><td>Cut the noise on any broad query.</td></tr>
+      <tr><td><code>url:</code></td><td>Token match on a URL</td><td>Find every link to a specific changelog or status page.</td></tr>
+      <tr><td><code>place_country:</code></td><td>Country</td><td>Useful if you are territory-bound.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="call warn">
+    <span class="h">One operator you may have seen that is not on that list</span>
+    <code>min_faves:</code> has worked in the X app for years, but it is <b>not in X's current operator
+    reference</b>. Use it if it works for you, and do not build a saved search you depend on around an
+    operator the documentation does not list. <code>min_replies:</code> is the documented equivalent.
+  </div>
+
+  <h3>Saved searches to set up today</h3>
+  <p>Each of these maps to one of the four trigger families from the previous section. Copy them and
+  paste them into X. Tune the provider names to whoever is in the conversation that week.</p>
+
+  <div class="qcard">
+    <h4>1. Provider pain, the loudest family</h4>
+    <p class="qwhy">Someone is being rate limited or timing out right now, and saying so in public.</p>
+    <div class="codebox"><span class="qstr">("rate limit" OR "rate limits" OR "timed out" OR "429") (openai OR anthropic OR gemini OR bedrock) -is:retweet lang:en</span><button class="copy" type="button">Copy</button></div>
+  </div>
+
+  <div class="qcard">
+    <h4>2. Migrations, which means a decision is live</h4>
+    <p class="qwhy">A migration post is the closest thing to a buying signal on X. They are already moving.</p>
+    <div class="codebox"><span class="qstr">("switched from" OR "moved off" OR "migrating from" OR "moving to") (openai OR anthropic OR bedrock OR "vertex ai") -is:retweet lang:en</span><button class="copy" type="button">Copy</button></div>
+  </div>
+
+  <div class="qcard">
+    <h4>3. Cost they cannot attribute</h4>
+    <p class="qwhy">This is our exact wedge. The pain is not the size of the bill, it is that nobody can explain it.</p>
+    <div class="codebox"><span class="qstr">("our LLM bill" OR "token costs" OR "inference costs" OR "model spend" OR "cost per request") -is:retweet lang:en</span><button class="copy" type="button">Copy</button></div>
+  </div>
+
+  <div class="qcard">
+    <h4>4. People asking for a recommendation</h4>
+    <p class="qwhy">The most polite buying signal there is. Answer the question properly and do not pitch in the reply.</p>
+    <div class="codebox"><span class="qstr">(recommendations OR "anyone using" OR "looking for" OR evaluating) ("llm gateway" OR "model router" OR "multi-provider" OR "model failover") -is:retweet lang:en</span><button class="copy" type="button">Copy</button></div>
+  </div>
+
+  <div class="qcard">
+    <h4>5. Builders shipping agent products</h4>
+    <p class="qwhy">Ship logs mean production traffic, which means a bill and an outage risk. Future pain, findable early.</p>
+    <div class="codebox"><span class="qstr">("we shipped" OR "now in production" OR "in prod") (agent OR agents OR agentic OR "tool calling") -is:retweet has:links lang:en</span><button class="copy" type="button">Copy</button></div>
+  </div>
+
+  <div class="qcard">
+    <h4>6. The hiring signal, which is a budget signal</h4>
+    <p class="qwhy">A team hiring to own the model stack has budget and an owner. That is two of the four things every sale needs.</p>
+    <div class="codebox"><span class="qstr">hiring ("platform engineer" OR "AI engineer" OR "ML platform") (agents OR "model serving" OR inference) -is:retweet lang:en</span><button class="copy" type="button">Copy</button></div>
+  </div>
+
+  <div class="call good">
+    <span class="h">How to use these without burning out</span>
+    Pick <b>two</b>, not six. Check them once in the morning and once in the afternoon. Reply to three
+    to five things properly rather than skimming fifty. The value is in the reply, not the reading.
+  </div>
+</section>
+
+<section id="onx-earn" class="tabpanel" role="tabpanel" hidden>
+  <h3>The sequence is find, reply, then message</h3>
+  <p>You cannot cold-message most people on X, and the next tab explains exactly why in X's own words.
+  That constraint is a gift, because it forces the behaviour that actually works: you become a
+  familiar name in their replies first, and the message you eventually send is a warm one.</p>
+
+  <div class="step">
+    <div class="n">1</div>
+    <div><b>Find them</b><br><span class="tech">A saved search catches a real, dated problem.</span></div>
+  </div>
+  <div class="step">
+    <div class="n">2</div>
+    <div><b>Reply with something they could not have written themselves</b><br><span class="tech">A number, a mechanism, a link to a doc that answers the actual question. Not agreement.</span></div>
+  </div>
+  <div class="step">
+    <div class="n">3</div>
+    <div><b>Be there the second time</b><br><span class="tech">One good reply is a stranger. Two or three over a few weeks is a name they recognise.</span></div>
+  </div>
+  <div class="step">
+    <div class="n">4</div>
+    <div><b>Then send the message</b><br><span class="tech">Reference your own reply and the thread. This is the difference between a request and a conversation.</span></div>
+  </div>
+
+  <h3>What a reply that earns the next step looks like</h3>
+  <div class="script">
+    <span class="lbl tk">Reads like this</span>
+    "Worth knowing: that timeout is usually the provider's queue, not your code. Two things that help
+    are pinning the request to a session so you keep the warm cache, and setting a fallback chain so a
+    queued request moves rather than fails. Docs on the failover side are here if it saves you a
+    debugging afternoon."
+  </div>
+  <p>It answers the question. It teaches something true. It mentions our product once, as a resource,
+  and it does not ask for anything. You are building the right to send a message later, not closing.</p>
+
+  <div class="never">
+    <span class="lbl nv">What a reply must never be</span>
+    "Great post!" Agreement adds nothing and nobody remembers it. Neither does a paragraph about our
+    company, a link with no explanation, or a correction delivered with a smirk. If you would not say
+    it to their face in a room of their peers, do not post it.
+  </div>
+
+  <h3>Your profile is the landing page</h3>
+  <p>When your reply makes someone curious, they click your name. That moment is the whole channel, and
+  most reps lose it.</p>
+  <table>
+    <thead><tr><th>Element</th><th>What it needs to do</th></tr></thead>
+    <tbody>
+      <tr><td><b>Bio</b></td><td>One line on what you help with and who you help. Not a job title and a list of interests.</td></tr>
+      <tr><td><b>Pinned post</b></td><td>The one thing you want a technical buyer to read. Make it useful on its own, with no ask in it.</td></tr>
+      <tr><td><b>Last 30 days</b></td><td>Some evidence you know the space. Replying counts. Posting nothing but reposts does not.</td></tr>
+      <tr><td><b>Link</b></td><td>Somewhere that works, and that a technical reader will not bounce off.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="call hyg">
+    <span class="h">Consistency beats volume, and it is not close</span>
+    Three real replies a day for a month will build a name in a niche faster than a burst of fifty in
+    one afternoon and then nothing. This is the same arithmetic as the pipeline calculator: the rate is
+    what compounds, not the spike.
+  </div>
+</section>
+
+<section id="onx-dm" class="tabpanel" role="tabpanel" hidden>
+  <h3>Why you cannot just send a message</h3>
+  <p>This is documented, not folklore. From X's help centre, you can start a conversation with anyone
+  who follows you. For someone who does not follow you, you can only reach them if one of these is
+  true:</p>
+  <ul>
+    <li>They have opted in to receive message requests from everyone</li>
+    <li>They are verified and have opted in to messages from verified accounts, and you are verified</li>
+    <li>They are a business account that has enabled messages from anyone</li>
+    <li>You are both members of the same Premium Business or Organization</li>
+  </ul>
+  <p>Otherwise your message arrives as a <b>request</b>, held separately from their inbox, and they
+  decide whether to accept it.</p>
+
+  <div class="call warn">
+    <span class="h">The part that decides everything</span>
+    X applies a <b>quality filter</b> to message requests that hides the ones it judges lower quality,
+    and <b>you are not notified when that happens</b>. A cold message from an unknown account, carrying
+    a link and a pitch, is exactly the shape that filter is built to catch. So the honest conclusion is
+    not that cold messages are rude. It is that <b>a cold message from a stranger can be silently
+    discarded and you will never know it happened</b>, which is why the reply-first sequence in the
+    previous tab is not a politeness ritual. It is the only version of this that reliably arrives.
+  </div>
+
+  <h3>The message, once you have earned it</h3>
+  <div class="script">
+    <span class="lbl tk">Reads like this</span>
+    "I replied on your rate-limit thread last week about pinning to a session for the cache. You
+    mentioned the retries now live in your own code, so I did not want to just pitch you. If it is
+    useful I can show you what the same failover looks like when it is not your team maintaining it.
+    Fifteen minutes, and I will say so up front if it does not fit."
+  </div>
+  <p>Four things it does: it reminds them where they met you, it shows you read their post properly, it
+  makes a claim we can defend, and it gives them permission to say no. That last one is not weakness.
+  It is the reason people reply.</p>
+
+  <h3>If it lands in Requests</h3>
+  <ul>
+    <li>The request is not a rejection. Do not follow up with a second message asking if they saw it.</li>
+    <li>Keep replying publicly in the meantime. When they see your name in a thread they care about, the request gets read.</li>
+    <li>If they accept, do not open with a meeting ask. Have the conversation they were already having in public.</li>
+  </ul>
+
+  <div class="call int">
+    <span class="h">A note on read receipts before you send anything</span>
+    X shows read receipts to the other side by default. They will know when you have read their message.
+    That is another reason not to send a message you would not want read carefully.
+  </div>
+</section>
+
+<section id="onx-never" class="tabpanel" role="tabpanel" hidden>
+  <h3>The things that cost you the channel</h3>
+  <table>
+    <thead><tr><th>Do not</th><th>Why it fails</th></tr></thead>
+    <tbody>
+      <tr><td><b>Mass-message strangers</b></td><td>The quality filter discards them and you never hear about it. You will believe you sent fifty messages and actually sent none.</td></tr>
+      <tr><td><b>Copy-paste the same reply</b></td><td>Technical people recognise template replies instantly, and they will check your other replies to confirm it.</td></tr>
+      <tr><td><b>Pitch in the first reply</b></td><td>You asked for something without giving anything. That is an interruption, and X is the one place where that is visibly unwelcome.</td></tr>
+      <tr><td><b>Argue with a competitor in public</b></td><td>You are now the brand that fights in comments, and a technical loss in public is permanent. Answer questions about competitors in your own replies, never in theirs.</td></tr>
+      <tr><td><b>Pile onto a competitor's launch</b></td><td>Their audience is not your pipeline, and beating them on a feature detail is not worth the reputation of the pile-on.</td></tr>
+      <tr><td><b>Buy engagement or join pods</b></td><td>The numbers look good and nobody qualified is in them. You will optimise your way to a metric that has never booked a meeting.</td></tr>
+      <tr><td><b>Post a claim you cannot source</b></td><td>On X the correction is public and quoted. Everything in the Never say section applies twice as hard here.</td></tr>
+      <tr><td><b>Manufacture urgency</b></td><td>Anyone can check when the funding round was. A fake reason for now is the fastest way to be ignored by an informed audience.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="call good">
+    <span class="h">The one rule that covers all of them</span>
+    Would a competent engineer, reading this reply cold, find it useful? If not, it belongs in an email
+    instead, where fewer people can see it.
+  </div>
+</section>
+
+<h3>Practice: respond or scroll past?</h3>
+<p>Six posts you could plausibly see this week. Decide whether each is worth a reply. Three are worth
+it and three are not, so replying to everything and replying to nothing both score exactly half.</p>
+<div id="xdrill"></div>
+<div class="tally"><span class="tlabel">X drill score</span><span class="tnum" id="xdnum">0 / 6</span><span class="tmsg" id="xdmsg">Answer all six to see your filter.</span></div>
+</section>
+
+<!-- ============ 6. DISCOVERY ============ -->
 <section id="discovery">
-<h2>5. Discovery: the highest-value skill you will learn</h2>
+<h2>6. Discovery: the highest-value skill you will learn</h2>
 
 <p>If you only get good at one thing this year, make it this. Discovery is the conversation where
 you ask and they talk. You are trying to find out what is actually broken, what it costs them, and
@@ -685,9 +983,9 @@ not ready for a demo.</p>
 </div>
 </section>
 
-<!-- ============ 6. DEMO ============ -->
+<!-- ============ 7. DEMO ============ -->
 <section id="demo">
-<h2>6. Presenting and demoing</h2>
+<h2>7. Presenting and demoing</h2>
 
 <p>A sale moves through four stages in one direction. Beginners lose deals by running them out of
 order, usually by presenting before they have discovered anything.</p>
@@ -781,9 +1079,9 @@ disguise. Answer the version they asked, then find out what is underneath.</p>
 </ol>
 </section>
 
-<!-- ============ 7. FOLLOW-UP ============ -->
+<!-- ============ 8. FOLLOW-UP ============ -->
 <section id="followup">
-<h2>7. Follow-up, and why hygiene is the whole game</h2>
+<h2>8. Follow-up, and why hygiene is the whole game</h2>
 
 <p>Deals rarely die from a clear no. They die quietly, from nobody following up, and from notes that
 were never accurate enough for the next person to act on.</p>
@@ -820,9 +1118,9 @@ had been silent for 71 days.</p>
 </div>
 </section>
 
-<!-- ============ 8. NEVER SAY ============ -->
+<!-- ============ 9. NEVER SAY ============ -->
 <section id="neversay">
-<h2>8. What not to say, and what to say instead</h2>
+<h2>9. What not to say, and what to say instead</h2>
 
 <p>Each of these is a real line that has been said or nearly said. Being caught on one costs you the
 deal and the account, because the buyer can check most of them in under a minute.</p>
@@ -886,9 +1184,9 @@ deal and the account, because the buyer can check most of them in under a minute
 </div>
 </section>
 
-<!-- ============ 9. PRACTICE ============ -->
+<!-- ============ 10. PRACTICE ============ -->
 <section id="practice">
-<h2>9. Practice</h2>
+<h2>10. Practice</h2>
 
 <p>Reading about this will not make you good at it. These drills will, if you do them honestly and
 without clicking around to find the answer. Every drill locks on your first pick.</p>
@@ -925,9 +1223,9 @@ answer everything before you submit.</p>
 </div>
 </section>
 
-<!-- ============ 10. WEEK 1 ============ -->
+<!-- ============ 11. WEEK 1 ============ -->
 <section id="week1">
-<h2>10. Your first week</h2>
+<h2>11. Your first week</h2>
 
 <p>You are not expected to close anything yet. You are expected to build the habits that make
 closing possible later, and to ask questions without worrying about looking new. Everyone here
@@ -942,6 +1240,7 @@ started somewhere.</p>
   <li>Do all three drills on this page and read every explanation, including the ones you got right.</li>
   <li>Read the ten statements you must never say until you could spot them in someone else's email.</li>
   <li>Write five practice first messages against real companies. Bring them to your manager for a teardown.</li>
+  <li>Set up <b>two</b> of the saved searches from the X section and reply to three things properly. Do not send a single message until you have replied in public first.</li>
   <li>Book your first role play, and let the objection land badly. That is what the drill is for.</li>
   <li>Ask what your activity target is, in conversations per week, and write it where you can see it.</li>
 </ul>
@@ -975,6 +1274,9 @@ started somewhere.</p>
     <tr><td>Seek first to understand, then to be understood</td><td>The 7 Habits of Highly Effective People, Habit 5 (Stephen Covey)</td><td>Published method</td></tr>
     <tr><td>Four deals sharing one next-step date, 71 days silent</td><td>Our own pipeline review, accounts withheld</td><td>2026-09-23</td></tr>
     <tr><td>Shadow mode exists for the firewall, not for guardrails</td><td>OrcaRouter product docs</td><td>2026-09-23</td></tr>
+    <tr><td>Search operators for finding buying signals on X</td><td>X developer documentation, Build a query and Search operators</td><td>2026-09-24</td></tr>
+    <tr><td>Who can be messaged, message requests, and the quality filter that hides low-quality requests without notifying the sender</td><td>X help centre, How to Direct Message on X</td><td>2026-09-24</td></tr>
+    <tr><td>Most larger leads arrive through X</td><td>Internal, from Yi</td><td>Internal, 2026-09</td></tr>
   </tbody>
 </table>
 <p class="dated">Anything marked vendor-reported is somebody else's measurement, not ours. Do not
@@ -1321,6 +1623,173 @@ present it as our own result.</p>
     document.getElementById('scoreVerdict').textContent = 'Answer the questions, then score yourself.';
     reveal(document.getElementById('scorebox'));
   });
+
+  /* ---------- tabs (data-tab): same contract as the stepper ---------- */
+  var tabBtns = [].slice.call(document.querySelectorAll('.tabs [data-tab]'));
+
+  function tabIndex(prop, val){
+    for (var i = 0; i < tabBtns.length; i++){
+      if (tabBtns[i].getAttribute(prop) === val) return i;
+    }
+    return -1;
+  }
+
+  function showTab(id, setHash, focus){
+    if (!tabBtns.length) return;
+    var idx = tabIndex('data-tab', id);
+    if (idx < 0) return;
+    tabBtns.forEach(function(b){
+      var sel = (b === tabBtns[idx]);
+      b.setAttribute('aria-selected', sel ? 'true' : 'false');
+      /* Hide EACH BUTTON'S OWN panel. Resolving the target id here instead leaves
+         every other panel visible, so the tabs stack up. */
+      var p = document.getElementById(b.getAttribute('data-tab'));
+      if (p) p.hidden = !sel;
+    });
+    /* Only a real click rewrites the URL. Doing it on first paint clobbers any
+       other anchor the visitor arrived with. */
+    if (setHash && history.replaceState) history.replaceState(null, '', '#' + id);
+    if (focus) tabBtns[idx].focus();
+  }
+
+  function selectedTab(){
+    for (var i = 0; i < tabBtns.length; i++){
+      if (tabBtns[i].getAttribute('aria-selected') === 'true') return i;
+    }
+    return 0;
+  }
+
+  tabBtns.forEach(function(b){
+    b.addEventListener('click', function(){ showTab(b.getAttribute('data-tab'), true, false); });
+    b.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      var cur = selectedTab();   // step from SELECTION, not from the event target
+      var next = e.key === 'ArrowRight'
+        ? Math.min(cur + 1, tabBtns.length - 1)
+        : Math.max(cur - 1, 0);
+      showTab(tabBtns[next].getAttribute('data-tab'), true, true);
+    });
+  });
+
+  window.addEventListener('hashchange', function(){
+    var h = location.hash.slice(1);
+    if (h && tabIndex('data-tab', h) >= 0) showTab(h, false, true);
+  });
+
+  (function(){
+    var h = location.hash.slice(1);
+    if (h && tabIndex('data-tab', h) >= 0) showTab(h, false, false);
+  })();
+
+  /* ---------- copyable search queries ---------- */
+  function legacyCopy(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* nothing else to try */ }
+    document.body.removeChild(ta);
+  }
+
+  [].slice.call(document.querySelectorAll('.copy')).forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = btn.closest ? btn.closest('.codebox') : null;
+      var t = box ? box.querySelector('.qstr') : null;
+      if (!t) return;
+      var text = t.textContent.trim();
+      var done = function(){
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1400);
+      };
+      /* navigator.clipboard needs a secure context, so file:// falls through */
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, function(){ legacyCopy(text, done); });
+      } else {
+        legacyCopy(text, done);
+      }
+    });
+  });
+
+  /* ---------- X drill: respond or scroll past ---------- */
+  var XDRILL = [
+    { p:'"anyone using a gateway in front of openai? we are adding a second provider next month and I really do not want to hand-roll failover again"',
+      opts:[
+        {v:'good', t:'Reply', w:'Explicit need, a deadline, and a named thing they do not want to build. This is as close to a buying signal as X gets.'},
+        {v:'weak', t:'Scroll past', w:'You would be walking past someone describing your product as the thing they need.'}
+      ]},
+    { p:'"gm. new week, new me"',
+      opts:[
+        {v:'weak', t:'Reply', w:'Nothing to answer and nothing to learn. A reply here is noise, and it teaches the platform that your replies are noise.'},
+        {v:'good', t:'Scroll past', w:'No problem, no intent, no information. There is no honest reply to give.'}
+      ]},
+    { p:'"our claude bill tripled after we shipped the summariser and I genuinely cannot tell you which team caused it"',
+      opts:[
+        {v:'good', t:'Reply', w:'This is our exact wedge. The complaint is not the size of the bill, it is that nobody can attribute it, which is the thing per-request cost visibility answers.'},
+        {v:'weak', t:'Scroll past', w:'This is the pain we exist to fix, stated in their own words, in public. Answer the question they asked.'}
+      ]},
+    { p:'"hot take: AI is overrated and everyone building with it is wasting money"',
+      opts:[
+        {v:'weak', t:'Reply', w:'It is an argument, not a problem. You cannot win it in a reply thread, and you will spend your credibility trying.'},
+        {v:'good', t:'Scroll past', w:'No stated problem, no intent, and the audience is there for the fight rather than the answer.'}
+      ]},
+    { p:'"we are hiring a platform engineer to own our model stack. dms open"',
+      opts:[
+        {v:'good', t:'Reply', w:'A hire to own the model stack means budget and a named owner. That is two of the four things every sale needs, before you have spoken to anyone.'},
+        {v:'weak', t:'Scroll past', w:'This is a budget and an owner announced in public with the messages explicitly open.'}
+      ]},
+    { p:'"excited to announce our new gateway. thread" (from a competitor)',
+      opts:[
+        {v:'weak', t:'Reply', w:'You are in their thread, in front of their audience, picking a fight over feature detail. A technical loss there is permanent and quoted.'},
+        {v:'good', t:'Scroll past', w:'Their announcement audience is not your pipeline. Answer questions about competitors in your own replies, never in theirs.'}
+      ]}
+  ];
+
+  var xd = document.getElementById('xdrill');
+  var xScore = 0, xDone = 0;
+
+  XDRILL.forEach(function(item, i){
+    var box = document.createElement('div');
+    box.className = 'drill';
+    var h = '<p class="qtext">' + item.p + '</p>';
+    item.opts.forEach(function(o, j){
+      h += '<button type="button" class="opt" data-x="' + i + '" data-xj="' + j + '" data-v="' + o.v + '">' + o.t + '</button>';
+      h += '<p class="why" data-xw="' + i + '-' + j + '" hidden>' + o.w + '</p>';
+    });
+    box.innerHTML = h;
+    xd.appendChild(box);
+  });
+
+  function xUpdate(){
+    document.getElementById('xdnum').textContent = xScore + ' / ' + XDRILL.length;
+    var m = document.getElementById('xdmsg');
+    if (xDone < XDRILL.length){ m.textContent = (XDRILL.length - xDone) + ' left. First pick counts.'; return; }
+    if (xScore >= 6) m.textContent = 'Your filter works. You are looking for a stated problem, not a post.';
+    else if (xScore >= 4) m.textContent = 'Reasonable, but you will waste replies on one or two of these. Re-read the explanations.';
+    else m.textContent = 'You are replying to posts instead of problems. Go back to the Find them tab.';
+  }
+
+  xd.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.opt') : null;
+    if (!b || b.disabled) return;
+    var i = b.getAttribute('data-x');
+    var v = b.getAttribute('data-v');
+    xd.querySelectorAll('.opt[data-x="' + i + '"]').forEach(function(o){
+      o.disabled = true;
+      o.classList.add(o.getAttribute('data-v') === 'good' ? 'good' : 'weak');
+      o.innerHTML += '<span class="mark">' + (o.getAttribute('data-v') === 'good' ? 'right call' : 'wrong call') + '</span>';
+    });
+    xd.querySelectorAll('.why[data-xw^="' + i + '-"]').forEach(function(p){ p.hidden = false; });
+    if (v === 'good') xScore++;
+    xDone++;
+    xUpdate();
+  });
+  xUpdate();
 })();
 </script>
 </body>
