@@ -174,6 +174,17 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .qcard h4{margin:0 0 4px;font-size:14px}
 .qcard .qwhy{font-size:12.5px;color:var(--mut);margin:0 0 8px}
 
+/* ---------- worked examples ---------- */
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+.ex h4{margin:0 0 4px;font-size:15px}
+.ex .exnote{font-size:12px;color:var(--mut2);margin:0 0 12px}
+.exstep{padding:9px 0;border-top:1px solid var(--line);font-size:13.5px;color:var(--mut)}
+.exstep:first-of-type{border-top:0}
+.exstep .exl{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent2);font-weight:600;margin-bottom:4px}
+.exstep em{color:#e6e8ff;font-style:italic}
+.exstep code{font-size:12px}
+
 /* ---------- drills ---------- */
 .drill{background:var(--surface);border:1px solid var(--line);border-radius:10px;
   padding:16px 18px;margin:14px 0}
@@ -661,19 +672,22 @@ to be worth replying to.</p>
 
 <div class="call hyg">
   <span class="h">Where this guidance comes from, and what it does not cover</span>
-  The search operators below come from <b>X's own developer documentation</b> on building queries, and
-  the direct-message rules from <b>X's help centre</b>. Both retrieved 24 September 2026. Two help
-  centre pages would not load, so treat the operator list as authoritative and the search box inside
-  the app as close to it but not identical. You will notice there is nothing here about how X ranks
-  posts. That is deliberate: we have not verified it, and a rep should not be repeating claims about
-  an algorithm to a buyer who builds things for a living.
+  The search operators below come from <b>X's own developer documentation</b> on building queries. The
+  direct-message rules come from <b>X's help centre</b>, and the account rules from X's
+  <b>Authenticity policy</b>. All retrieved 24 September 2026. Three help centre pages would not load,
+  so treat the operator list as authoritative and the search box inside the app as close to it but not
+  identical. You will also notice there is nothing here about how X ranks posts. That is deliberate:
+  we have not verified it, and a rep should not be repeating claims about an algorithm to a buyer who
+  builds things for a living.
 </div>
 
 <div class="tabs" role="tablist" aria-label="Prospecting on X">
   <button role="tab" data-tab="onx-why" aria-selected="true" aria-controls="onx-why">Why X works</button>
+  <button role="tab" data-tab="onx-new" aria-selected="false" aria-controls="onx-new">New account</button>
   <button role="tab" data-tab="onx-find" aria-selected="false" aria-controls="onx-find">Find them</button>
   <button role="tab" data-tab="onx-earn" aria-selected="false" aria-controls="onx-earn">Earn the reply</button>
   <button role="tab" data-tab="onx-dm" aria-selected="false" aria-controls="onx-dm">The DM</button>
+  <button role="tab" data-tab="onx-eg" aria-selected="false" aria-controls="onx-eg">Examples</button>
   <button role="tab" data-tab="onx-never" aria-selected="false" aria-controls="onx-never">What not to do</button>
 </div>
 
@@ -701,6 +715,62 @@ to be worth replying to.</p>
     On email you are interrupting. On X you are joining a conversation that was already happening. That
     difference changes everything about what works: you contribute first and ask second, and the ask
     gets smaller, not bigger.
+  </div>
+</section>
+
+<section id="onx-new" class="tabpanel" role="tabpanel" hidden>
+  <h3>If you are starting from an empty account</h3>
+  <p>Everything above assumes people recognise your name. If you have just made an account, they do
+  not, and the channel behaves differently for a few weeks. That is not a reason to wait. It is a
+  reason to sequence it properly.</p>
+
+  <div class="call warn">
+    <span class="h">The honest problem with a fresh account</span>
+    A reply from an account with no photo, no bio and no history reads as spam to the human reading it,
+    before any platform system gets involved. And the shortcut people reach for is against the rules.
+    X's <b>Authenticity policy</b> prohibits fake personas, and it names <b>stock, stolen or
+    AI-generated profile photos</b> and <b>copied or stolen bios</b> specifically. So there is no
+    version of making it look established that is both allowed and convincing. Build it for real. It
+    takes about two weeks.
+  </div>
+
+  <p>The same policy defines <b>content spam</b> as posting in a <b>bulk, duplicative, irrelevant or
+  unsolicited</b> manner. A new account doing fifty replies a day is exactly the shape that
+  describes, which is why the volume advice in this section is not only about manners.</p>
+
+  <h3>Day zero, before you reply to anyone</h3>
+  <ul class="chk">
+    <li>Your real name, and a photo of you. Not a logo, not a stock image, not generated.</li>
+    <li>A bio that says what you help with and who you help, in one line. Not a job title and a list of interests.</li>
+    <li>A link that works when a technical person clicks it.</li>
+    <li>Follow our own account, the model providers, and 20 to 30 accounts where your buyers actually are.</li>
+    <li>Set up your two saved searches from the Find them tab, and turn notifications on.</li>
+  </ul>
+
+  <h3>Weeks one and two</h3>
+  <table>
+    <thead><tr><th>When</th><th>What you do</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><b>Week 1</b></td><td>Read your saved searches daily. Reply to two or three posts where you can genuinely help. Follow five to ten accounts a day, no more.</td><td>You are learning how buyers describe this problem in their own words, and letting a few hundred people see your name. It is free discovery practice.</td></tr>
+      <tr><td><b>Week 2</b></td><td>Hold the reply cadence. Post one useful thing of your own with no ask in it: a short teardown, a measured comparison, or a correction of something commonly misunderstood. Pin it.</td><td>Now you have a landing page. When someone clicks your name from a reply, there is something worth reading.</td></tr>
+      <tr><td><b>Week 3 onward</b></td><td>Send your first message, referencing your own reply. Keep replying in public alongside it.</td><td>Your message now arrives with context, which is the entire difference.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="call warn">
+    <span class="h">Things that get a new account limited</span>
+    Buying followers or joining engagement pods. Following four hundred accounts in a day. Copying
+    another rep's bio or posts, which is the fake-persona rule. Putting a link in your first replies.
+    Changing your handle once people start recognising it. And mass-messaging the moment you look
+    slightly established, because the quality filter in the next tab does not care how old your
+    account is.
+  </div>
+
+  <div class="call good">
+    <span class="h">Two weeks is not slow</span>
+    It is the same arithmetic as the pipeline calculator. A rate you can hold for a year beats a spike
+    you cannot, and the reps who last on this channel are the ones who treated the first fortnight as
+    setup rather than lost time.
   </div>
 </section>
 
@@ -889,6 +959,147 @@ to be worth replying to.</p>
     <span class="h">A note on read receipts before you send anything</span>
     X shows read receipts to the other side by default. They will know when you have read their message.
     That is another reason not to send a message you would not want read carefully.
+  </div>
+</section>
+
+<section id="onx-eg" class="tabpanel" role="tabpanel" hidden>
+  <h3>Three worked examples</h3>
+
+  <div class="call hyg">
+    <span class="h">These are written to show the shape, not taken from real threads</span>
+    The posts, replies and messages below are illustrations built to demonstrate the pattern. They are
+    not quotes from customers, and they are not transcripts of real conversations. Use them as a
+    template, never as evidence.
+  </div>
+
+  <div class="ex">
+    <h4>Example 1: the rate-limit post</h4>
+    <p class="exnote">The most common signal, and the one with the most competition for attention.</p>
+    <div class="exstep">
+      <span class="exl">What they posted</span>
+      <em>"third time this week our batch job has died on 429s from openai. the retry logic is held
+      together with tape at this point"</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">The search that finds it</span>
+      <code>("rate limit" OR "rate limits" OR "timed out" OR "429") (openai OR anthropic OR gemini OR bedrock) -is:retweet lang:en</code>
+    </div>
+    <div class="exstep">
+      <span class="exl">Your reply</span>
+      <em>"429s on a batch endpoint are usually the per-minute token ceiling rather than your
+      concurrency, so retrying faster tends to make it worse. Two things that help: a fallback chain
+      so the request moves to another model instead of failing, and pinning the session so you keep
+      the warm cache on the retries. Happy to send the failover docs if it saves you an afternoon."</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">Two weeks later, after a second reply on a different thread</span>
+      <em>"I have replied twice on your 429 threads so this is not a cold pitch. If the retry logic is
+      still yours to maintain, I can show you what that looks like when the failover sits in front of
+      the providers instead of inside your code. Fifteen minutes, and I will say so up front if it
+      does not fit."</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">Why it worked</span>
+      A dated, specific pain. The reply taught something true that they had not said. Two public
+      touches before any ask, so the message arrived warm. And the ask carried explicit permission to
+      decline, which is the reason it got answered.
+    </div>
+  </div>
+
+  <div class="ex">
+    <h4>Example 2: the bill nobody can explain</h4>
+    <p class="exnote">Our closest-fit signal, and the one where a caveat is worth more than a pitch.</p>
+    <div class="exstep">
+      <span class="exl">What they posted</span>
+      <em>"our model bill doubled this quarter and I genuinely cannot tell you which product line
+      caused it. we have no per-feature attribution at all"</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">The search that finds it</span>
+      <code>("our LLM bill" OR "token costs" OR "inference costs" OR "model spend" OR "cost per request") -is:retweet lang:en</code>
+    </div>
+    <div class="exstep">
+      <span class="exl">Your reply</span>
+      <em>"This is one of the rare problems where the fix is mostly plumbing. If every call leaves
+      through one endpoint, you can tag the request and get cost back per tag instead of per invoice.
+      The part nobody warns you about: the number your client calculates and the number you actually
+      get billed can differ, so read it from the request id rather than the response body."</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">Your message</span>
+      <em>"Following your attribution thread. If you want to see the tagged version before you build
+      it, I can show you the per-request view on your own numbers. If it does not solve the
+      attribution problem you described, say so and we leave it there."</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">Why it worked</span>
+      It answered the question, then volunteered a real limitation that only someone close to the
+      product would know. That caveat is doing the selling. It is also the kind of detail that makes
+      an engineer reply instead of scrolling.
+    </div>
+  </div>
+
+  <div class="ex">
+    <h4>Example 3: the hiring post</h4>
+    <p class="exnote">Shorter, and useful even when the hire is not for you.</p>
+    <div class="exstep">
+      <span class="exl">What they posted</span>
+      <em>"we are hiring a platform engineer to own our model stack. dms open"</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">The search that finds it</span>
+      <code>hiring ("platform engineer" OR "AI engineer" OR "ML platform") (agents OR "model serving" OR inference) -is:retweet lang:en</code>
+    </div>
+    <div class="exstep">
+      <span class="exl">Your reply</span>
+      <em>"If it helps while you are searching: the part that surprises engineers taking this role is
+      how much of it is failure policy and cost attribution rather than picking models. Happy to share
+      the questions we use for that if it saves you a loop."</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">Your message</span>
+      <em>"Following your hiring thread. While the role is open, I can send over the failure-policy
+      and cost-attribution questions we use for that interview loop. No strings. If you have already
+      found someone with that background, disregard it entirely."</em>
+    </div>
+    <div class="exstep">
+      <span class="exl">Why it worked</span>
+      It is genuinely useful to someone hiring, it positions the category without pitching the
+      product, and it offers something they can accept without any commitment. A reply like this gets
+      remembered even if there is no deal in it this quarter.
+    </div>
+  </div>
+
+  <h3>The same post, two replies</h3>
+  <p>This is the difference the whole section is about, on one post.</p>
+  <p><b>The post:</b> <em>"anyone using a gateway in front of openai? we are adding a second provider
+  next month and I really do not want to hand-roll failover again"</em></p>
+
+  <div class="never">
+    <span class="lbl nv">This one gets ignored</span>
+    "We do exactly that. OrcaRouter routes across roughly 200 models with automatic failover and full
+    cost attribution. Dm me and I will set up a demo."
+  </div>
+  <p>It pitches in the first reply, it answers a question nobody asked, it gives no information they
+  could not get from our homepage, and it asks for something before giving anything. On X that reads
+  as an advert, and the audience for this post is engineers who spot adverts.</p>
+
+  <div class="script">
+    <span class="lbl tk">This one gets a reply</span>
+    "The hand-rolled version usually breaks on one thing: the provider returns 200 and then dies
+    mid-stream, so your failure detection never fires and the user sees a half-finished response.
+    Worth deciding up front whether you retry or move the request, because those need different
+    plumbing. Happy to share what we see in logs if useful."
+  </div>
+  <p>It teaches something specific and slightly uncomfortable, which means they have to think about
+  it. It mentions no product. And it offers a resource instead of a meeting, so the next step is
+  theirs to take. That reply is the first touch in a sequence that eventually gets to a message, and
+  it costs you ninety seconds.</p>
+
+  <div class="call good">
+    <span class="h">The test to apply before you hit reply</span>
+    Would an engineer who does not work here, reading this cold, learn something they could use? If
+    the answer is no, you are advertising. Move it to a message and pick a better post.
   </div>
 </section>
 
@@ -1241,6 +1452,7 @@ started somewhere.</p>
   <li>Read the ten statements you must never say until you could spot them in someone else's email.</li>
   <li>Write five practice first messages against real companies. Bring them to your manager for a teardown.</li>
   <li>Set up <b>two</b> of the saved searches from the X section and reply to three things properly. Do not send a single message until you have replied in public first.</li>
+  <li>If your X account is new, complete every item in the <b>New account</b> tab before you reply to anyone.</li>
   <li>Book your first role play, and let the objection land badly. That is what the drill is for.</li>
   <li>Ask what your activity target is, in conversations per week, and write it where you can see it.</li>
 </ul>
@@ -1277,6 +1489,8 @@ started somewhere.</p>
     <tr><td>Search operators for finding buying signals on X</td><td>X developer documentation, Build a query and Search operators</td><td>2026-09-24</td></tr>
     <tr><td>Who can be messaged, message requests, and the quality filter that hides low-quality requests without notifying the sender</td><td>X help centre, How to Direct Message on X</td><td>2026-09-24</td></tr>
     <tr><td>Most larger leads arrive through X</td><td>Internal, from Yi</td><td>Internal, 2026-09</td></tr>
+    <tr><td>Account rules for new accounts: fake personas (stock or AI-generated photos, copied bios), content spam defined as bulk, duplicative, irrelevant or unsolicited</td><td>X Authenticity policy</td><td>2026-09-24</td></tr>
+    <tr><td>The three worked examples and the weak-versus-strong reply comparison</td><td>Written illustrations for this page, not real threads or customer quotes</td><td>2026-09-24</td></tr>
   </tbody>
 </table>
 <p class="dated">Anything marked vendor-reported is somebody else's measurement, not ours. Do not
