@@ -211,6 +211,10 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .q input{accent-color:var(--accent);flex:0 0 auto}
 .q.right{border-color:rgba(63,185,80,.55)}
 .q.wrong{border-color:rgba(248,81,73,.55)}
+/* Mark the specific options, not just the whole card. A rep needs to see WHICH
+   answer was right at a glance, otherwise the card border alone teaches nothing. */
+.q label.rightopt{border-color:rgba(63,185,80,.7);background:rgba(63,185,80,.12)}
+.q label.wrongopt{border-color:rgba(248,81,73,.6);background:rgba(248,81,73,.1)}
 .q .fb{display:none;font-size:12.5px;color:var(--mut);margin-top:10px;
   padding-left:13px;border-left:2px solid var(--line2)}
 .q.done .fb{display:block}
@@ -1278,6 +1282,13 @@ present it as our own result.</p>
       var got = sel ? sel.value : null;
       q.classList.add('done');
       q.classList.remove('right','wrong');
+      // colour the right option, and the wrong pick if there was one
+      q.querySelectorAll('label').forEach(function(lb){
+        lb.classList.remove('rightopt','wrongopt');
+        var iv = lb.querySelector('input').value;
+        if (iv === want) lb.classList.add('rightopt');
+        if (got && iv === got && got !== want) lb.classList.add('wrongopt');
+      });
       var fb = q.querySelector('.fb');
       if (got === want){ score++; q.classList.add('right');
         fb.innerHTML = '<b>Correct.</b> ' + QUIZ[[].indexOf.call(qs, q)].w; }
@@ -1300,6 +1311,9 @@ present it as our own result.</p>
     quizEl.querySelectorAll('.q').forEach(function(q){
       q.classList.remove('done','right','wrong');
       q.querySelectorAll('input').forEach(function(i){ i.checked = false; });
+      q.querySelectorAll('label').forEach(function(lb){
+        lb.classList.remove('rightopt','wrongopt');
+      });
       q.querySelector('.fb').innerHTML = '';
     });
     document.getElementById('scoreOut').textContent = '- / 12';
