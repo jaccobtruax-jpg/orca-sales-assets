@@ -1,0 +1,1313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrcaRouter - Your First Sales Job</title>
+<link rel="preload" href="fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jetbrains-mono-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Self-hosted variable fonts. Never @import these from Google: that serialises
+   HTML -> stylesheet -> fonts across two third-party origins and stalls wherever
+   those are slow or blocked. Same bytes, same origin, preloaded. */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;
+           src:url('fonts/inter-var.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 500;font-display:swap;
+           src:url('fonts/jetbrains-mono-var.woff2') format('woff2')}
+
+:root{
+  --bg:#08090a;
+  --surface:rgba(255,255,255,.028);
+  --surface2:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.14);
+  --ink:#f7f8f8;
+  --mut:rgba(255,255,255,.62);
+  --mut2:rgba(255,255,255,.44);
+  --accent:#5e6ad2;
+  --accent2:#8b93e8;
+  --good:#3fb950;
+  --warn:#d29922;
+  --bad:#f85149;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-weight:510;font-feature-settings:'cv01' 1,'ss03' 1;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 26px 90px}
+
+/* reading progress */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:60}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:#0a0b0c;border-bottom:1px solid var(--line)}
+nav .inner{max-width:1040px;margin:0 auto;padding:0 26px;display:flex;align-items:center;gap:16px;height:56px}
+nav .brand{font-weight:600;letter-spacing:-.01em;white-space:nowrap;font-size:14px}
+nav .brand span{color:var(--accent2)}
+nav .links{display:flex;gap:13px;overflow-x:auto;scrollbar-width:none;font-size:12.5px}
+nav .links::-webkit-scrollbar{display:none}
+nav a{color:var(--mut);text-decoration:none;white-space:nowrap;padding:2px 0;border-bottom:1px solid transparent}
+nav a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+
+section{scroll-margin-top:80px}
+h2{font-size:12px;text-transform:uppercase;letter-spacing:.11em;color:var(--mut2);
+   font-weight:600;margin:52px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;font-weight:600;margin:24px 0 8px;letter-spacing:-.01em}
+h4{font-size:14.5px;font-weight:600;margin:18px 0 6px}
+p{margin:9px 0}
+a{color:var(--accent2)}
+code,.num{font-family:var(--mono);font-size:12.5px}
+code{background:var(--surface2);padding:1px 5px;border-radius:4px;color:#e6e8ff}
+
+/* ---------- hero ---------- */
+header.hero{padding:54px 0 8px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent2);font-weight:600}
+h1{font-size:37px;line-height:1.13;letter-spacing:-.025em;margin:12px 0 10px;font-weight:600}
+.lede{font-size:17px;color:var(--mut);max-width:74ch;margin:0 0 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:13px 14px}
+.stat b{display:block;font-family:var(--mono);font-size:20px;font-weight:500;letter-spacing:-.02em}
+.stat span{display:block;font-size:11.5px;color:var(--mut2);margin-top:3px;line-height:1.4}
+.dated{font-size:11.5px;color:var(--mut2);margin-top:8px}
+
+/* ---------- callouts ---------- */
+.call{border-radius:9px;padding:14px 17px;margin:18px 0;font-size:14px;border:1px solid var(--line)}
+.call.hyg{background:rgba(94,106,210,.07);border-color:rgba(94,106,210,.32)}
+.call.int{background:rgba(210,153,34,.06);border-color:rgba(210,153,34,.3)}
+.call.warn{background:rgba(248,81,73,.06);border-color:rgba(248,81,73,.3)}
+.call.good{background:rgba(63,185,80,.06);border-color:rgba(63,185,80,.3)}
+.call b{font-weight:600}
+.call .h{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+         color:var(--accent2);margin-bottom:6px;font-weight:600}
+.call.int .h{color:var(--warn)} .call.warn .h{color:var(--bad)} .call.good .h{color:var(--good)}
+
+/* ---------- generic blocks ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:15px 17px}
+.card h4{margin:0 0 7px;font-size:14.5px;font-weight:600}
+.card p{margin:6px 0;font-size:13.5px;color:var(--mut)}
+.card .tagline{font-size:12px;color:var(--mut2);font-family:var(--mono)}
+
+ul,ol{margin:9px 0;padding-left:20px}
+li{margin:5px 0}
+li::marker{color:var(--mut2)}
+
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:12px 0}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface2);font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+   color:var(--mut);font-weight:600}
+td b{font-weight:600}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+
+/* technical + plain pairing */
+.pair{border-left:2px solid var(--line2);padding:0 0 0 14px;margin:12px 0}
+.tech{font-size:13.5px;color:var(--mut)}
+.plain{background:rgba(94,106,210,.07);border-left:2px solid var(--accent);
+       padding:9px 13px;margin:8px 0 0;border-radius:0 6px 6px 0;font-size:14px}
+.lbl{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+     color:var(--mut2);margin-bottom:4px;font-weight:600}
+.lbl.pl{color:var(--accent2)}
+.lbl.tk{color:var(--good)}
+.lbl.nv{color:var(--bad)}
+
+/* script / talk track */
+.script{border-left:2px solid var(--good);background:rgba(63,185,80,.055);
+        padding:11px 15px;border-radius:0 7px 7px 0;margin:11px 0;font-size:14px;font-style:italic}
+.script .lbl{font-style:normal}
+.never{border-left:2px solid var(--bad);background:rgba(248,81,73,.055);
+       padding:11px 15px;border-radius:0 7px 7px 0;margin:11px 0;font-size:14px}
+.never .lbl{font-style:normal}
+
+/* ---------- stepper ---------- */
+.stepnav{display:flex;gap:7px;flex-wrap:wrap;margin:16px 0 0}
+.stepnav button{background:var(--surface2);border:1px solid var(--line2);color:var(--mut);
+  border-radius:999px;padding:8px 14px;font-size:12.5px;cursor:pointer;font-family:inherit;
+  min-height:44px;display:inline-flex;align-items:center;gap:7px}
+.stepnav button:hover{color:var(--ink);border-color:var(--accent)}
+.stepnav button[aria-selected="true"]{background:rgba(94,106,210,.16);border-color:var(--accent);
+  color:#fff;font-weight:600}
+.stepnav button .sn{font-family:var(--mono);font-size:11px;opacity:.75}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:12px 0}
+.stagefoot{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:12px}
+.stagefoot .cnt{font-family:var(--mono);font-size:12px;color:var(--mut2)}
+.stagefoot button{background:var(--surface2);border:1px solid var(--line2);color:var(--ink);
+  border-radius:7px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;min-height:44px}
+.stagefoot button:hover{border-color:var(--accent)}
+.stagefoot button[disabled]{opacity:.35;cursor:default}
+.costbadge{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
+  border-radius:5px;padding:4px 8px;margin-bottom:10px}
+.cost-free{background:rgba(63,185,80,.14);color:var(--good)}
+.cost-bill{background:rgba(210,153,34,.15);color:var(--warn)}
+
+/* ---------- calculator ---------- */
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0}
+.calc .row{display:grid;grid-template-columns:1fr 92px;gap:12px;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.calc .row:last-of-type{border-bottom:0}
+.calc input{background:var(--surface2);border:1px solid var(--line2);color:var(--ink);
+  border-radius:6px;padding:8px 10px;font-family:var(--mono);font-size:13px;width:100%;text-align:right}
+.calc input:focus{outline:2px solid rgba(94,106,210,.5);outline-offset:1px}
+.calc .out{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:15px;
+  padding-top:15px;border-top:1px solid var(--line2)}
+.calc .out div{background:var(--surface2);border-radius:8px;padding:11px 13px}
+.calc .out b{display:block;font-family:var(--mono);font-size:21px;font-weight:500;color:var(--accent2)}
+.calc .out span{display:block;font-size:11.5px;color:var(--mut2);margin-top:3px}
+.calc .row label{color:var(--mut)}
+
+/* ---------- drills ---------- */
+.drill{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:16px 18px;margin:14px 0}
+.drill .qtext{font-size:14.5px;margin:0 0 12px}
+.drill .qtext .who{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--mut2);margin-bottom:5px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;background:var(--surface2);border:1px solid var(--line2);
+  color:var(--ink);border-radius:8px;padding:12px 14px;margin:8px 0;font-size:13.5px;cursor:pointer;
+  font-family:inherit;min-height:44px;line-height:1.5}
+.opt:hover{border-color:var(--accent)}
+.opt.good{border-color:rgba(63,185,80,.6);background:rgba(63,185,80,.09)}
+.opt.weak{border-color:rgba(248,81,73,.5);background:rgba(248,81,73,.07)}
+.opt[disabled]{cursor:default}
+.opt .mark{font-family:var(--mono);font-size:11px;float:right;margin-left:10px;opacity:.9}
+.why{font-size:12.5px;color:var(--mut);margin:7px 0 0;padding-left:13px;border-left:2px solid var(--line2)}
+.verdict{margin-top:11px;font-size:13.5px}
+.verdict b{font-weight:600}
+.tally{display:flex;align-items:baseline;gap:9px;margin-top:13px;padding-top:11px;border-top:1px solid var(--line)}
+.tally .tlabel{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2);font-weight:600}
+.tally .tnum{font-family:var(--mono);font-size:16px}
+.tally .tmsg{font-size:12.5px;color:var(--mut)}
+
+/* spot-the-overclaim */
+.stmt{display:block;width:100%;text-align:left;background:var(--surface2);border:1px solid var(--line2);
+  color:var(--ink);border-radius:8px;padding:12px 15px;margin:8px 0;font-size:13.5px;cursor:pointer;
+  font-family:inherit;min-height:44px;line-height:1.5}
+.stmt:hover{border-color:var(--accent)}
+.stmt.picked{border-color:var(--accent);background:rgba(94,106,210,.12)}
+.stmt.hit{border-color:rgba(63,185,80,.6);background:rgba(63,185,80,.1)}
+.stmt.miss{border-color:rgba(248,81,73,.5);background:rgba(248,81,73,.08)}
+.stmt .why{display:none;margin-top:8px}
+.stmt.rev .why{display:block}
+
+/* jargon toggle */
+.jtoggle{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13.5px;color:var(--mut)}
+.jtoggle input{width:18px;height:18px;accent-color:var(--accent)}
+.jargon.hide td:last-child{color:transparent;user-select:none}
+.jargon.hide tr:hover td:last-child{color:var(--ink)}
+.jargon td:last-child{transition:color .12s}
+
+/* quiz */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+   padding:15px 18px;margin:12px 0}
+.q .qt{font-size:14.5px;margin:0 0 11px;font-weight:600}
+.q label{display:block;font-size:13.5px;padding:9px 12px;margin:6px 0;border-radius:7px;
+  border:1px solid var(--line2);background:var(--surface2);cursor:pointer;min-height:44px;
+  display:flex;align-items:center;gap:10px}
+.q label:hover{border-color:var(--accent)}
+.q input{accent-color:var(--accent);flex:0 0 auto}
+.q.right{border-color:rgba(63,185,80,.55)}
+.q.wrong{border-color:rgba(248,81,73,.55)}
+.q .fb{display:none;font-size:12.5px;color:var(--mut);margin-top:10px;
+  padding-left:13px;border-left:2px solid var(--line2)}
+.q.done .fb{display:block}
+.scorebox{background:rgba(94,106,210,.09);border:1px solid rgba(94,106,210,.34);
+  border-radius:10px;padding:17px 20px;margin:16px 0}
+.scorebox .big{font-family:var(--mono);font-size:31px;font-weight:500}
+.scorebox .bar{height:7px;background:rgba(255,255,255,.09);border-radius:4px;margin:11px 0;overflow:hidden}
+.scorebox .bar i{display:block;height:100%;background:var(--accent);width:0}
+.qbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.qbtns button{background:var(--accent);border:0;color:#fff;border-radius:8px;padding:11px 20px;
+  font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;min-height:44px}
+.qbtns button.sec{background:var(--surface2);border:1px solid var(--line2);color:var(--ink);font-weight:500}
+.qbtns button:hover{filter:brightness(1.12)}
+
+/* checklist */
+.chk{list-style:none;padding-left:0}
+.chk li{display:flex;gap:11px;align-items:flex-start;background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;padding:11px 14px;margin:8px 0}
+.chk li:before{content:"\2610";font-size:15px;color:var(--accent2);flex:0 0 auto;line-height:1.5}
+
+/* do-not-say cards */
+.dns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dns .card{display:flex;flex-direction:column;gap:9px}
+.dns .blk{font-size:13px;color:var(--mut)}
+.dns .blk .lbl2{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mut2);font-weight:600;margin-bottom:3px}
+.dns .repl{font-size:13px;border:1px solid rgba(63,185,80,.34);background:rgba(63,185,80,.06);
+  border-radius:7px;padding:9px 12px}
+.dns .repl .lbl2{color:var(--good)}
+
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--mut2)}
+@media (max-width:820px){
+  .grid2,.grid3,.dns{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  h1{font-size:27px} .wrap{padding:0 18px 70px}
+  nav .inner{padding:0 18px;gap:12px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="prog" aria-hidden="true"></div>
+
+<nav>
+  <div class="inner">
+    <span class="brand">OrcaRouter <span>Sales 101</span></span>
+    <div class="links">
+      <a href="#mindset">Mindset</a>
+      <a href="#scoreboard">Scoreboard</a>
+      <a href="#product">Product</a>
+      <a href="#prospecting">Prospecting</a>
+      <a href="#discovery">Discovery</a>
+      <a href="#demo">Demo</a>
+      <a href="#followup">Follow-up</a>
+      <a href="#neversay">Never say</a>
+      <a href="#practice">Practice</a>
+      <a href="#week1">Week 1</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">OrcaRouter &middot; Rep Enablement &middot; Internal</p>
+  <h1>How to sell, when this is your first sales job</h1>
+  <p class="lede">You have not sold anything before. That is fine, and it is the assumption this
+  page is written for. It teaches the job from the ground up, then shows you what it looks like
+  at OrcaRouter. Fundamentals first, product second. Nothing here assumes you already know the
+  vocabulary.</p>
+
+  <div class="stats">
+    <div class="stat"><b>4</b><span>things every sale needs. Missing one and it is not a sale yet.</span></div>
+    <div class="stat"><b>45 / 55</b><span>your talk share versus theirs. Talk less than you think.</span></div>
+    <div class="stat"><b>5</b><span>discovery questions that carry an entire first call.</span></div>
+    <div class="stat"><b>$0.00</b><span>the routing fee you can promise without checking a thing.</span></div>
+  </div>
+  <p class="dated">Built Thursday, September 24, 2026 &middot; 14 sections &middot; internal training,
+  not for prospects</p>
+</header>
+
+<div class="call hyg">
+  <span class="h">Read this before you read anything else</span>
+  Everything on this page about our product is either a verified fact, dated, or marked as
+  <b>vendor-reported</b>. If a number here does not carry a source, treat it as unconfirmed and
+  check before you say it to a buyer. The fastest way to lose a deal is to be caught citing a
+  figure from a page you did not check. When in doubt, say less.
+</div>
+
+<!-- ============ 1. MINDSET ============ -->
+<section id="mindset">
+<h2>1. What the job actually is</h2>
+
+<p>Selling is not talking people into things. If that were the job, the best sellers would be the
+best talkers, and they are not. The job is three things:</p>
+
+<ol>
+  <li><b>Find people who have a problem you can actually fix.</b> Most of your work is here.</li>
+  <li><b>Understand that problem better than they do.</b> This is the part beginners skip because
+  they are eager to talk about the product.</li>
+  <li><b>Help them decide.</b> Not pressure. Help. Give them the information and the confidence to
+  make a call they were already inclined to make.</li>
+</ol>
+
+<h3>The four things every sale needs</h3>
+<table>
+  <thead><tr><th>What</th><th>What it means</th><th>What it looks like when it is missing</th></tr></thead>
+  <tbody>
+    <tr><td><b>A real problem</b></td><td>Something is costing them money, sleep, or credibility right now.</td><td>They are polite and interested and never move.</td></tr>
+    <tr><td><b>Someone who can say yes</b></td><td>You know who signs, and you have met them or know how to.</td><td>Great conversations that cannot become signatures.</td></tr>
+    <tr><td><b>A next step</b></td><td>A specific action, with a date, agreed at the end of every call.</td><td>The deal sits still for two months and quietly dies.</td></tr>
+    <tr><td><b>A reason for now</b></td><td>A real, dated event that makes this urgent.</td><td>"Let's revisit next quarter" forever.</td></tr>
+  </tbody>
+</table>
+
+<div class="call int">
+  <span class="h">The uncomfortable part</span>
+  Most of this job is being told no, or getting no answer at all. That is not failure, it is the
+  shape of the work. The people who last in sales are the ones who stopped taking it personally
+  early. You are not being rejected, your message is being ignored, and those are different things.
+  The fix for a quiet pipeline is always more activity, not a better mood.
+</div>
+
+<h3>What you control, and what you do not</h3>
+<div class="grid2">
+  <div class="card">
+    <h4>Yours to control</h4>
+    <ul>
+      <li>How many people you contact today</li>
+      <li>Whether you researched them first</li>
+      <li>How well you listened</li>
+      <li>Whether every call ended with a next step</li>
+      <li>Whether every number you said was true</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Not yours, stop carrying it</h4>
+    <ul>
+      <li>Their budget cycle</li>
+      <li>Their reorganisation</li>
+      <li>Their boss saying no</li>
+      <li>Whether they reply today</li>
+      <li>What a competitor promised them</li>
+    </ul>
+  </div>
+</div>
+<p>Beginners burn out trying to control the right-hand column. Spend your energy on the left one,
+and the right one gets easier, because you stop wasting weeks on people who were never going to
+buy this quarter.</p>
+</section>
+
+<!-- ============ 2. SCOREBOARD ============ -->
+<section id="scoreboard">
+<h2>2. The scoreboard: pipeline math</h2>
+
+<p>Sales has one genuinely fair quality: the arithmetic is honest. Every deal you close came from
+a chain of smaller numbers, and each number has a rate. When a month goes badly you do not need to
+guess why. You count backwards and find which rate broke.</p>
+
+<div class="pair">
+  <div class="tech">
+    <span class="lbl">The chain</span>
+    Conversations &rarr; Meetings &rarr; Opportunities &rarr; Closed
+  </div>
+  <div class="plain">
+    <span class="lbl pl">In plain words</span>
+    You talk to a number of people. Some agree to a real meeting. Some of those turn into a live
+    opportunity with a date and a budget. Some of those sign. Each arrow has a ratio, and the
+    ratios are learnable.
+  </div>
+</div>
+
+<div class="call hyg">
+  <span class="h">Try it with your own target</span>
+  Change any number below and watch what it does to your required daily activity. Most new reps are
+  surprised by how much of the job is the first box.
+</div>
+
+<div class="calc" id="calc">
+  <div class="row"><label for="cTarget">Closes you need per month</label><input id="cTarget" type="number" min="0.5" step="0.5" value="2"></div>
+  <div class="row"><label for="cOppClose">Opportunities that close</label><input id="cOppClose" type="number" min="1" step="1" value="5"></div>
+  <div class="row"><label for="cMeetOpp">Meetings that become opportunities</label><input id="cMeetOpp" type="number" min="1" step="1" value="2"></div>
+  <div class="row"><label for="cConvMeet">Conversations that become meetings</label><input id="cConvMeet" type="number" min="1" step="1" value="4"></div>
+  <div class="row"><label for="cDays">Working days in the month</label><input id="cDays" type="number" min="1" step="1" value="20"></div>
+  <div class="out">
+    <div><b id="oConv">-</b><span>conversations needed this month</span></div>
+    <div><b id="oPer">-</b><span>conversations per working day</span></div>
+    <div><b id="oMeet">-</b><span>real meetings needed</span></div>
+    <div><b id="oOpp">-</b><span>opportunities needed</span></div>
+  </div>
+</div>
+
+<p>Notice what the tool does not include: a field for talent, or luck, or a better script. At this
+stage of your career the only lever you fully own is the first box, which is why your first weeks
+are measured on activity rather than revenue.</p>
+
+<div class="call warn">
+  <span class="h">The trap in the arithmetic</span>
+  It is tempting to fix a weak month by promising a faster close rate. You cannot. The only honest
+  fixes are more activity at the front, or better qualification so you stop spending meetings on
+  people who were never going to buy. Improving the quality of your conversations is the real skill,
+  and it is what the rest of this page is about.
+</div>
+</section>
+
+<!-- ============ 3. PRODUCT ============ -->
+<section id="product">
+<h2>3. What we actually sell</h2>
+
+<p>You need to be able to explain this to a stranger in thirty seconds without a single piece of
+jargon. Here it is.</p>
+
+<div class="pair">
+  <div class="tech">
+    <span class="lbl">The technical line</span>
+    OrcaRouter is a routing and governance layer that sits between your application and every model
+    provider behind one OpenAI-compatible endpoint.
+  </div>
+  <div class="plain">
+    <span class="lbl pl">The plain line, say this one</span>
+    Your product calls one address for AI. We make sure that call goes to a working model, tell you
+    exactly what it cost, and give you rules about what your AI is allowed to say and do. You change
+    one line of code.
+  </div>
+</div>
+
+<h3>The four things buyers care about</h3>
+<div class="grid2">
+  <div class="card">
+    <h4>Reliability</h4>
+    <p>When a provider has a bad afternoon, your product keeps working. Fallbacks move the request
+    to another model instead of showing your user an error.</p>
+    <p class="tagline">Ask about: their last outage</p>
+  </div>
+  <div class="card">
+    <h4>Cost visibility</h4>
+    <p>You can see what each request cost and attribute it to a team, a customer, or a feature.
+    Most teams cannot answer "what did AI cost us last month, per customer".</p>
+    <p class="tagline">Ask about: their last invoice surprise</p>
+  </div>
+  <div class="card">
+    <h4>Governance</h4>
+    <p>Rules that screen what goes in and what comes back, plus controls on what an agent is
+    allowed to do with tools. This is the box that gets a security review unblocked.</p>
+    <p class="tagline">Ask about: who has to approve AI features</p>
+  </div>
+  <div class="card">
+    <h4>No lock-in</h4>
+    <p>Bring your own provider contracts, keep your keys, and keep the freedom to name a specific
+    model when you want one. Nothing about your stack becomes ours.</p>
+    <p class="tagline">Ask about: what happens if a lab raises prices</p>
+  </div>
+</div>
+
+<h3>What we are not</h3>
+<ul>
+  <li><b>We are not an AI vendor.</b> We do not make a model and we do not compete with the labs.</li>
+  <li><b>We do not train anything on your data.</b></li>
+  <li><b>We are not a replacement for your application.</b> We sit underneath it.</li>
+</ul>
+<p>This distinction matters more than any feature. Buyers who think you are another AI vendor will
+compare you to a model. Buyers who understand you are infrastructure will compare you to a bill.</p>
+
+<h3>What it costs, and where the honesty matters</h3>
+<p>A new rep's instinct is to lead with price. Do not. Lead with the problem, and let cost arrive as
+the thing that makes the problem worse. When you do get there, be exact:</p>
+
+<table>
+  <thead><tr><th>Situation</th><th>What you can say</th></tr></thead>
+  <tbody>
+    <tr><td>Hacker and Team plans</td><td>The routing fee is <b>$0.00</b>. We do not take a cut of your token spend.</td></tr>
+    <tr><td>Bring your own keys</td><td>A platform fee <b>may apply</b>. The docs default is <b>5%</b>, and the console shows the exact rate. Do not claim zero here.</td></tr>
+    <tr><td>Enterprise</td><td><b>Quoted individually.</b> Volume-based, and it may include a per-million-token routing fee depending on tier.</td></tr>
+  </tbody>
+</table>
+
+<div class="call warn">
+  <span class="h">The mistake that gets caught</span>
+  Saying "we add nothing to your token spend" to a buyer who brings their own keys, or to an
+  Enterprise account, is false the moment the contract arrives. The zero-fee line is narrow and it
+  is checkable in our own public docs in about ten seconds. The buyer who cares about BYOK is
+  exactly the buyer who reads docs.
+</div>
+
+<h3 id="jargon-h">Sales jargon, decoded</h3>
+<p>Nobody is born knowing these. Hide the answers and use it as a flashcard drill until they stick.</p>
+<div class="jtoggle">
+  <input type="checkbox" id="jHide" aria-label="Hide the meanings so I can test myself">
+  <label for="jHide">Hide the meanings and test myself</label>
+</div>
+<div id="jWrap">
+<table class="jargon" id="jTable">
+  <thead><tr><th>Term</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pipeline</b></td><td>Every live opportunity you are working, as one number.</td></tr>
+    <tr><td><b>Quota</b></td><td>The number you are expected to close in a period.</td></tr>
+    <tr><td><b>Discovery</b></td><td>The conversation where you ask questions and they talk. Not a demo.</td></tr>
+    <tr><td><b>Qualification</b></td><td>Deciding whether a deal is real, so you stop spending time on ones that are not.</td></tr>
+    <tr><td><b>ICP</b></td><td>Ideal customer profile. The type of company that fits us best.</td></tr>
+    <tr><td><b>MQL / SQL</b></td><td>Marketing qualified lead / sales qualified lead. Two stages of "we think this one is real".</td></tr>
+    <tr><td><b>Cold outreach</b></td><td>Contacting someone who has never heard of you.</td></tr>
+    <tr><td><b>Warm lead</b></td><td>Someone who has already shown interest, by visiting, downloading, or replying.</td></tr>
+    <tr><td><b>Sequence / cadence</b></td><td>A planned set of touches over several weeks, across more than one channel.</td></tr>
+    <tr><td><b>Champion</b></td><td>The person inside the account who wants this to happen and argues for it when you are not there.</td></tr>
+    <tr><td><b>Economic buyer</b></td><td>The person who can approve the spend. Often not the person you talk to most.</td></tr>
+    <tr><td><b>Gatekeeper</b></td><td>Someone who stands between you and the decision maker. Treat them as a person, not an obstacle.</td></tr>
+    <tr><td><b>Single-threaded</b></td><td>You only know one person at the account. If they leave, the deal dies. A real risk, not jargon.</td></tr>
+    <tr><td><b>Next step</b></td><td>A specific agreed action with a date. If a call has no next step, it did not count.</td></tr>
+    <tr><td><b>Objection</b></td><td>A stated reason not to buy, or a real question in disguise.</td></tr>
+    <tr><td><b>Talk ratio</b></td><td>How much you spoke versus how much they did. Aim for roughly 45 percent you.</td></tr>
+    <tr><td><b>Pilot / POC</b></td><td>A small, time-boxed test before a full commitment. Our preferred close for technical buyers.</td></tr>
+    <tr><td><b>Commit / best case / pipeline</b></td><td>Forecast categories. How confident you are the deal lands this period.</td></tr>
+    <tr><td><b>ACV</b></td><td>Annual contract value. What the deal is worth per year.</td></tr>
+    <tr><td><b>Churn</b></td><td>A customer leaving. Why retention matters as much as closing.</td></tr>
+    <tr><td><b>Logo</b></td><td>A customer, usually used for referenceability. "Do we have a logo in that industry?"</td></tr>
+    <tr><td><b>Hygiene</b></td><td>Keeping your notes and dates accurate. Boring, and the reason deals quietly die.</td></tr>
+  </tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ 4. PROSPECTING ============ -->
+<section id="prospecting">
+<h2>4. Prospecting: finding people who have the problem</h2>
+
+<p>You cannot sell to everyone, and trying to is the most common beginner mistake. Your first job
+is deciding who is worth your time, and the second is saying something worth their attention.</p>
+
+<div class="call hyg">
+  <span class="h">Use the buyer's words, not ours</span>
+  Internal analysis of how our buyers actually describe their own problem: <b>workflow automation
+  (42%)</b> and <b>agents (26%)</b> dominate. Almost nobody describes it as <b>inference (5.5%)</b>
+  or <b>cost (3%)</b>. If you open with routing, inference, or per-token cost, you are using our
+  language and their eyes will glaze. Lead with the workflow they are trying to build, land on the
+  model layer second, and let price arrive third, if at all.
+</div>
+
+<h3>Who fits, and who to skip</h3>
+<div class="grid2">
+  <div class="card">
+    <h4 class="lbl tk" style="font-size:13px">Worth your time</h4>
+    <ul>
+      <li>Teams shipping an AI feature or agent into production now</li>
+      <li>Anyone with a real monthly model bill they cannot break down</li>
+      <li>Companies who have been burned by a provider outage</li>
+      <li>Anyone whose security team has to approve the AI work</li>
+      <li>Teams already using more than one provider</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4 class="lbl nv" style="font-size:13px">Skip, or park</h4>
+    <ul>
+      <li>Companies with no AI work at all yet</li>
+      <li>Someone with no authority over the AI roadmap</li>
+      <li>Other routers and gateways. They are competitors, not buyers.</li>
+      <li>Infrastructure suppliers who would be partners instead</li>
+      <li>Anyone whose only interest is a discount conversation</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Why now: the only legitimate reason to reach out</h3>
+<p>An outreach message without a reason for today is spam, no matter how well written. The reason
+must be real, checkable, and dated. If you make one up, the buyer can tell, and you lose the
+relationship before it starts.</p>
+
+<table>
+  <thead><tr><th>Kind of trigger</th><th>What to look for</th></tr></thead>
+  <tbody>
+    <tr><td><b>Money moved</b></td><td>Funding, acquisition, a new AI budget. They just got a reason to build.</td></tr>
+    <tr><td><b>Pain felt</b></td><td>An outage, a rate-limit incident, a cost spike, or a public post about one of those.</td></tr>
+    <tr><td><b>Calendar</b></td><td>A launch, a migration, a compliance deadline that forces a decision.</td></tr>
+    <tr><td><b>Warm signal</b></td><td>They visited, downloaded, attended, or replied to something of ours.</td></tr>
+  </tbody>
+</table>
+
+<div class="call int">
+  <span class="h">One trigger per touch, and name it</span>
+  Reference the specific thing you saw, in their words. "You mentioned the rate-limit incident in
+  your changelog last week" beats "I saw your company is growing". The first proves you looked. The
+  second proves you sent the same message to four hundred people.
+</div>
+
+<h3>The first message</h3>
+<p>Four rules. Short, one reason, one ask, nothing you cannot back up.</p>
+
+<div class="script">
+  <span class="lbl tk">Reads like this</span>
+  Subject: your retry logic after the March rate limits<br><br>
+  You wrote in your changelog that you added retries after the March rate-limit failures. Most
+  teams end up maintaining that retry path forever.<br><br>
+  We sit in front of the model providers and move a failed request to another one, so the retry
+  logic stops being your problem. Worth fifteen minutes to see whether it fits?<br><br>
+  Jaccob
+</div>
+
+<p>Why it works: it names something specific and true, it shows you understand what the fix cost
+them, it makes one claim we can actually defend, and it asks for a small yes. It never reaches for
+filler, and it never asks to pick your brain over coffee.</p>
+
+<div class="never">
+  <span class="lbl nv">What kills a first message</span>
+  Three paragraphs about our company. A feature list. "Just following up" with no new information.
+  Fake urgency. A claim you cannot source. And any sentence that would read identically if you
+  pasted in a different company name.
+</div>
+</section>
+
+<!-- ============ 5. DISCOVERY ============ -->
+<section id="discovery">
+<h2>5. Discovery: the highest-value skill you will learn</h2>
+
+<p>If you only get good at one thing this year, make it this. Discovery is the conversation where
+you ask and they talk. You are trying to find out what is actually broken, what it costs them, and
+who cares. You are not presenting anything.</p>
+
+<div class="call good">
+  <span class="h">The single most useful number in selling</span>
+  Aim for a talk ratio of roughly <b>45 percent you, 55 percent them</b>. Practically every beginner
+  runs at 80 percent and does not notice. If you are talking, you are not learning, and you cannot
+  sell to something you do not understand.
+</div>
+
+<h3>Four moves that make people keep talking</h3>
+<table>
+  <thead><tr><th>Move</th><th>What you do</th><th>How it sounds</th></tr></thead>
+  <tbody>
+    <tr><td><b>Loop</b></td><td>Repeat their words back, using their vocabulary.</td><td>"So the retries are fine in staging and only fail in production."</td></tr>
+    <tr><td><b>Mirror</b></td><td>Reflect the emotion, not the content.</td><td>"That sounds like it was a rough week."</td></tr>
+    <tr><td><b>Label</b></td><td>Name the pain you think you are hearing.</td><td>"It sounds like the real cost is engineering time, not the bill."</td></tr>
+    <tr><td><b>Silence</b></td><td>Say nothing after they answer. Count to three.</td><td>Most people fill a pause with the most useful sentence of the call.</td></tr>
+  </tbody>
+</table>
+<p>Write while they talk. It shows you are listening, and it means your notes are theirs rather than
+yours.</p>
+
+<h3>The five questions that carry a first call</h3>
+<ol>
+  <li><b>"What are you building right now?"</b> Start on their work, never on our product.</li>
+  <li><b>"What does the AI part look like today?"</b> Which providers, who owns it, how much of it is manual.</li>
+  <li><b>"What is the most annoying part of that?"</b> The word annoying gets you truth. "Challenges" gets you a rehearsed answer.</li>
+  <li><b>"What happens when it breaks?"</b> This is where the real cost lives, in engineering time and customer trust.</li>
+  <li><b>"If that were solved, what would it let you do that you cannot do today?"</b> Their own words for the value, which you will reuse later.</li>
+</ol>
+
+<div class="call warn">
+  <span class="h">The beginner's mistake, in one line</span>
+  Pitching during discovery. The moment you start describing features, you have stopped learning and
+  they have stopped telling you the truth. There is a time to present. It is not now, and it is
+  always later than you want it to be.
+</div>
+
+<h3>Is this real? Qualify before you invest</h3>
+<p>Three questions to ask yourself after any first call. If you cannot answer all three, the deal is
+not ready for a demo.</p>
+<div class="grid3">
+  <div class="card"><h4>Problem</h4><p>Can I describe their problem in one sentence, in their words, with a number attached?</p></div>
+  <div class="card"><h4>Power</h4><p>Do I know who signs, and have I at least identified how to reach them?</p></div>
+  <div class="card"><h4>Plan</h4><p>Is there a dated next step, and a plausible reason this happens this quarter?</p></div>
+</div>
+
+<div class="call hyg">
+  <span class="h">Qualify out fast, and treat it as a win</span>
+  Handing a deal back costs you a week. Carrying a deal that cannot close costs you a quarter and
+  distorts your forecast. Telling your manager "this one is not real, here is why" early is a sign
+  of a good rep, not a failing one.
+</div>
+</section>
+
+<!-- ============ 6. DEMO ============ -->
+<section id="demo">
+<h2>6. Presenting and demoing</h2>
+
+<p>A sale moves through four stages in one direction. Beginners lose deals by running them out of
+order, usually by presenting before they have discovered anything.</p>
+
+<div class="stepnav" role="tablist" aria-label="The four stages of a sale">
+  <button role="tab" data-stg="s1" aria-selected="true" aria-controls="s1"><span class="sn">01</span> Open</button>
+  <button role="tab" data-stg="s2" aria-selected="false" aria-controls="s2"><span class="sn">02</span> Discover</button>
+  <button role="tab" data-stg="s3" aria-selected="false" aria-controls="s3"><span class="sn">03</span> Present</button>
+  <button role="tab" data-stg="s4" aria-selected="false" aria-controls="s4"><span class="sn">04</span> Close</button>
+</div>
+
+<section class="stage" id="s1" role="tabpanel">
+  <span class="costbadge cost-free">costs you nothing but time</span>
+  <h3>Open: earn the next five minutes</h3>
+  <p>Set an agenda, state why you are there, and be brief. Do not open with your company history.
+  You are trying to earn the right to continue, nothing more.</p>
+  <div class="script"><span class="lbl tk">Say it like this</span>
+    "I have fifteen minutes. I want to understand how you handle model providers today, and if it
+    looks relevant I will show you one thing at the end. If it does not, I will say so and we can
+    stop. Fair?"</div>
+  <p>That last sentence buys you enormous credibility, because almost nobody offers it.</p>
+</section>
+
+<section class="stage" id="s2" role="tabpanel" hidden>
+  <span class="costbadge cost-free">the part that decides the deal</span>
+  <h3>Discover: they talk, you listen</h3>
+  <p>Everything from the previous section happens here. Use the five questions, use the four moves,
+  keep the talk ratio near 45 percent, and write things down.</p>
+  <div class="call good"><span class="h">Come out with one sentence</span>
+    You are finished discovering when you can say their problem back to them in one sentence that
+    contains their words and a number. If you cannot, keep asking.</div>
+</section>
+
+<section class="stage" id="s3" role="tabpanel" hidden>
+  <span class="costbadge cost-bill">the only part that costs model spend</span>
+  <h3>Present: agree the target first, then show one thing</h3>
+  <p>Before you show anything, get them to agree on what would make it worth their time. This is the
+  step beginners skip, and it is why their demos wander.</p>
+  <div class="script"><span class="lbl tk">Say it like this</span>
+    "If I could show you a way to stop maintaining your own retry logic, is that worth fifteen
+    minutes?"</div>
+  <p>Then show that, and only that. One pillar. A tour of every feature teaches nothing and is
+  remembered as "impressive but I am not sure what it does".</p>
+  <h4>The money moment</h4>
+  <p>For us, it is one line. Swapping the base address in their existing code is the moment the idea
+  becomes real. Show that, then show the response headers that name which model actually served the
+  request, and the per-request cost. Those two things are the difference between a claim and
+  evidence.</p>
+</section>
+
+<section class="stage" id="s4" role="tabpanel" hidden>
+  <span class="costbadge cost-free">costs you nothing, wins the most</span>
+  <h3>Close: agree the next step, every single time</h3>
+  <p>A close is not always a signature. Early in a deal, closing means agreeing the next specific
+  action with a date. If a call ends without one, the deal has stalled and you did not notice.</p>
+  <div class="script"><span class="lbl tk">Say it like this</span>
+    "Can we get thirty minutes with the engineer who owns this on Tuesday, and I will bring the
+    retry example with your numbers in it?"</div>
+</section>
+
+<div class="stagefoot">
+  <button id="stPrev" type="button" disabled>Back</button>
+  <span class="cnt" id="stCount">Stage 1 of 4</span>
+  <button id="stNext" type="button">Next</button>
+</div>
+
+<h3>The pilot is the real close</h3>
+<p>With a technical buyer, the signature comes last. What they actually buy first is a test. Offer
+one, on their terms, and you stop asking them to take your word for anything.</p>
+<table>
+  <thead><tr><th>Stage</th><th>What happens</th></tr></thead>
+  <tbody>
+    <tr><td><b>Week 1</b></td><td>Run it offline on their own logs. No production traffic, no commitment, nothing at risk.</td></tr>
+    <tr><td><b>Weeks 2 to 3</b></td><td>Shadow mode. Real traffic is evaluated but nothing is blocked or changed.</td></tr>
+    <tr><td><b>Week 4</b></td><td>A small slice of live traffic. The numbers are now theirs, not ours.</td></tr>
+  </tbody>
+</table>
+<div class="call good">
+  <span class="h">The line that closes technical buyers</span>
+  "You run it on your logs, with your evaluation. If it misses the threshold you set, you walk and
+  you keep the measurement." No promise required, because the buyer is now doing the measuring.
+</div>
+
+<h3>Objections</h3>
+<p>An objection is not a rejection. It is either a real gap you need to know about, or a question in
+disguise. Answer the version they asked, then find out what is underneath.</p>
+<ol>
+  <li><b>Ask before answering.</b> "What is driving that concern?" gets you the real objection. The first one is usually a decoy.</li>
+  <li><b>Never argue.</b> You can be right and lose the deal. Agree with the concern, then reframe it.</li>
+  <li><b>Pivot to the pilot.</b> Almost every objection is cheaper to answer with a test than with a sentence.</li>
+</ol>
+</section>
+
+<!-- ============ 7. FOLLOW-UP ============ -->
+<section id="followup">
+<h2>7. Follow-up, and why hygiene is the whole game</h2>
+
+<p>Deals rarely die from a clear no. They die quietly, from nobody following up, and from notes that
+were never accurate enough for the next person to act on.</p>
+
+<p>Here is a real example from our own pipeline review, with the accounts removed because this page
+is not the place for them. Four live deals were found sharing an identical next-step date of
+14 July, and identical wording: check for a reply, and call if there is none. A single batch of
+touches had been logged on 10 July and never worked. By the time anyone looked, those four deals
+had been silent for 71 days.</p>
+
+<div class="call int">
+  <span class="h">What that example is teaching you</span>
+  Nobody decided to abandon those deals. A task was written down, assigned to a date, and skipped,
+  and the pipeline still showed them as live. That is what bad hygiene looks like from the inside:
+  not chaos, just a tidy list of things that did not happen. Your notes are the only reason anyone
+  can tell the difference.
+</div>
+
+<h3>Rules that prevent it</h3>
+<ul>
+  <li><b>Every call ends with a next step and a date.</b> If they will not commit to one, that is your answer about the deal.</li>
+  <li><b>Write the note the same day.</b> Tomorrow you will remember the gist and lose the details that mattered.</li>
+  <li><b>Record the reason, not just the action.</b> "Sent proposal" teaches nothing. "Sent proposal because they need board approval on the 12th" tells the next person what to do.</li>
+  <li><b>Follow up on time, or change the date.</b> A date you miss silently is worse than one you moved honestly.</li>
+  <li><b>Use more than one channel, over time.</b> Email, then a call, then a message. Same reason each time, in different words.</li>
+  <li><b>Multi-thread early.</b> One contact means one person who can leave, get promoted, or go quiet.</li>
+</ul>
+
+<div class="call warn">
+  <span class="h">The honest measure of your work</span>
+  At the end of any week, the question is not "how many calls did I make". It is "does every live
+  deal in my name have an accurate date and a real next step, and did I do the things I said I
+  would do on the days I said I would". That is the whole job at this stage.
+</div>
+</section>
+
+<!-- ============ 8. NEVER SAY ============ -->
+<section id="neversay">
+<h2>8. What not to say, and what to say instead</h2>
+
+<p>Each of these is a real line that has been said or nearly said. Being caught on one costs you the
+deal and the account, because the buyer can check most of them in under a minute.</p>
+
+<div class="dns">
+  <div class="card">
+    <h4>"We work with 40+ providers"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>The live catalog has <b>15 provider prefixes</b>. The number on some of our own pages does not match its own lists.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>It is checkable in our public docs, and a rep who inflates the provider count has told the buyer that every other number is suspect too.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>Quote the model count, and date it: "roughly 200 models in the catalog today, across 15 providers."</div>
+  </div>
+
+  <div class="card">
+    <h4>"You pay nothing on top, ever"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>The $0.00 routing fee applies to Hacker and Team. BYOK may carry a platform fee, and Enterprise is quoted individually.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>The first Enterprise quote makes it false. The buyer who asks about BYOK is precisely the buyer who reads the docs.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>"On Hacker and Team the routing fee is zero. If you bring your own keys there may be a platform fee, and the console shows your exact rate."</div>
+  </div>
+
+  <div class="card">
+    <h4>"We are SOC 2 Type II certified"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>What exists is a <b>certificate</b>, not an audit report. A security reviewer will ask for the report by name.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>Asking for the wrong document in a security review makes you look like you do not know your own product. It is a short conversation and a long recovery.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>Name the artifact you actually have and offer to get it in front of their reviewer.</div>
+  </div>
+
+  <div class="card">
+    <h4>"We will cut your AI bill by 40%"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>That class of figure is <b>vendor-reported</b>, not measured on this buyer's traffic.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>You have just handed them a number to hold you to, from their own bill, on their own account. If it lands at 12 percent, you were wrong out loud.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>"I do not know what your number is. That is what the four-week replay is for, and it runs on your logs."</div>
+  </div>
+
+  <div class="card">
+    <h4>"Everything can run in shadow mode first"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>Only the agent firewall has shadow mode. Guardrails have none, and fire or do not.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>It is a claim about how the product works, made to an engineer, about the exact feature they will configure first. They will find out in an afternoon.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>"The firewall can run in shadow so you see verdicts before enforcing. For guardrails we start on audit and promote to block once you have seen the traffic."</div>
+  </div>
+
+  <div class="card">
+    <h4>"We guarantee 100% uptime"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>No system does. Our Enterprise SLA is <b>99.99%</b>, and that is a contractual number with credits attached, not a slogan.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>Anyone senior has heard a rep promise this and watched it break. It marks you as someone who has not operated a system in production.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>"Enterprise carries a 99.99% SLA. More useful than the percentage: here is what happens to a request when a provider fails mid-call."</div>
+  </div>
+
+  <div class="card">
+    <h4>"Our router is smarter than your evaluation"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>Teams that build AI seriously have their own test suite, and it is better than any vendor benchmark for their use case.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>You have just told a senior engineer their work is unnecessary. That is the fastest way to end a first call.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>"Your evaluation decides, not our benchmark. We make the model layer cheaper and more reliable and we let your harness judge it."</div>
+  </div>
+
+  <div class="card">
+    <h4>"I will get you a discount"</h4>
+    <div class="blk"><span class="lbl2">What it means</span>We do not discount. Committed spend is a floor on money already being spent, and it is what funds the savings.</div>
+    <div class="blk"><span class="lbl2">Why it matters</span>Once you offer a discount, the price was never the price, and every future conversation becomes a negotiation about the number rather than the outcome.</div>
+    <div class="repl"><span class="lbl2">Say instead</span>"The routing fee is already zero. The lever is a commitment, which is a floor on spend you are making anyway, not an extra charge."</div>
+  </div>
+</div>
+</section>
+
+<!-- ============ 9. PRACTICE ============ -->
+<section id="practice">
+<h2>9. Practice</h2>
+
+<p>Reading about this will not make you good at it. These drills will, if you do them honestly and
+without clicking around to find the answer. Every drill locks on your first pick.</p>
+
+<h3>Drill 1: what do you say?</h3>
+<p>Six objections you will actually hear. Pick the response you would give. One is strong, two will
+cost you the deal, and each one explains why.</p>
+
+<div id="drill1"></div>
+<div class="tally"><span class="tlabel">Drill 1 score</span><span class="tnum" id="d1num">0 / 6</span><span class="tmsg" id="d1msg">Answer all six to see your read.</span></div>
+
+<h3>Drill 2: spot the claim you cannot defend</h3>
+<p>Ten statements. Tap the ones you should never say to a buyer. Then check. Five are bad and five
+are fine, so tapping everything and tapping nothing both score exactly half. Guessing will not save
+you.</p>
+
+<div id="stmtList"></div>
+<div class="qbtns"><button id="stmtCheck" type="button">Check my answers</button></div>
+<div class="tally"><span class="tlabel">Drill 2 score</span><span class="tnum" id="d2num">0 / 10</span><span class="tmsg" id="d2msg">Tap the statements you would not say, then check.</span></div>
+
+<h3>Drill 3: the knowledge check</h3>
+<p>Twelve questions on the things that actually get said wrong. Blank answers count as wrong, so
+answer everything before you submit.</p>
+
+<div id="quiz"></div>
+<div class="qbtns">
+  <button id="qSubmit" type="button">Score my answers</button>
+  <button id="qReset" class="sec" type="button">Reset</button>
+</div>
+<div class="scorebox" id="scorebox">
+  <div class="big" id="scoreOut">- / 12</div>
+  <div class="bar"><i id="scoreBar"></i></div>
+  <div id="scoreVerdict">Answer the questions, then score yourself.</div>
+</div>
+</section>
+
+<!-- ============ 10. WEEK 1 ============ -->
+<section id="week1">
+<h2>10. Your first week</h2>
+
+<p>You are not expected to close anything yet. You are expected to build the habits that make
+closing possible later, and to ask questions without worrying about looking new. Everyone here
+started somewhere.</p>
+
+<ul class="chk">
+  <li>Read this page end to end, once, without trying to memorise it.</li>
+  <li>Be able to explain what we sell in thirty seconds, out loud, to someone who is not technical.</li>
+  <li>Be able to explain the one thing we do not do: we are not an AI vendor.</li>
+  <li>Learn the four pillars: reliability, cost visibility, governance, no lock-in. One sentence each.</li>
+  <li>Say the $0.00 fee line, and its boundary, without checking. Hacker and Team.</li>
+  <li>Do all three drills on this page and read every explanation, including the ones you got right.</li>
+  <li>Read the ten statements you must never say until you could spot them in someone else's email.</li>
+  <li>Write five practice first messages against real companies. Bring them to your manager for a teardown.</li>
+  <li>Book your first role play, and let the objection land badly. That is what the drill is for.</li>
+  <li>Ask what your activity target is, in conversations per week, and write it where you can see it.</li>
+</ul>
+
+<div class="call good">
+  <span class="h">How you will be judged early on</span>
+  Activity, curiosity, and honesty. Not revenue, and not polish. A rep who says "I do not know, let
+  me find out and come back to you" is worth more than one who improvises a number. Buyers forgive
+  not knowing. They do not forgive being misled.
+</div>
+
+<div class="call warn">
+  <span class="h">If something is genuinely unclear, ask internally</span>
+  There are open questions about our own product that are not answered anywhere public. If a buyer
+  asks something you cannot source, take it to your manager. Do not fill the gap with a plausible
+  guess. An invented answer is worse than no answer, because it travels.
+</div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section id="sources">
+<h2>Sources</h2>
+<table>
+  <thead><tr><th>Claim</th><th>Where it comes from</th><th>Retrieved</th></tr></thead>
+  <tbody>
+    <tr><td>$0.00 routing fee on Hacker and Team; BYOK platform fee default 5%; Enterprise quoted individually</td><td>OrcaRouter pricing page and product docs</td><td>2026-09-23</td></tr>
+    <tr><td>Roughly 200 models, 15 provider prefixes</td><td>Live model catalog endpoint</td><td>2026-09-23</td></tr>
+    <tr><td>Buyer vocabulary: workflow automation 42%, agents 26%, inference 5.5%, cost 3%</td><td>Internal analysis of how buyers describe their own problem</td><td>Internal, 2026</td></tr>
+    <tr><td>Talk ratio target of 45 / 55</td><td>Gong published research on sales conversations</td><td>Vendor-reported</td></tr>
+    <tr><td>Straight line sequence: open, discover, present, close</td><td>Straight Line Selling (Jordan Belfort)</td><td>Published method</td></tr>
+    <tr><td>Seek first to understand, then to be understood</td><td>The 7 Habits of Highly Effective People, Habit 5 (Stephen Covey)</td><td>Published method</td></tr>
+    <tr><td>Four deals sharing one next-step date, 71 days silent</td><td>Our own pipeline review, accounts withheld</td><td>2026-09-23</td></tr>
+    <tr><td>Shadow mode exists for the firewall, not for guardrails</td><td>OrcaRouter product docs</td><td>2026-09-23</td></tr>
+  </tbody>
+</table>
+<p class="dated">Anything marked vendor-reported is somebody else's measurement, not ours. Do not
+present it as our own result.</p>
+</section>
+
+<footer>
+  <p>OrcaRouter internal rep enablement. Built Thursday, September 24, 2026.
+  Fundamentals taught from published methods; product facts verified against our own docs and
+  dated above. Not for external distribution.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- reading progress ---------- */
+  var prog = document.getElementById('prog');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Offset scroll. scrollIntoView parks the target under the sticky nav. */
+  function goTo(el){
+    var y = el.getBoundingClientRect().top + window.pageYOffset - 76;
+    window.scrollTo({top: y, behavior: reduce ? 'auto' : 'smooth'});
+  }
+
+  /* ---------- stepper (data-stg, never data-tab) ---------- */
+  var stBtns = [].slice.call(document.querySelectorAll('[data-stg]'));
+  var stCnt  = document.getElementById('stCount');
+  var stPrev = document.getElementById('stPrev');
+  var stNext = document.getElementById('stNext');
+  var stIdx  = 0;
+
+  function showStage(i, focus){
+    stIdx = Math.max(0, Math.min(stBtns.length - 1, i));
+    stBtns.forEach(function(b){
+      var mine = b.getAttribute('data-stg');
+      var sel = (b === stBtns[stIdx]);
+      b.setAttribute('aria-selected', sel ? 'true' : 'false');
+      /* Hide EACH BUTTON'S OWN panel. Reading the target id here instead leaves
+         every other panel visible, so the stages stack up. */
+      var p = document.getElementById(mine);
+      if (p) p.hidden = !sel;
+    });
+    stCnt.textContent = 'Stage ' + (stIdx + 1) + ' of ' + stBtns.length;
+    stPrev.disabled = (stIdx === 0);
+    stNext.disabled = (stIdx === stBtns.length - 1);
+    if (focus) stBtns[stIdx].focus();
+  }
+  stBtns.forEach(function(b, i){
+    b.addEventListener('click', function(){ showStage(i, false); });
+    b.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight'){ e.preventDefault(); showStage(stIdx + 1, true); }
+      if (e.key === 'ArrowLeft'){  e.preventDefault(); showStage(stIdx - 1, true); }
+    });
+  });
+  stPrev.addEventListener('click', function(){ showStage(stIdx - 1, true); });
+  stNext.addEventListener('click', function(){ showStage(stIdx + 1, true); });
+  showStage(0, false);
+
+  /* ---------- pipeline math ---------- */
+  var ids = ['cTarget','cOppClose','cMeetOpp','cConvMeet','cDays'];
+  function calc(){
+    var t = parseFloat(document.getElementById('cTarget').value) || 0;
+    var oc = parseFloat(document.getElementById('cOppClose').value) || 1;
+    var mo = parseFloat(document.getElementById('cMeetOpp').value) || 1;
+    var cm = parseFloat(document.getElementById('cConvMeet').value) || 1;
+    var d  = parseFloat(document.getElementById('cDays').value) || 1;
+    var opp  = Math.ceil(t * oc);
+    var meet = Math.ceil(opp * mo);
+    var conv = Math.ceil(meet * cm);
+    document.getElementById('oOpp').textContent  = opp;
+    document.getElementById('oMeet').textContent = meet;
+    document.getElementById('oConv').textContent = conv;
+    document.getElementById('oPer').textContent  = (conv / d).toFixed(1);
+  }
+  ids.forEach(function(id){ document.getElementById(id).addEventListener('input', calc); });
+  calc();
+
+  /* ---------- jargon toggle ---------- */
+  var jHide = document.getElementById('jHide');
+  var jTable = document.getElementById('jTable');
+  jHide.addEventListener('change', function(){
+    jTable.classList.toggle('hide', jHide.checked);
+  });
+
+  /* ---------- drill 1: objection responses ---------- */
+  var DRILL1 = [
+    { who:'VP Engineering', q:'"We already built our own failover. Why would we add a vendor in the middle?"',
+      opts:[
+        {v:'good', t:'"You have solved it, so the question is what it costs you to keep it. Would it help to see what the same failover looks like when it is not your team maintaining it?"', w:'Credits their work, then reframes the real cost as maintenance rather than capability. Nothing to argue with.'},
+        {v:'weak', t:'"Our router is much smarter than what you have built in house."', w:'Insults their engineering on a first call. They built it, they own it, and now they are defending it instead of talking to you.'},
+        {v:'weak', t:'"Totally understand. I will send over some information and you can take a look."', w:'You just ended the call without learning anything. No next step, no discovery, and no reason for them to reply.'}
+      ]},
+    { who:'CFO', q:'"What is this going to cost us on top of the model spend we already have?"',
+      opts:[
+        {v:'weak', t:'"Nothing at all. We do not charge anything on top, ever."', w:'That claim is false for BYOK and Enterprise. The first quote makes you wrong, and you were the one who said it.'},
+        {v:'good', t:'"On our Team plan the routing fee is zero, so nothing on top. If you want to bring your own provider contracts instead, there may be a platform fee and the console shows the exact rate. Which of those two is closer to how you buy today?"', w:'Exact, draws the boundary yourself, and turns the answer into the next discovery question.'},
+        {v:'weak', t:'"I can probably get you a discount if you commit today."', w:'We do not discount, and inventing urgency marks you as someone who negotiates rather than solves.'}
+      ]},
+    { who:'Head of Platform', q:'"We are already multi-provider. What does this actually add?"',
+      opts:[
+        {v:'weak', t:'"We support over 40 providers, far more than anyone else."', w:'That number is not backed up and is checkable in our own docs. It also answers a question they did not ask.'},
+        {v:'good', t:'"Then you already know the annoying part is not picking providers, it is what happens at 2am when one of them degrades. Do you have a story from the last time that happened?"', w:'Reframes from capability to the operational reality they live in, then asks for the story that gives you your reason for now.'},
+        {v:'weak', t:'"Let me give you a demo of the dashboard and you will see."', w:'Pitching before discovering. You learn nothing about their setup and they learn nothing they needed.'}
+      ]},
+    { who:'Security Lead', q:'"We cannot route customer data through a third party. Legal will never approve it."',
+      opts:[
+        {v:'good', t:'"That is usually the first thing that stops this, so let us start there. What does your review need to see, and who signs it off? If it helps, the first four weeks can run entirely on your own logs, with no production traffic at all."', w:'Takes the blocker seriously, asks what the gate actually requires, and offers a path that needs no data to leave their environment.'},
+        {v:'weak', t:'"Plenty of regulated companies use us, it is really not a problem."', w:'Dismisses a legal concern with a vague appeal to others. Their reviewer will ask exactly who, and you will not know.'},
+        {v:'weak', t:'"We are SOC 2 Type II certified, so you are covered."', w:'What exists is a certificate, not an audit report. A security reviewer asks for the report by name, and you have just misled them on the one topic they are expert in.'}
+      ]},
+    { who:'Founder', q:'"Send me some information and I will take a look when things calm down."',
+      opts:[
+        {v:'weak', t:'"Of course, I will send the full deck and follow up next week."', w:'A deck with no context gets skimmed and archived. And you agreed to a follow-up with no reason for it to be answered.'},
+        {v:'good', t:'"Happy to. So it is worth my time to get the right thing: is the AI work a this-quarter thing or a next-quarter thing for you? If it is next quarter, I will send one page and check back then rather than filling your inbox."', w:'Gives them an honest way to say "not now", which is information you need, and protects the relationship for later.'},
+        {v:'weak', t:'"How about I put thirty minutes in your calendar for Thursday?"', w:'They just told you they have no time. Pushing a meeting onto them anyway is the fastest way to be ignored.'}
+      ]},
+    { who:'Engineering Manager', q:'"How is your routing actually better than a simple fallback list?"',
+      opts:[
+        {v:'weak', t:'"Our routing is powered by adaptive machine learning that learns from every request."', w:'Sounds impressive, explains nothing, and they will ask how. If you cannot describe the mechanism, do not name it.'},
+        {v:'weak', t:'"It is basically the same idea but easier to configure."', w:'You just told them your product is not different. If you cannot name the difference, stay on the problem instead.'},
+        {v:'good', t:'"That is a fair question and the honest answer is it depends what you are optimising for. Would it be useful to see the two next to each other on your own traffic, before either of us has to take a position on it?"', w:'Does not overclaim, moves the argument to their data, and is the pilot close without needing to win the abstract debate.'}
+      ]}
+  ];
+
+  var d1 = document.getElementById('drill1');
+  var d1Score = 0, d1Done = 0;
+
+  DRILL1.forEach(function(item, i){
+    var box = document.createElement('div');
+    box.className = 'drill';
+    var h = '<p class="qtext"><span class="who">' + item.who + '</span>' + item.q + '</p>';
+    item.opts.forEach(function(o, j){
+      h += '<button type="button" class="opt" data-i="' + i + '" data-j="' + j + '" data-v="' + o.v + '">' + o.t + '</button>';
+      h += '<p class="why" data-w="' + i + '-' + j + '" hidden>' + o.w + '</p>';
+    });
+    h += '<p class="verdict" data-vd="' + i + '" hidden></p>';
+    box.innerHTML = h;
+    d1.appendChild(box);
+  });
+
+  function d1Update(){
+    document.getElementById('d1num').textContent = d1Score + ' / ' + DRILL1.length;
+    var m = document.getElementById('d1msg');
+    if (d1Done < DRILL1.length){ m.textContent = (DRILL1.length - d1Done) + ' left. First pick counts, so think before you tap.'; return; }
+    if (d1Score >= 6) m.textContent = 'Strong. You are answering before you pitch.';
+    else if (d1Score >= 4) m.textContent = 'Workable, but two of these cost you a deal. Re-read the explanations for the ones you missed.';
+    else m.textContent = 'Go back through every explanation before you take a live call.';
+  }
+  d1.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.opt') : null;
+    if (!b || b.disabled) return;
+    var i = +b.getAttribute('data-i'), j = +b.getAttribute('data-j');
+    var v = b.getAttribute('data-v');
+    /* lock the whole drill on first pick */
+    d1.querySelectorAll('.opt[data-i="' + i + '"]').forEach(function(o){
+      o.disabled = true;
+      o.classList.add(o.getAttribute('data-v') === 'good' ? 'good' : 'weak');
+      o.innerHTML += '<span class="mark">' + (o.getAttribute('data-v') === 'good' ? 'strong' : 'weakens it') + '</span>';
+    });
+    d1.querySelectorAll('.why[data-w^="' + i + '-"]').forEach(function(p){ p.hidden = false; });
+    var vd = d1.querySelector('.verdict[data-vd="' + i + '"]');
+    vd.hidden = false;
+    vd.innerHTML = (v === 'good')
+      ? '<b>You picked the strong answer.</b> This is the one that keeps the information flowing.'
+      : '<b>You picked one that costs you the deal.</b> Read the explanation underneath, then the strong option above it.';
+    if (v === 'good') d1Score++;
+    d1Done++;
+    d1Update();
+  });
+  d1Update();
+
+  /* ---------- drill 2: spot the overclaim ---------- */
+  var STMTS = [
+    { t:'"Roughly 200 models in the catalog today, across 15 providers."', bad:false, w:'Fine. It is a dated count that matches the live catalog.' },
+    { t:'"We will cut your AI bill by 40 percent."', bad:true, w:'Unmeasured on their traffic, and now a number they can hold you to.' },
+    { t:'"Your retry logic is something you should not have to maintain."', bad:false, w:'Fine. It is an opinion about their situation, not a claim about our numbers.' },
+    { t:'"We are SOC 2 Type II certified."', bad:true, w:'What exists is a certificate, not an audit report, and a reviewer asks for the report by name.' },
+    { t:'"The routing fee is zero on Hacker and Team."', bad:false, w:'Fine. Exact, scoped, and verifiable in our public docs.' },
+    { t:'"Every part of the system can run in shadow mode before you enforce anything."', bad:true, w:'Only the firewall has shadow mode. Guardrails fire or they do not.' },
+    { t:'"The four-week replay runs on your logs, and your evaluation decides."', bad:false, w:'Fine. It promises a process, not a result.' },
+    { t:'"We guarantee 100 percent uptime."', bad:true, w:'Nobody can. Enterprise carries a 99.99% SLA, which is a contract term with credits.' },
+    { t:'"You change one line of code, the base address, and nothing else moves."', bad:false, w:'Fine, and it is the honest version of a migration claim.' },
+    { t:'"Our routing is smarter than your in-house evaluation."', bad:true, w:'It insults their engineering and it is not something we can demonstrate.' }
+  ];
+
+  var stList = document.getElementById('stmtList');
+  var picked = {};
+  STMTS.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'stmt';
+    b.setAttribute('data-i', i);
+    b.innerHTML = s.t + '<p class="why">' + s.w + '</p>';
+    stList.appendChild(b);
+  });
+  stList.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.stmt') : null;
+    if (!b || b.classList.contains('rev')) return;
+    var i = +b.getAttribute('data-i');
+    picked[i] = !picked[i];
+    b.classList.toggle('picked', !!picked[i]);
+  });
+  document.getElementById('stmtCheck').addEventListener('click', function(){
+    var score = 0;
+    stList.querySelectorAll('.stmt').forEach(function(b){
+      var i = +b.getAttribute('data-i');
+      var p = !!picked[i], bad = STMTS[i].bad;
+      b.classList.remove('picked');
+      b.classList.add('rev', p === bad ? 'hit' : 'miss');
+      if (p === bad) score++;
+    });
+    document.getElementById('d2num').textContent = score + ' / ' + STMTS.length;
+    var m = document.getElementById('d2msg');
+    if (score === STMTS.length) m.textContent = 'Clean. Every one of them.';
+    else if (score >= 8) m.textContent = 'Close. Read the explanations on the ones you missed.';
+    else m.textContent = 'Go back through the Never say section. These are the lines that end accounts.';
+  });
+  document.getElementById('d2msg').textContent = 'Tap the statements you would not say, then check.';
+
+  /* ---------- drill 3: quiz ---------- */
+  var QUIZ = [
+    { q:'A buyer asks what OrcaRouter is. What is the thirty second answer?',
+      a:'b',
+      o:{a:'A router that picks the smartest possible model for each prompt.', b:'One address your product calls for AI. We keep that call working, show you what it cost, and let you set rules on it.', c:'An AI platform for building agents end to end.'},
+      w:'We are infrastructure under their application, not an AI vendor and not a model picker.' },
+    { q:'Which part of the sales process should take the most of a first call?',
+      a:'c',
+      o:{a:'The demo, so they can see the value.', b:'The pricing, so there are no surprises.', c:'Discovery, so you understand the problem before offering anything.'},
+      w:'Pitching before discovering is the single most common beginner mistake.' },
+    { q:'What talk ratio should you aim for?',
+      a:'b',
+      o:{a:'About 70 percent you, so you cover everything.', b:'About 45 percent you, 55 percent them.', c:'As little as possible, just ask and say nothing.'},
+      w:'Roughly 45 / 55. Almost every beginner runs far higher than 45 and does not notice.' },
+    { q:'Is the $0.00 routing fee safe to promise on every plan?',
+      a:'c',
+      o:{a:'Yes, we never take a cut.', b:'Yes, and the same applies to bringing your own keys.', c:'No. It applies to Hacker and Team. BYOK may carry a platform fee and Enterprise is quoted individually.'},
+      w:'The zero-fee line is narrow. Carrying it into BYOK or Enterprise makes it false at the first quote.' },
+    { q:'What actually exists for our compliance posture?',
+      a:'b',
+      o:{a:'A SOC 2 Type II audit report.', b:'A certificate, not an audit report.', c:'Nothing yet, so avoid the topic.'},
+      w:'A security reviewer asks for the audit report by name. Name the artifact you actually have.' },
+    { q:'A deal has had three good conversations and no agreed next step. What is true?',
+      a:'a',
+      o:{a:'It has stalled. Conversation without a next step is not progress.', b:'It is progressing well, they clearly like us.', c:'It is time to send a proposal.'},
+      w:'Every call ends with a specific action and a date. If they will not commit to one, that is your answer.' },
+    { q:'Which is a real reason to reach out today?',
+      a:'c',
+      o:{a:'Their funding round closed six months ago and they are growing.', b:'The quarter is ending and you need pipeline.', c:'They published a changelog entry about retry logic after rate-limit failures.'},
+      w:'One real, checkable, dated trigger, named in their own words. Never manufactured urgency.' },
+    { q:'A senior engineer says they already built their own failover. Best response?',
+      a:'b',
+      o:{a:'Explain that our router is more advanced than their in-house build.', b:'Acknowledge they solved it, then ask what maintaining it costs their team.', c:'Offer a discount to make the comparison easier.'},
+      w:'Credit the work, then move to the real cost, which is the maintenance, not the capability.' },
+    { q:'Does shadow mode apply to guardrails?',
+      a:'c',
+      o:{a:'Yes, everything can run in shadow first.', b:'Yes, but only on the output stage.', c:'No. Only the agent firewall has shadow mode.'},
+      w:'Guardrails fire or they do not. Saying otherwise is a product claim an engineer disproves in an afternoon.' },
+    { q:'Four live deals in our own pipeline sat 71 days past their next-step date with identical wording. What caused it?',
+      a:'a',
+      o:{a:'A task was written down with a date and then skipped, while the deals stayed marked live.', b:'The buyers all went silent at once.', c:'A competitor took them.'},
+      w:'Hygiene failure, not chaos. A tidy list of things that did not happen is how deals actually die.' },
+    { q:'What should you lead with in outreach?',
+      a:'b',
+      o:{a:'Cost savings and per-token pricing.', b:'The workflow they are trying to build, in their words.', c:'Our model count and provider coverage.'},
+      w:'Buyers say workflow automation and agents. Almost nobody says inference or cost.' },
+    { q:'A buyer asks something about the product you cannot source. What do you do?',
+      a:'c',
+      o:{a:'Give your best guess, then correct it later if needed.', b:'Change the subject to something you know well.', c:'Say you do not know, and commit to finding out with a date.'},
+      w:'Buyers forgive not knowing. They do not forgive being misled, and a wrong answer travels.' }
+  ];
+
+  var quizEl = document.getElementById('quiz');
+  QUIZ.forEach(function(item, i){
+    var d = document.createElement('div');
+    d.className = 'q';
+    d.setAttribute('data-answer', item.a);
+    var h = '<p class="qt">' + (i + 1) + '. ' + item.q + '</p>';
+    Object.keys(item.o).forEach(function(k){
+      h += '<label><input type="radio" name="q' + i + '" value="' + k + '"> <span>' + item.o[k] + '</span></label>';
+    });
+    h += '<p class="fb"></p>';
+    d.innerHTML = h;
+    quizEl.appendChild(d);
+  });
+
+  function reveal(el){ goTo(el); }
+
+  document.getElementById('qSubmit').addEventListener('click', function(){
+    var qs = quizEl.querySelectorAll('.q');
+    var score = 0;
+    qs.forEach(function(q){
+      var want = q.getAttribute('data-answer');
+      var sel = q.querySelector('input:checked');
+      var got = sel ? sel.value : null;
+      q.classList.add('done');
+      q.classList.remove('right','wrong');
+      var fb = q.querySelector('.fb');
+      if (got === want){ score++; q.classList.add('right');
+        fb.innerHTML = '<b>Correct.</b> ' + QUIZ[[].indexOf.call(qs, q)].w; }
+      else { q.classList.add('wrong');
+        fb.innerHTML = (got === null ? '<b>No answer given.</b> ' : '<b>Not quite.</b> ') +
+                       QUIZ[[].indexOf.call(qs, q)].w; }
+    });
+    var pct = Math.round(score / qs.length * 100);
+    document.getElementById('scoreOut').textContent = score + ' / ' + qs.length + '  (' + pct + '%)';
+    document.getElementById('scoreBar').style.width = pct + '%';
+    var v = document.getElementById('scoreVerdict');
+    if (score === qs.length) v.innerHTML = '<b>Ready.</b> You can take a call today. The drills are here for when you forget.';
+    else if (pct >= 75) v.innerHTML = '<b>Close.</b> Solid on the fundamentals. Re-read the ones you missed before you are on a live call.';
+    else if (pct >= 50) v.innerHTML = '<b>Not yet.</b> Go back through Discovery and Never say, then run this again.';
+    else v.innerHTML = '<b>Start over.</b> Read the page properly, do all three drills, and come back. There is no rush, and there is no shortcut.';
+    reveal(document.getElementById('scorebox'));
+  });
+
+  document.getElementById('qReset').addEventListener('click', function(){
+    quizEl.querySelectorAll('.q').forEach(function(q){
+      q.classList.remove('done','right','wrong');
+      q.querySelectorAll('input').forEach(function(i){ i.checked = false; });
+      q.querySelector('.fb').innerHTML = '';
+    });
+    document.getElementById('scoreOut').textContent = '- / 12';
+    document.getElementById('scoreBar').style.width = '0';
+    document.getElementById('scoreVerdict').textContent = 'Answer the questions, then score yourself.';
+    reveal(document.getElementById('scorebox'));
+  });
+})();
+</script>
+</body>
+</html>
