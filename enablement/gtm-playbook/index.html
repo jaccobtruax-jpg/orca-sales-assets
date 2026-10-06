@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrcaRouter — GTM Playbook for Reps</title>
+<style>
+  :root{
+    --bg:#0b0d10; --panel:#14171c; --panel2:#1a1e25; --bd:#232833;
+    --tx:#e9edf2; --mut:#98a1ad; --dim:#6b7480;
+    --acc:#4fd1c5; --good:#3fb950; --warn:#d29922; --bad:#f85149;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--tx);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 22px 72px}
+  header.top{border-bottom:1px solid var(--bd);background:var(--panel);padding:26px 0 22px;margin-bottom:22px}
+  .kicker{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin:0 0 10px}
+  h1{margin:0 0 8px;font-size:28px;letter-spacing:-.02em;font-weight:650}
+  .meta{color:var(--mut);font-size:13px;margin:0}
+  h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+     margin:30px 0 12px;font-weight:650;font-family:var(--mono)}
+  h3{font-size:16px;margin:20px 0 8px;font-weight:650}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .tab{background:var(--panel);border:1px solid var(--bd);color:var(--mut);border-radius:999px;
+    padding:8px 15px;font-size:13px;cursor:pointer;font-family:inherit}
+  .tab:hover{color:var(--tx);border-color:#333a47}
+  .tab[aria-pressed="true"]{background:rgba(79,209,197,.13);border-color:var(--acc);color:var(--acc);font-weight:600}
+  .pane{display:none}
+  .pane.active{display:block}
+  .card{background:var(--panel);border:1px solid var(--bd);border-radius:11px;padding:15px 17px;margin-bottom:12px}
+  .kl{font:600 10px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .good{color:var(--good)} .bad{color:var(--bad)} .warn{color:var(--warn)} .acc{color:var(--acc)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{background:var(--panel2);text-align:left;padding:10px 12px;font:600 10.5px/1 var(--mono);
+     letter-spacing:.08em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--bd)}
+  td{padding:9px 12px;border-bottom:1px solid var(--bd);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .tpl{background:var(--panel);border:1px solid var(--bd);border-left:3px solid var(--acc);
+    border-radius:9px;padding:14px 16px;margin-bottom:12px}
+  .tpl .name{font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+  .tpl .body{color:#d6dbe2;font-size:14px;white-space:pre-wrap}
+  .copy{background:var(--panel2);border:1px solid var(--bd);color:var(--tx);border-radius:6px;
+    padding:5px 11px;font-size:12px;cursor:pointer;margin-top:10px;font-family:inherit}
+  .copy:hover{border-color:var(--acc);color:var(--acc)}
+  .note{background:var(--panel);border:1px solid var(--bd);border-left:3px solid var(--warn);
+    border-radius:9px;padding:13px 16px;margin:0 0 14px;font-size:14px;color:#d6dbe2}
+  .note b{color:var(--warn)}
+  .note.g{border-left-color:var(--good)} .note.g b{color:var(--good)}
+  ul{margin:8px 0;padding-left:20px}
+  li{margin-bottom:6px}
+  .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}
+  .sc{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:13px 15px}
+  .sc .q{font-size:13px;color:#d6dbe2;margin-bottom:10px}
+  .sc label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:6px;cursor:pointer}
+  .sc input{margin-right:7px;accent-color:var(--acc)}
+  #score-result{margin-top:14px;font-size:14px}
+  .pill{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid var(--acc);color:var(--acc);border-radius:999px;padding:4px 8px;margin-left:8px;vertical-align:2px}
+  footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--bd);color:var(--dim);font-size:12.5px}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--panel2);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <p class="kicker">OrcaRouter · Rep Enablement</p>
+  <h1>GTM Playbook for Reps<span class="pill">v3</span></h1>
+  <p class="meta">Competitor-aware · technical buyers · social-first · benchmarked messaging — October 2026</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" data-pane="p1" aria-pressed="true">The Playbook</button>
+  <button class="tab" data-pane="p2" aria-pressed="false">The Buyer</button>
+  <button class="tab" data-pane="p3" aria-pressed="false">Templates</button>
+  <button class="tab" data-pane="p4" aria-pressed="false">Channels</button>
+  <button class="tab" data-pane="p5" aria-pressed="false">Message Lab</button>
+</nav>
+
+<!-- ============ TAB 1: PLAYBOOK ============ -->
+<section class="pane active" id="p1">
+  <div class="note g"><b>The thesis:</b> this category is won with specifics, not spray. Every winning message has a number, a named model, or a named buyer in it. Every losing message could be sent to anyone.</div>
+
+  <div class="card">
+    <div class="kl">The seven rules</div>
+    <ol>
+      <li><b>The money number leads.</b> 0% markup · 30–40%+ net savings · 200+ models. Engineers respect a number over an adjective.</li>
+      <li><b>The wedge is OpenRouter's own FAQ.</b> 5.5% fee on credit top-ups, 5% crypto, BYOK 5% above $25K/mo, credits expire in a year. Quote <i>their</i> docs, not us. "No markup on inference — however we do charge a fee when purchasing credits."</li>
+      <li><b>The Stripe acquisition is the trigger.</b> "Your neutral referee is now owned by the house accountant." Governance questions follow the money.</li>
+      <li><b>Proof, not vibes.</b> Benchmarks, docs, a test on their stack. Fear converts short-term; proof converts long-term.</li>
+      <li><b>Never overclaim.</b> One wrong number ends the evaluation. "I'd verify that" is a strength.</li>
+      <li><b>Persistence is the advantage.</b> 70% of senders quit after touch 1. Replies concentrate on touches 2–3. Run all 3 touches, every time.</li>
+      <li><b>Track reply rate per template.</b> Kill below 2%, scale above 8%. The category average is 3.4%; top decile runs 10.7%.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="kl">How OpenRouter's machine works (so you can counter it)</div>
+    <ul>
+      <li>Category naming + one-line identity ("The Unified Interface for Every Model")</li>
+      <li>Developer gravity first: free tier, docs, ~10M devs, 10T+ tokens/day (self-reported)</li>
+      <li>A marketplace that ranks itself — every model and app page is an SEO landing page</li>
+      <li>Leaderboards and acquisitions as PR (the $7.5B Stripe story)</li>
+      <li>The fee is real, it's just renamed — that's the counter: <b>"OpenRouter routes. OrcaRouter governs."</b></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ TAB 2: BUYER ============ -->
+<section class="pane" id="p2">
+  <div class="card">
+    <div class="kl">Five technical personas — what each cares about, what each kills</div>
+    <table>
+      <tr><th>Persona</th><th>Cares about</th><th>Kills the deal if</th></tr>
+      <tr><td><b>Developer</b></td><td>DX, docs, one-line integration, no harness rewrite</td><td>The integration smells; docs are bad</td></tr>
+      <tr><td><b>Tech lead</b></td><td>Architecture fit, maintenance cost, abstraction layers</td><td>It's another layer they must own</td></tr>
+      <tr><td><b>Architect</b></td><td>Scale, failure modes, security model, lock-in</td><td>Can't pass a security/compliance review</td></tr>
+      <tr><td><b>VP Eng</b></td><td>Reliability, cost curve, headcount</td><td>It adds headcount work, not removes it</td></tr>
+      <tr><td><b>CTO</b></td><td>Speed to market, business risk, optionality</td><td>The story dies on contact with their engineers</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="kl">The six rules for technical buyers</div>
+    <ol>
+      <li><b>Competence before product.</b> Speak models, tokens, latency, SLAs, failure modes. One sharp technical point beats three value props.</li>
+      <li><b>Proof over claims.</b> The demo isn't the pitch — the docs, GitHub, and the hands-on test are.</li>
+      <li><b>Respect the evaluation.</b> They WILL test it. Make the self-serve path excellent; sales supports, never pushes.</li>
+      <li><b>Never overclaim.</b> Technical buyers verify everything and pattern-match hype instantly.</li>
+      <li><b>Answer build-vs-buy head-on.</b> "Most teams spend 3–6 months building multi-model routing, streaming failover, and guardrails. Then they own re-benchmarking a moving catalogue forever. That's a headcount line, not infrastructure."</li>
+      <li><b>Arm the champion.</b> Give the technical buyer the ammo for their internal sell: comparison table, fee math, security posture, TCO one-pager.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="kl">Objections</div>
+    <table>
+      <tr><th>They say</th><th>You say</th></tr>
+      <tr><td>"We'll build it in-house"</td><td>The headcount-line counter (rule 5) + "you'll re-benchmark a moving catalogue forever"</td></tr>
+      <tr><td>"LiteLLM is free"</td><td>"Free to run, expensive to own: no managed failover, no guardrails, no support. What's your engineering hour worth?"</td></tr>
+      <tr><td>"We already use OpenRouter"</td><td>Don't trash them. "Their own docs confirm 5.5% on top-ups and 5% BYOK — at your volume that's real money. And the owner is now a payments company."</td></tr>
+      <tr><td>"Open source or nothing"</td><td>"Open core exists. The question is what you want to operate vs. buy."</td></tr>
+      <tr><td>"Security/compliance"</td><td>Calm and proof-backed: agent firewall, PII shield, audit trails, ZDR posture — the docs, not the adjectives.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ TAB 3: TEMPLATES ============ -->
+<section class="pane" id="p3">
+  <div class="note">Under 90 words. One idea. One question. Small ask. The first touch carries ~58% of your replies — the opener IS the message. The benchmarked CTA: <i>"Would you have a couple minutes to chat about this over the next few days?"</i></div>
+
+  <div class="tpl">
+    <div class="name">Template A — the stack question <span class="pill">Noah model</span></div>
+    <div class="body" id="tplA">What does your tooling actually look like day to day at {{company}}? If your team works inside Claude Code / Codex / {{their harness}}, OrcaRouter drops in underneath and nothing changes for them — one base_url. If you've built your own routing, that's a different conversation and I'd rather have it properly. Which one are you?</div>
+    <button class="copy" data-target="tplA">Copy</button>
+  </div>
+
+  <div class="tpl">
+    <div class="name">Template B — the researched number <span class="pill">Framer model</span></div>
+    <div class="body" id="tplB">Noticed {{company}} routes ~{{volume}} through {{provider}}. At that scale, routing decisions compound into {{dollar figure}} differences. How are you handling model selection today — fixed per feature, or evaluated per query?</div>
+    <button class="copy" data-target="tplB">Copy</button>
+  </div>
+
+  <div class="tpl">
+    <div class="name">Template C — the comment warm DM <span class="pill">Anna model</span></div>
+    <div class="body" id="tplC">Hey {{first}} — enjoyed our discussion on {{topic}}. Your point about {{specific}} got me thinking. Curious — are you handling {{routing / failover / guardrails}} in-house or with a dedicated solution?</div>
+    <button class="copy" data-target="tplC">Copy</button>
+  </div>
+
+  <div class="tpl">
+    <div class="name">Template D — the fee-math opener <span class="pill">the wedge</span></div>
+    <div class="body" id="tplD">Saw {{company}} routes through {{provider}}. Their own docs confirm a 5.5% fee on credit top-ups (and BYOK carries 5% above the allowance). At {{volume}} tokens that's {{$}}/yr in fees alone. Curious how you're thinking about that line item?</div>
+    <button class="copy" data-target="tplD">Copy</button>
+  </div>
+
+  <div class="tpl">
+    <div class="name">Template E — radical honesty <span class="pill">the reset</span></div>
+    <div class="body" id="tplE">We're OrcaRouter. We route models. 0% markup on tokens. One base_url change. Worth 10 minutes?</div>
+    <button class="copy" data-target="tplE">Copy</button>
+  </div>
+</section>
+
+<!-- ============ TAB 4: CHANNELS ============ -->
+<section class="pane" id="p4">
+  <div class="card">
+    <div class="kl">Channel allocation</div>
+    <table>
+      <tr><th>Channel</th><th>Share</th><th>Role</th></tr>
+      <tr><td><b>LinkedIn</b></td><td>60%</td><td>Booking. Comment-first, warm DMs. The only reliable cold-to-meeting channel left.</td></tr>
+      <tr><td><b>X</b></td><td>20%</td><td>Public credibility + pain-signal search. Tech is slow to reply on X DMs — do the work in public.</td></tr>
+      <tr><td><b>Reddit</b></td><td>10%</td><td>Credibility answers + pain monitoring. No cold DMs — DM only after you helped publicly.</td></tr>
+      <tr><td><b>Email</b></td><td>10%</td><td>Triggered only: reply, signal, event, referral. Cold volume is dead — the deliverability regime caps it.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="kl">The three-touch social sequence (per prospect — the floor, not the ceiling)</div>
+    <ol>
+      <li><b>Comment.</b> A genuine thought on their post, referencing a specific point. No product.</li>
+      <li><b>Engage again</b> within ~a week — comment or a sharp public reply on a relevant thread.</li>
+      <li><b>Warm DM.</b> Reference both touches. One question. Under 90 words. Small ask.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="kl">Signals beat lists — each trigger comes with an opener</div>
+    <table>
+      <tr><th>Signal</th><th>Meaning</th><th>Opener</th></tr>
+      <tr><td>Job change</td><td>New mandate</td><td>"Congrats on the move — how are you handling multi-provider routing at {{new company}}?"</td></tr>
+      <tr><td>Funding round</td><td>New budget</td><td>"Congrats on the raise — saw you're scaling the AI team…"</td></tr>
+      <tr><td>Hiring spike</td><td>Scaling AI usage</td><td>Same frame as funding</td></tr>
+      <tr><td>Stack reveal / "we're building on X"</td><td>Architecture in motion</td><td>"Saw you're building on {{X}} — how are you choosing models per query?"</td></tr>
+      <tr><td>Cost complaint (OpenRouter fees, LLM costs)</td><td>Pain, public</td><td>Template D, right now</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="kl">Metrics that matter</div>
+    <table>
+      <tr><th>Metric</th><th>Target</th></tr>
+      <tr><td>Connection acceptance</td><td>&gt;50%</td></tr>
+      <tr><td>Comment engagement</td><td>1–3 genuine replies per comment</td></tr>
+      <tr><td>Warm DM reply rate</td><td>Scale &gt;8%, kill &lt;2% (per template)</td></tr>
+      <tr><td>Meetings booked</td><td>1 per 30–50 touched prospects</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ TAB 5: MESSAGE LAB ============ -->
+<section class="pane" id="p5">
+  <div class="note"><b>The 2-second test:</b> a technical buyer decides to read or delete in under two seconds. Buzzwords, "curious if you're looking…", blocks of text, fear + exclamation = delete. Their name, their number, their models, one question = read.</div>
+
+  <div class="card">
+    <div class="kl">Failure modes to recognize in your own drafts</div>
+    <table>
+      <tr><th>Failure</th><th>Sounds like</th><th>Fix</th></tr>
+      <tr><td>Generic opener + buzzwords</td><td>"We help teams get more out of their AI stack, reducing costs, optimizing selection…"</td><td>One number, one name, one model instead.</td></tr>
+      <tr><td>Vague ask</td><td>"We'd fit your ecosystem"</td><td>"Fit" is a wish. Say what changes.</td></tr>
+      <tr><td>Soft CTA</td><td>"Would love to trade notes"</td><td>"Trade notes" invites a no. Small specific ask.</td></tr>
+      <tr><td>Fear block</td><td>"One breach and your entire corpus is exposed… no markup!"</td><td>Calm proof: firewall, PII shield, audit trail. Fear opens a defensive loop.</td></tr>
+      <tr><td>Research, no bridge</td><td>"What made you pick OpenRouter?"</td><td>Add: "…and what would make you reconsider?"</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="kl">Self-score your next message before you send it</div>
+    <div class="score-grid">
+      <div class="sc">
+        <div class="q"><b>Hook</b> — did you earn attention with a number, name, or model?</div>
+        <label><input type="radio" name="hook" value="1"> No — generic opener</label>
+        <label><input type="radio" name="hook" value="2"> Mild — some context</label>
+        <label><input type="radio" name="hook" value="3"> Yes — a specific fact about them</label>
+      </div>
+      <div class="sc">
+        <div class="q"><b>Specific</b> — is it about THIS person/company?</div>
+        <label><input type="radio" name="spec" value="1"> Could go to anyone</label>
+        <label><input type="radio" name="spec" value="2"> Name + company only</label>
+        <label><input type="radio" name="spec" value="3"> Their stack / their post / their number</label>
+      </div>
+      <div class="sc">
+        <div class="q"><b>CTA</b> — does it ask for something small and specific?</div>
+        <label><input type="radio" name="cta" value="1"> No CTA or "let's chat"</label>
+        <label><input type="radio" name="cta" value="2"> A question, no ask</label>
+        <label><input type="radio" name="cta" value="3"> Small specific ask</label>
+      </div>
+      <div class="sc">
+        <div class="q"><b>Tone</b> — would a technical buyer not flinch?</div>
+        <label><input type="radio" name="tone" value="1"> Fear, hype, or shouty</label>
+        <label><input type="radio" name="tone" value="2"> Neutral</label>
+        <label><input type="radio" name="tone" value="3"> Calm, proof-backed, peer-to-peer</label>
+      </div>
+    </div>
+    <button class="copy" id="score-btn">Score it</button>
+    <div id="score-result"></div>
+  </div>
+</section>
+
+<footer>
+  Internal-facing team playbook · based on the GTM Playbook v3 (Oct 2026) · benchmarks sourced to published 2026 cold-outreach data ·
+  full internal version (with team audit) lives on Drive — this page is the public-safe rep version.
+</footer>
+</div>
+
+<script>
+  // tabs
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-pressed', 'false'));
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    t.setAttribute('aria-pressed', 'true');
+    document.getElementById(t.dataset.pane).classList.add('active');
+  }));
+  // copy buttons
+  document.querySelectorAll('.copy[data-target]').forEach(b => b.addEventListener('click', () => {
+    const el = document.getElementById(b.dataset.target);
+    navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+      const old = b.textContent; b.textContent = 'Copied ✓';
+      setTimeout(() => b.textContent = old, 1500);
+    });
+  }));
+  // scorecard
+  document.getElementById('score-btn').addEventListener('click', () => {
+    const vals = ['hook','spec','cta','tone'].map(n => {
+      const r = document.querySelector(`input[name="${n}"]:checked`);
+      return r ? parseInt(r.value, 10) : 0;
+    });
+    const total = vals.reduce((a,b) => a+b, 0);
+    const out = document.getElementById('score-result');
+    if (vals.some(v => v === 0)) {
+      out.innerHTML = '<span class="warn">Answer all four before scoring.</span>';
+      return;
+    }
+    const verdict = total >= 11 ? '<span class="good">Send it.</span> Specific, small ask, calm tone.'
+      : total >= 8 ? '<span class="warn">Almost — tighten the weak dimension.</span>'
+      : '<span class="bad">Rewrite.</span> Add a number, name, or model; cut the filler; make the ask small and specific.';
+    out.innerHTML = `Score: <b>${total}/12</b> (Hook ${vals[0]} · Specific ${vals[1]} · CTA ${vals[2]} · Tone ${vals[3]}) — ${verdict}`;
+  });
+</script>
+</body>
+</html>
