@@ -14,7 +14,7 @@
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
   body{margin:0;background:var(--bg);color:var(--tx);
-    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
   .wrap{max-width:1200px;margin:0 auto;padding:0 22px 72px}
   header.top{border-bottom:1px solid var(--bd);background:var(--panel);padding:26px 0 22px;margin-bottom:22px}
   .kicker{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin:0 0 10px}
@@ -30,8 +30,12 @@
   .tab[aria-pressed="true"]{background:rgba(79,209,197,.13);border-color:var(--acc);color:var(--acc);font-weight:600}
   .pane{display:none}
   .pane.active{display:block}
-  .card{background:var(--panel);border:1px solid var(--bd);border-radius:11px;padding:15px 17px;margin-bottom:12px}
-  .kl{font:600 10px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .card{background:var(--panel);border:1px solid var(--bd);border-radius:11px;padding:17px 19px;margin-bottom:12px}
+  .kl{font:600 10px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+  .rule{margin-bottom:15px}
+  .rule:last-child{margin-bottom:0}
+  .rule .rn{font-weight:650;color:var(--acc)}
+  .rule p{margin:3px 0 0;color:#d6dbe2}
   .good{color:var(--good)} .bad{color:var(--bad)} .warn{color:var(--warn)} .acc{color:var(--acc)}
   table{width:100%;border-collapse:collapse;font-size:13.5px}
   th{background:var(--panel2);text-align:left;padding:10px 12px;font:600 10.5px/1 var(--mono);
@@ -46,11 +50,12 @@
     padding:5px 11px;font-size:12px;cursor:pointer;margin-top:10px;font-family:inherit}
   .copy:hover{border-color:var(--acc);color:var(--acc)}
   .note{background:var(--panel);border:1px solid var(--bd);border-left:3px solid var(--warn);
-    border-radius:9px;padding:13px 16px;margin:0 0 14px;font-size:14px;color:#d6dbe2}
+    border-radius:9px;padding:14px 17px;margin:0 0 14px;font-size:14px;color:#d6dbe2}
   .note b{color:var(--warn)}
   .note.g{border-left-color:var(--good)} .note.g b{color:var(--good)}
   ul{margin:8px 0;padding-left:20px}
-  li{margin-bottom:6px}
+  li{margin-bottom:7px;color:#d6dbe2}
+  p{color:#d6dbe2}
   .score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}
   .sc{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:13px 15px}
   .sc .q{font-size:13px;color:#d6dbe2;margin-bottom:10px}
@@ -60,14 +65,13 @@
   .pill{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
     border:1px solid var(--acc);color:var(--acc);border-radius:999px;padding:4px 8px;margin-left:8px;vertical-align:2px}
   footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--bd);color:var(--dim);font-size:12.5px}
-  code{font-family:var(--mono);font-size:12.5px;background:var(--panel2);padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
   <p class="kicker">OrcaRouter · Rep Enablement</p>
-  <h1>GTM Playbook for Reps<span class="pill">v3</span></h1>
+  <h1>GTM Playbook for Reps<span class="pill">v4</span></h1>
   <p class="meta">Competitor-aware · technical buyers · social-first · benchmarked messaging — October 2026</p>
 </header>
 
@@ -81,42 +85,60 @@
 
 <!-- ============ TAB 1: PLAYBOOK ============ -->
 <section class="pane active" id="p1">
-  <div class="note g"><b>The thesis:</b> this category is won with specifics, not spray. Every winning message has a number, a named model, or a named buyer in it. Every losing message could be sent to anyone.</div>
+  <div class="note g"><b>The thesis:</b> this category is won with specifics, not spray. A technical buyer decides whether to read your message in under two seconds, and the pattern-match is brutal — generic openers read as spam, specifics read as respect. Every message that books a meeting contains a number, a named model, or a named buyer. Every message that could go to anyone goes to no one.</div>
 
   <div class="card">
     <div class="kl">The seven rules</div>
-    <ol>
-      <li><b>The money number leads.</b> 0% markup · 30–40%+ net savings · 200+ models. Engineers respect a number over an adjective.</li>
-      <li><b>The wedge is OpenRouter's own FAQ.</b> 5.5% fee on credit top-ups, 5% crypto, BYOK 5% above $25K/mo, credits expire in a year. Quote <i>their</i> docs, not us. "No markup on inference — however we do charge a fee when purchasing credits."</li>
-      <li><b>The Stripe acquisition is the trigger.</b> "Your neutral referee is now owned by the house accountant." Governance questions follow the money.</li>
-      <li><b>Proof, not vibes.</b> Benchmarks, docs, a test on their stack. Fear converts short-term; proof converts long-term.</li>
-      <li><b>Never overclaim.</b> One wrong number ends the evaluation. "I'd verify that" is a strength.</li>
-      <li><b>Persistence is the advantage.</b> 70% of senders quit after touch 1. Replies concentrate on touches 2–3. Run all 3 touches, every time.</li>
-      <li><b>Track reply rate per template.</b> Kill below 2%, scale above 8%. The category average is 3.4%; top decile runs 10.7%.</li>
-    </ol>
+
+    <div class="rule"><span class="rn">1 · The money number leads.</span>
+      <p>Lead with a number, not an adjective. "Cutting-edge routing" means nothing to an engineer; "0% markup on tokens" means something. Buyers in this category respect a number over a claim, so put ours up front every time: 0% markup, 30–40%+ net savings, 200+ models.</p></div>
+
+    <div class="rule"><span class="rn">2 · The wedge is OpenRouter's own FAQ.</span>
+      <p>Our best sales tool is the competitor's own documentation. OpenRouter says there's "no markup on inference pricing" — then charges 5.5% on every credit top-up, 5% on crypto, 5% on BYOK usage above $25K a month, and lets credits expire after a year. That's a markup with a different name, and it's all written down on their site. Quote their words, not ours — it's verifiable, and it's damning.</p></div>
+
+    <div class="rule"><span class="rn">3 · The Stripe acquisition is the trigger.</span>
+      <p>Stripe bought OpenRouter for roughly $7.5B in August 2026. That ends the "neutral referee" story — the referee is now owned by the house accountant. Any enterprise prospect routing through OpenRouter has a governance question they can't answer, and that's your reason to reach out now, not later.</p></div>
+
+    <div class="rule"><span class="rn">4 · Proof, not vibes.</span>
+      <p>It's our brand voice and it's also how technical buyers evaluate vendors: they verify everything, they trust peers over marketing, and they can smell a claim without evidence from across the room. Fear converts short-term; proof converts long-term. Benchmarks, docs, a live test on their stack — that's what survives contact with engineers.</p></div>
+
+    <div class="rule"><span class="rn">5 · Never overclaim.</span>
+      <p>One wrong number ends the evaluation. A technical buyer will check the fee math, the benchmark, the latency claim — and a false one reads as either laziness or dishonesty, both fatal. Saying "I'd verify that and get back to you" is a strength, not a weakness. It's the difference between losing a deal and losing credibility forever.</p></div>
+
+    <div class="rule"><span class="rn">6 · Persistence is the advantage.</span>
+      <p>Seventy percent of senders quit after the first touch, and replies concentrate on touches two and three — which means most senders never see the replies their own message earned. Run the full three-touch sequence on every prospect, every time. Persistence is a measurable edge, and most of the competition simply doesn't have it.</p></div>
+
+    <div class="rule"><span class="rn">7 · Track reply rate per template.</span>
+      <p>The category average reply rate for cold outreach is about 3.4%; the top decile runs 10.7%. That spread is the whole game. Track every template you send: kill anything under 2%, scale anything over 8%, and let the data decide what you send next week.</p></div>
+  </div>
+
+  <div class="card">
+    <div class="kl">How OpenRouter's machine works — so you can counter it</div>
+    <p>OpenRouter built the category, and their machine is worth understanding because every piece of it is counterable. They created a one-line identity — "The Unified Interface for Every Model" — simple enough that developers repeat it for them. They grew developers first: free tier, strong docs, and self-reported numbers of roughly 10 million developers and 10 trillion tokens a day before any commercial gravity. Their marketplace is a content engine: every model page and featured app is a landing page that ranks itself in search, so the catalog does the marketing. And their fee structure looks free while being a renamed markup — which is exactly the crack we sell into.</p>
+    <p>The counter in one line: <b>OpenRouter routes. OrcaRouter governs.</b> They route by crowd behavior; we route by learned, per-query selection. They charge fees with a different name; we charge zero markup. They just got bought by a payments company; we're independent. Every one of those is a sentence a prospect can verify.</p>
   </div>
 
   <div class="card">
     <div class="kl">The anatomy of a message that books</div>
     <table>
       <tr><th>Slot</th><th>Job</th><th>Example</th></tr>
-      <tr><td><b>1. Hook</b></td><td>Earn the two-second scan with a number, name, or model</td><td>"Framer routes ~285B tokens/week through OpenRouter."</td></tr>
-      <tr><td><b>2. Proof</b></td><td>One specific fact about THEM — research no tool fakes</td><td>"Their own docs confirm a 5.5% fee on credit top-ups."</td></tr>
-      <tr><td><b>3. Question</b></td><td>About their stack, not our product</td><td>"How are you handling model selection today — fixed per feature, or evaluated per query?"</td></tr>
-      <tr><td><b>4. Small ask</b></td><td>The benchmarked CTA, low pressure</td><td>"Would you have a couple minutes to chat about this over the next few days?"</td></tr>
+      <tr><td><b>1. Hook</b></td><td>Earn the two-second scan. A number, a name, or a model the prospect recognizes.</td><td>"Framer routes ~285B tokens/week through OpenRouter."</td></tr>
+      <tr><td><b>2. Proof</b></td><td>One specific fact about them that shows you did the research — the kind no template can fake.</td><td>"Their own docs confirm a 5.5% fee on credit top-ups."</td></tr>
+      <tr><td><b>3. Question</b></td><td>Ask about their stack, not our product. Discovery disguised as curiosity.</td><td>"How are you handling model selection today — fixed per feature, or evaluated per query?"</td></tr>
+      <tr><td><b>4. Small ask</b></td><td>The benchmarked CTA — low pressure, easy to say yes to.</td><td>"Would you have a couple minutes to chat about this over the next few days?"</td></tr>
     </table>
-    <p style="margin:10px 0 0;font-size:13px;color:var(--mut)">Under 90 words. One idea. The first touch carries ~58% of your replies — the opener IS the message.</p>
+    <p style="margin:10px 0 0;font-size:13px;color:var(--mut)">Keep it under 90 words. One idea. The first touch carries roughly 58% of your replies — the opener is the message.</p>
   </div>
 
   <div class="card">
     <div class="kl">The hook taxonomy — pick one per message</div>
     <table>
-      <tr><th>Hook</th><th>Shape</th></tr>
-      <tr><td><b>Data</b></td><td>Their number: tokens, volume, fee, benchmark — with a consequence</td></tr>
-      <tr><td><b>Question</b></td><td>About their stack, disarming, zero pitch ("What does your tooling look like day to day?")</td></tr>
-      <tr><td><b>Compliment with evidence</b></td><td>Named models, named work ("The open-weight models you shipped (Kimi K2.6, GLM 5.2)…")</td></tr>
-      <tr><td><b>Warm reference</b></td><td>Event, associate, shared connection — the referral opener</td></tr>
-      <tr><td><b>Pattern interrupt</b></td><td>A visual, a Loom, a chart — rare enough to get opened</td></tr>
+      <tr><th>Hook</th><th>What it looks like</th></tr>
+      <tr><td><b>Data</b></td><td>Their number — tokens, volume, fees — with a consequence attached. The strongest hook in the stack.</td></tr>
+      <tr><td><b>Question</b></td><td>Disarming, about their stack, zero pitch. "What does your tooling look like day to day?"</td></tr>
+      <tr><td><b>Compliment with evidence</b></td><td>Named models, named work. "The open-weight models you shipped into Claygent (Kimi K2.6, GLM 5.2)…"</td></tr>
+      <tr><td><b>Warm reference</b></td><td>An event, an associate, a shared connection — the referral opener that gets replied to.</td></tr>
+      <tr><td><b>Pattern interrupt</b></td><td>A visual, a Loom, a chart — rare enough to get opened when text isn't.</td></tr>
     </table>
   </div>
 </section>
@@ -138,20 +160,20 @@
   <div class="card">
     <div class="kl">The six rules for technical buyers</div>
     <ol>
-      <li><b>Competence before product.</b> Speak models, tokens, latency, SLAs, failure modes. One sharp technical point beats three value props.</li>
-      <li><b>Proof over claims.</b> The demo isn't the pitch — the docs, GitHub, and the hands-on test are.</li>
-      <li><b>Respect the evaluation.</b> They WILL test it. Make the self-serve path excellent; sales supports, never pushes.</li>
-      <li><b>Never overclaim.</b> Technical buyers verify everything and pattern-match hype instantly.</li>
+      <li><b>Competence before product.</b> Speak their language — models, tokens, latency, SLAs, failure modes. One sharp technical observation beats three value props.</li>
+      <li><b>Proof over claims.</b> The demo isn't the pitch; the docs, the GitHub, and the hands-on test are. If it can't be tested, it doesn't exist to them.</li>
+      <li><b>Respect the evaluation.</b> They will test it. Make the self-serve path excellent and let the product sell; sales supports, never pushes.</li>
+      <li><b>Never overclaim.</b> Technical buyers verify everything and pattern-match hype instantly. One false number ends the evaluation permanently.</li>
       <li><b>Answer build-vs-buy head-on.</b> "Most teams spend 3–6 months building multi-model routing, streaming failover, and guardrails. Then they own re-benchmarking a moving catalogue forever. That's a headcount line, not infrastructure."</li>
-      <li><b>Arm the champion.</b> Give the technical buyer the ammo for their internal sell: comparison table, fee math, security posture, TCO one-pager.</li>
+      <li><b>Arm the champion.</b> The technical buyer who loves the product still has to sell it internally. Give them the comparison table, the fee math, the security posture, the TCO one-pager.</li>
     </ol>
   </div>
 
   <div class="card">
-    <div class="kl">Objections</div>
+    <div class="kl">Objections — and the response</div>
     <table>
       <tr><th>They say</th><th>You say</th></tr>
-      <tr><td>"We'll build it in-house"</td><td>The headcount-line counter (rule 5) + "you'll re-benchmark a moving catalogue forever"</td></tr>
+      <tr><td>"We'll build it in-house"</td><td>The headcount-line counter (rule 5) — plus "you'll re-benchmark a moving catalogue forever."</td></tr>
       <tr><td>"LiteLLM is free"</td><td>"Free to run, expensive to own: no managed failover, no guardrails, no support. What's your engineering hour worth?"</td></tr>
       <tr><td>"We already use OpenRouter"</td><td>Don't trash them. "Their own docs confirm 5.5% on top-ups and 5% BYOK — at your volume that's real money. And the owner is now a payments company."</td></tr>
       <tr><td>"Open source or nothing"</td><td>"Open core exists. The question is what you want to operate vs. buy."</td></tr>
@@ -162,34 +184,34 @@
 
 <!-- ============ TAB 3: TEMPLATES ============ -->
 <section class="pane" id="p3">
-  <div class="note">Under 90 words. One idea. One question. Small ask. The first touch carries ~58% of your replies — the opener IS the message. The benchmarked CTA: <i>"Would you have a couple minutes to chat about this over the next few days?"</i></div>
+  <div class="note">Under 90 words. One idea. One question. Small ask. The first touch carries ~58% of your replies — the opener is the message. The benchmarked CTA: <i>"Would you have a couple minutes to chat about this over the next few days?"</i></div>
 
   <div class="tpl">
-    <div class="name">Template A — the stack question <span class="pill">Noah model</span></div>
-    <div class="body" id="tplA">What does your tooling actually look like day to day at {{company}}? If your team works inside Claude Code / Codex / {{their harness}}, OrcaRouter drops in underneath and nothing changes for them — one base_url. If you've built your own routing, that's a different conversation and I'd rather have it properly. Which one are you?</div>
+    <div class="name">Template A — the stack question</div>
+    <div class="body" id="tplA">What does your tooling look like day to day at {{company}}? If your team works inside Claude Code or Codex, OrcaRouter drops in underneath — one base_url, no harness rewrite. If you've built your own routing, that's a different conversation and I'd rather have it properly. Which are you?</div>
     <button class="copy" data-target="tplA">Copy</button>
   </div>
 
   <div class="tpl">
-    <div class="name">Template B — the researched number <span class="pill">Framer model</span></div>
+    <div class="name">Template B — the researched number</div>
     <div class="body" id="tplB">Noticed {{company}} routes ~{{volume}} through {{provider}}. At that scale, routing decisions compound into {{dollar figure}} differences. How are you handling model selection today — fixed per feature, or evaluated per query?</div>
     <button class="copy" data-target="tplB">Copy</button>
   </div>
 
   <div class="tpl">
-    <div class="name">Template C — the comment warm DM <span class="pill">Anna model</span></div>
+    <div class="name">Template C — the comment warm DM</div>
     <div class="body" id="tplC">Hey {{first}} — enjoyed our discussion on {{topic}}. Your point about {{specific}} got me thinking. Curious — are you handling {{routing / failover / guardrails}} in-house or with a dedicated solution?</div>
     <button class="copy" data-target="tplC">Copy</button>
   </div>
 
   <div class="tpl">
-    <div class="name">Template D — the fee-math opener <span class="pill">the wedge</span></div>
+    <div class="name">Template D — the fee-math opener</div>
     <div class="body" id="tplD">Saw {{company}} routes through {{provider}}. Their own docs confirm a 5.5% fee on credit top-ups (and BYOK carries 5% above the allowance). At {{volume}} tokens that's {{$}}/yr in fees alone. Curious how you're thinking about that line item?</div>
     <button class="copy" data-target="tplD">Copy</button>
   </div>
 
   <div class="tpl">
-    <div class="name">Template E — radical honesty <span class="pill">the reset</span></div>
+    <div class="name">Template E — radical honesty</div>
     <div class="body" id="tplE">We're OrcaRouter. We route models. 0% markup on tokens. One base_url change. Worth 10 minutes?</div>
     <button class="copy" data-target="tplE">Copy</button>
   </div>
@@ -212,9 +234,10 @@
     <div class="kl">The three-touch social sequence (per prospect — the floor, not the ceiling)</div>
     <ol>
       <li><b>Comment.</b> A genuine thought on their post, referencing a specific point. No product.</li>
-      <li><b>Engage again</b> within ~a week — comment or a sharp public reply on a relevant thread.</li>
+      <li><b>Engage again</b> within about a week — a comment or a sharp public reply on a relevant thread.</li>
       <li><b>Warm DM.</b> Reference both touches. One question. Under 90 words. Small ask.</li>
     </ol>
+    <p style="margin:8px 0 0;font-size:13px;color:var(--mut)">Seventy percent of senders quit after touch one, and replies concentrate on touches two and three. The sequence is the advantage.</p>
   </div>
 
   <div class="card">
@@ -225,7 +248,7 @@
       <tr><td>Funding round</td><td>New budget</td><td>"Congrats on the raise — saw you're scaling the AI team…"</td></tr>
       <tr><td>Hiring spike</td><td>Scaling AI usage</td><td>Same frame as funding</td></tr>
       <tr><td>Stack reveal / "we're building on X"</td><td>Architecture in motion</td><td>"Saw you're building on {{X}} — how are you choosing models per query?"</td></tr>
-      <tr><td>Cost complaint (OpenRouter fees, LLM costs)</td><td>Pain, public</td><td>Template D, right now</td></tr>
+      <tr><td>Cost complaint (OpenRouter fees, LLM costs)</td><td>Pain, made public</td><td>Template D, right now</td></tr>
     </table>
   </div>
 
@@ -302,8 +325,8 @@
 </section>
 
 <footer>
-  Internal-facing team playbook · based on the GTM Playbook v3 (Oct 2026) · benchmarks sourced to published 2026 cold-outreach data ·
-  full internal version (with team audit) lives on Drive — this page is the public-safe rep version.
+  Team-facing playbook · based on GTM Playbook v4 (Oct 2026) · benchmarks sourced to published 2026 cold-outreach data ·
+  full internal version (with the per-rep coaching) lives on Drive — this page is the public-safe rep version.
 </footer>
 </div>
 
