@@ -66,6 +66,16 @@
   #score-result{margin-top:14px;font-size:14px}
   .pill{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
     border:1px solid var(--acc);color:var(--acc);border-radius:999px;padding:4px 8px;margin-left:8px;vertical-align:2px}
+  .clinic{margin-bottom:14px;border:1px solid var(--bd);border-radius:11px;overflow:hidden;background:var(--panel)}
+  .clinic .hd{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 16px;background:var(--panel2);border-bottom:1px solid var(--bd)}
+  .clinic .hd .tag{font:600 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .clinic .hd .why{font-size:12px;color:var(--mut)}
+  .clinic .body{padding:14px 16px;white-space:pre-wrap;font-size:13.5px;color:#d6dbe2;font-family:var(--mono);line-height:1.6}
+  .clinic .notes{padding:10px 16px 12px;border-top:1px solid var(--bd)}
+  .clinic .notes li{color:var(--mut);font-size:12.5px;margin-bottom:6px}
+  .clinic .notes b{color:var(--tx)}
+  .badbox .hd{border-left:3px solid var(--bad)} .badbox .tag{color:var(--bad)}
+  .goodbox .hd{border-left:3px solid var(--good)} .goodbox .tag{color:var(--good)}
   footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--bd);color:var(--dim);font-size:12.5px}
 </style>
 </head>
@@ -323,15 +333,136 @@
   <div class="note"><b>The 2-second test:</b> a technical buyer decides to read or delete in under two seconds. Buzzwords, "curious if you're looking…", blocks of text, fear + exclamation = delete. Their name, their number, their models, one question = read.</div>
 
   <div class="card">
+    <div class="kl">Why most messages die — what the reader is doing in those 2 seconds</div>
+    <p>Your message lands next to a hundred others. The reader doesn't read it — they <b>scan it against four silent questions</b>, in order:</p>
+    <ol>
+      <li><b>"Who is this?"</b> — Have I seen this person before? A comment on my post, a reply in a thread? Or a stranger with a name?</li>
+      <li><b>"Why me?"</b> — Is there a reason this is for <i>me</i>, or is this a spray they sent to 400 people?</li>
+      <li><b>"What do you want?"</b> — A meeting? A sale? A favor? Be plain about it.</li>
+      <li><b>"Is this worth 30 seconds?"</b> — Is there a fact I can verify, or a question worth answering?</li>
+    </ol>
+    <p>Every message also passes through <b>three filters</b>, and it must survive all three:</p>
+    <ul>
+      <li><b>Relevance filter</b> — "does this have anything to do with me?" Generic sprays die here.</li>
+      <li><b>Trust filter</b> — "is this person real and credible?" Buzzwords, exclamation marks, and fear die here.</li>
+      <li><b>Effort filter</b> — "is it easy to say yes?" Open-ended asks ("let me know when works") die here.</li>
+    </ul>
+    <p>A message that survives all three earns a reply. Everything below is about engineering messages that survive.</p>
+  </div>
+
+  <div class="card">
     <div class="kl">Failure modes to recognize in your own drafts</div>
     <table>
       <tr><th>Failure</th><th>Sounds like</th><th>Fix</th></tr>
       <tr><td>Generic opener + buzzwords</td><td>"We help teams get more out of their AI stack, reducing costs, optimizing selection…"</td><td>One number, one name, one model instead.</td></tr>
+      <tr><td>Wall of text</td><td>"Hi! I'm reaching out because our platform provides best-in-class solutions for enterprises looking to leverage cutting-edge AI to drive transformative outcomes…"</td><td>Cut to under 90 words. One idea, one question.</td></tr>
       <tr><td>Vague ask</td><td>"We'd fit your ecosystem"</td><td>"Fit" is a wish. Say what changes.</td></tr>
       <tr><td>Soft CTA</td><td>"Would love to trade notes"</td><td>"Trade notes" invites a no. Small specific ask.</td></tr>
+      <tr><td>No next step</td><td>Message ends with "…thoughts?"</td><td>End with a small specific ask or a real question. A message with no next step dies quietly.</td></tr>
       <tr><td>Fear block</td><td>"One breach and your entire corpus is exposed… no markup!"</td><td>Calm proof: firewall, PII shield, audit trail. Fear opens a defensive loop.</td></tr>
       <tr><td>Research, no bridge</td><td>"What made you pick OpenRouter?"</td><td>Add: "…and what would make you reconsider?"</td></tr>
+      <tr><td>The premature pitch</td><td>They reply with a question → you dump the full pitch in message two</td><td>Answer their question fully first. Earn message three.</td></tr>
+      <tr><td>Link in message one</td><td>"Here's our docs: orcarouter.ai…"</td><td>Links belong after they ask, or in the follow-up. A link in message one signals a campaign.</td></tr>
     </table>
+  </div>
+
+  <div class="card">
+    <div class="kl">The rewrite clinic — same prospect, same product, before and after</div>
+    <p>Every pair below is the same situation. The bad version is what most senders write; the good version is what actually gets replies. Read the notes — they're the lesson.</p>
+
+    <div class="clinic badbox">
+      <div class="hd"><span class="tag">Case 1 · Bad — the spray</span><span class="why">why it dies</span></div>
+      <div class="body">Hi Sarah, we help AI companies optimize their model spend with cutting-edge routing technology. Our platform reduces costs and improves performance. Would love to connect and explore synergies!</div>
+      <ul class="notes">
+        <li><b>"Cutting-edge routing technology"</b> — buzzwords. There is no number and no proof, so there's nothing to verify.</li>
+        <li><b>"Help AI companies"</b> — could be sent to anyone at any company. Nothing says "Sarah, specifically."</li>
+        <li><b>"Explore synergies"</b> — a wish, not a question or an ask. Dies on the effort filter.</li>
+      </ul>
+    </div>
+
+    <div class="clinic goodbox">
+      <div class="hd"><span class="tag">Case 1 · Good — the researched number</span><span class="why">why it works</span></div>
+      <div class="body">Saw you're running 12B+ tokens/mo through OpenRouter at Meridian. Their own docs confirm the 5.5% top-up fee — at your volume that's a five-figure line item every year. How are you thinking about that line item?</div>
+      <ul class="notes">
+        <li><b>Hook:</b> her volume + her provider — proof the sender did the work before messaging.</li>
+        <li><b>Specific:</b> 12B tokens/mo, OpenRouter, 5.5% — and it's <i>their docs</i>, not our marketing.</li>
+        <li><b>One question</b>, answerable in one sentence.</li>
+        <li><b>The product never appears.</b> The number does the work; the meeting earns the pitch.</li>
+      </ul>
+    </div>
+
+    <div class="clinic badbox">
+      <div class="hd"><span class="tag">Case 2 · Bad — the fear play</span><span class="why">why it dies</span></div>
+      <div class="body">⚠️ URGENT: your AI costs are spiraling! Don't let hidden provider fees drain your budget. One outage and your entire pipeline is exposed. Act NOW!</div>
+      <ul class="notes">
+        <li><b>Fear + urgency + exclamation marks = the shape of spam.</b> Technical buyers have seen ten thousand of these; the reflex is delete and mute.</li>
+        <li><b>Fear opens a defensive loop:</b> the reader starts looking for reasons it's wrong, not reasons to reply.</li>
+        <li>No name, no number, nothing to verify — fails all three filters at once.</li>
+      </ul>
+    </div>
+
+    <div class="clinic goodbox">
+      <div class="hd"><span class="tag">Case 2 · Good — the calm proof</span><span class="why">why it works</span></div>
+      <div class="body">Your post on model fallbacks was the useful kind of honest. We built OrcaRouter so the same base_url keeps working when a provider 500s — automatic failover, no code change. What's your approach when a model goes down mid-request today?</div>
+      <ul class="notes">
+        <li><b>Opens on their content</b> — they've already seen this person (touch 1 did its job).</li>
+        <li><b>Product in one calm sentence</b>, three concrete facts, zero adjectives.</li>
+        <li><b>A real question about their operations</b> — a technical peer asking, not a vendor pitching.</li>
+        <li>No fear, no urgency, no exclamation marks.</li>
+      </ul>
+    </div>
+
+    <div class="clinic badbox">
+      <div class="hd"><span class="tag">Case 3 · Bad — the vague ask</span><span class="why">why it dies</span></div>
+      <div class="body">I'd love to get some time on your calendar to show you what we do. Let me know when works!</div>
+      <ul class="notes">
+        <li><b>"Let me know when works" = homework for the prospect</b> — the easiest thing to say no to (by saying nothing).</li>
+        <li><b>"Show you what we do" is about us</b>, not about them. Nothing in it rewards 30 seconds of their time.</li>
+      </ul>
+    </div>
+
+    <div class="clinic goodbox">
+      <div class="hd"><span class="tag">Case 3 · Good — the small ask</span><span class="why">why it works</span></div>
+      <div class="body">Would you have a couple minutes to chat about this over the next few days? Happy to work around your schedule — Tuesday or Thursday afternoon?</div>
+      <ul class="notes">
+        <li><b>The benchmarked CTA</b> ("a couple minutes… over the next few days") — small, specific, easy to say yes to.</li>
+        <li><b>Two concrete alternatives</b> halve the effort of replying.</li>
+        <li>It's about the topic already on the table, not a demo of us.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="kl">A message that scores 12/12 — annotated</div>
+    <p>This is the anatomy of a warm DM that checks every box. Steal the structure, change the details.</p>
+    <div class="clinic goodbox">
+      <div class="hd"><span class="tag">The specimen · ~85 words</span><span class="why">under the 90-word ceiling</span></div>
+      <div class="body">Hey Marcus — your write-up on routing costs was the clearest I've read this month.
+At Meridian you're routing roughly 8B tokens/mo; at OpenRouter's 5.5% top-up fee that's a real line item.
+We built OrcaRouter to sit underneath any harness — one base_url, no rewrite, 0% markup on tokens.
+Curious how you're picking models per query today — fixed per feature or evaluated live?
+Would you have a couple minutes to chat about this over the next few days?</div>
+    </div>
+    <table>
+      <tr><th>Line</th><th>Why it earns its points</th></tr>
+      <tr><td>"your write-up… the clearest I've read"</td><td><b>Touch 2 referenced.</b> He's seen this person before — earned attention, not cold.</td></tr>
+      <tr><td>"8B tokens/mo… 5.5% top-up fee"</td><td><b>The hook.</b> His volume, his provider, a figure from their docs — verifiable in five seconds.</td></tr>
+      <tr><td>"one base_url, no rewrite, 0% markup"</td><td><b>Product in one sentence.</b> Three concrete facts, zero adjectives.</td></tr>
+      <tr><td>"fixed per feature or evaluated live?"</td><td><b>The question.</b> About his stack, answerable, shows peer-level understanding.</td></tr>
+      <tr><td>"couple minutes… next few days?"</td><td><b>The small ask.</b> Specific, low-effort, easy yes.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="kl">When they reply — the four scenarios</div>
+    <table>
+      <tr><th>They…</th><th>Do this</th><th>Say something like</th></tr>
+      <tr><td>Ask how it works</td><td>Answer their exact question with one concrete point, then the small ask.</td><td>"You keep your harness and point one base_url at us — we route each request to the cheapest model that meets your quality bar, and you pay the model price, 0% markup. Would you have a couple minutes to chat about this over the next few days?"</td></tr>
+      <tr><td>Push back</td><td>Acknowledge, give one calm proof point, small ask. Never argue.</td><td>"Fair — the fee question is exactly why we exist. Their 5.5% sits on credit top-ups; we don't charge a markup at all. Worth a look at your volume?"</td></tr>
+      <tr><td>Say "not now"</td><td>One value-add follow-up in 3–5 days, then stop.</td><td>"No problem. One number if it's useful: at your volume the top-up fee alone runs roughly $40K/yr before a single model call. When that line starts to matter, we're one base_url away. No reply needed."</td></tr>
+      <tr><td>Go quiet after replying</td><td>One value-add touch — a data point or observation about their stack — then let go.</td><td>"One thing I forgot: teams at your scale typically lose 8–15% of AI spend to routing overhead. Happy to show where it leaks if you ever benchmark it. No reply needed."</td></tr>
+    </table>
+    <p style="margin-top:8px"><b>"No reply needed" is a pressure valve, not a throwaway.</b> It gives the reader permission to stay quiet — and people reply more when they're not being leaned on.</p>
   </div>
 
   <div class="card">
@@ -343,6 +474,11 @@
       <tr><td>Each touch adds NEW value</td><td>A data point, an observation, a question — never "just following up"</td></tr>
       <tr><td>The 3-touch social sequence is the floor</td><td>Comment → engage → warm DM referencing both</td></tr>
     </table>
+    <p style="margin-top:8px">What "adds value" looks like in practice — a follow-up that isn't a nudge:</p>
+    <div class="clinic goodbox">
+      <div class="hd"><span class="tag">Example follow-up</span><span class="why">new information + a reason to reply later + the pressure valve</span></div>
+      <div class="body">One number that might matter for 2027 planning: OpenRouter's 5.5% top-up fee at your scale is roughly $40K/yr before a single model call. If you ever benchmark that line, we'd love to be the comparison. No reply needed.</div>
+    </div>
   </div>
 
   <div class="card">
