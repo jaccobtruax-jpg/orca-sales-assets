@@ -457,7 +457,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       <div class="panel">
         <h4>Say it like this</h4>
         <blockquote class="track">
-          <p>"Three tiers. Hacker is free forever with the full 200+ model catalogue and automatic failover. Team is $49 a month, up to 10 seats, with compliance enforcement, unlimited API keys and priority support. Enterprise is volume-based with dedicated infrastructure, residency, and a 99.99% SLA."</p>
+          <p>"Three tiers. Hacker is free forever with the full 200+ model catalogue and automatic failover. Team is $499 a month, up to 10 seats, with compliance enforcement, unlimited API keys and priority support. Enterprise is volume-based with dedicated infrastructure, residency, and a 99.99% SLA."</p>
           <p>"The number that matters is in the second column: 0% token markup. Token usage is pass-through at the provider's published rate, the same number on OpenAI's or Anthropic's own pricing page. Cached reads bill at the provider's discounted cache rate."</p>
           <div class="core">"A gateway paid a percentage of your tokens has an incentive to route you expensive. We take no spread, so the only thing we have to sell you is a smaller bill."</div>
         </blockquote>
@@ -465,7 +465,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       </div>
       <div class="panel">
         <h4>Numbers to quote</h4>
-        <div class="nums"><span class="num">$0 <em>markup</em></span><span class="num">$49/mo <em>Team</em></span><span class="num">5–20% <em>typical gateway</em></span><span class="num">$2M → <em>$800k</em></span></div>
+        <div class="nums"><span class="num">$0 <em>markup</em></span><span class="num">$499/mo <em>Team</em></span><span class="num">5–20% <em>typical gateway</em></span><span class="num">$2M → <em>$800k</em></span></div>
         <div class="dont"><b>What not to say</b>Never describe the Enterprise commitment as an extra fee. It is a floor: a minimum monthly spend routed through the platform. A fee sits on top of your bill and eats the saving. A floor is how the saving gets shared. And the $2M arithmetic is illustrative, not a customer result: the pilot replaces every line of it.</div>
         <details><summary>Likely question</summary><p><b>Can we keep our existing OpenAI and Anthropic contracts?</b> Yes, BYOK: attach your own keys, and your negotiated rates, commitments and data terms stay unchanged. Routing runs across all of them, and committed spend still draws down. Fee specifics for BYOK live on the pricing page.</p></details>
         <details><summary>Likely question</summary><p><b>What about caching?</b> Cache warmth. Prompt caching is priced per provider and per key, and a gateway that load-balances mid-conversation destroys it. We pin a session to the same channel and key, and account the saving per request.</p></details>
@@ -627,7 +627,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       <div class="qrow"><div class="q">We have multi-year contracts with OpenAI and Anthropic.</div><div class="a">BYOK: attach your own keys, negotiated rates, commitments and data terms unchanged, and committed spend still draws down. Fee specifics are on the pricing page.</div></div>
       <div class="qrow"><div class="q">Where does our data go?</div><div class="a">Region-stamped evidence with cross-region download denial, plus honest disclosure that upstream providers process in their own regions. The honest answer is the one that survives diligence.</div></div>
       <div class="qrow"><div class="q">What if we want out?</div><div class="a">The Lite gateway runs the same API surface, open source, forever. The escape hatch is by construction, which is also why lock-in fear is not a valid objection.</div></div>
-      <div class="qrow"><div class="q">How is this actually priced?</div><div class="a">Subscriptions: free tier, $49 a month Team, volume-based Enterprise. Zero markup on tokens. The Enterprise commitment is a floor on spend routed through us, never a fee on top of your bill.</div></div>
+      <div class="qrow"><div class="q">How is this actually priced?</div><div class="a">Subscriptions: free tier, $499 a month Team, volume-based Enterprise. Zero markup on tokens. The Enterprise commitment is a floor on spend routed through us, never a fee on top of your bill.</div></div>
       <div class="qrow"><div class="q">Can't we just pin models ourselves?</div><div class="a">You can, and the controls let you. But the moment you pin everything, the 62% pays the hard rate again. Pinning is the override, not the default.</div></div>
       <div class="qrow"><div class="q">What if the router is wrong?</div><div class="a">Escalation catches it, reversibly, and the offline loop learns from it. The measured cost of the saving is under 1% quality degradation, and the replay verifies that on their workload too.</div></div>
     </div>
